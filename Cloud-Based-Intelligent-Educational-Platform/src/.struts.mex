@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Struts2Diagram version="2.0">
+  <package name="default" location="289,54" size="192,512">
+    <action name="SearchAction" location="18,42" size="150,62">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="searchFinish.jsp" />
+      </result>
+      <result name="error">
+        <resourceEdge source="error" routing="0" target="searchNothing.jsp" />
+      </result>
+    </action>
+    <action name="UploadAction" location="19,133" size="150,41">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="uploadsuccess.jsp" />
+      </result>
+    </action>
+    <action name="ResourceAction" location="20,211" size="150,41">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="resourcehost.jsp" />
+      </result>
+    </action>
+    <action name="DownloadAction" location="21,352" size="150,41">
+      <result name="success" />
+    </action>
+    <action name="ContentAction" location="20,277" size="150,41">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="resourcecontent.jsp" />
+      </result>
+    </action>
+  </package>
+  <webResource name="searchFinish.jsp" path="searchFinish.jsp" location="50,269" size="150,55" />
+  <webResource name="searchNothing.jsp" path="searchNothing.jsp" location="52,169" size="150,55" />
+  <webResource name="uploadsuccess.jsp" path="uploadsuccess.jsp" location="50,350" size="150,55" />
+  <webResource name="resourcehost.jsp" path="resourcehost.jsp" location="515,217" size="150,55" />
+  <webResource name="resourcecontent.jsp" path="resourcecontent.jsp" location="548,329" size="150,55" />
+</Struts2Diagram>
+
