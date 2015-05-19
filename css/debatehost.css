@@ -1,0 +1,112 @@
+*{
+	margin:0px;
+	padding:0px;
+	border:0px;
+}
+html{
+	background-color:#D1D1D1;
+}
+#main{
+	background-color:#FFFFFF;
+	margin-left:auto;
+	margin-right:auto;
+	width:1000px;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+#topMenu{
+	background-color:#EAEAEA;
+	width:99%;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:5px;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+#icon{
+	margin-left:5px;
+	display:inline;
+}
+#mainlink{
+	position:absolute;
+	left:870px;
+	top:80px;
+	display:inline;
+}
+#form1{
+	width:241px;
+	display:inline;
+}
+#picwall{
+	width:99%;
+	background-color:#EAEAEA;
+	margin-left:auto;
+	margin-right:auto;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+img.pic{
+	width:100px;
+	height:100px;
+}
+#resource{
+	width:99%;
+	background-color:#EAEAEA;
+	padding-top:1px;
+	padding-bottom:1px;
+	margin-top:5px;
+	margin-left:auto;
+	margin-right:auto;
+}
+#searchresult{
+	width:99%;
+	background-color:#FFFFFF;
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-left:auto;
+	margin-right:auto;
+}
+#title{
+	width:99%;
+	overflow:none;
+	border:none;
+	font-size:12;
+	margin-top:5px;
+	margin-left:auto;
+	margin-right:auto;
+}
+#titlelabel{
+	font-size:20;
+	font-family:SimHei;
+	font-weight:bold;
+}
+#content{
+	width:99%;
+	overflow:none;
+	border:none;
+	font-size:10;
+	margin-top:5px;
+	margin-left:auto;
+	margin-right:auto;
+}
+#contentlabel{
+	font-size:20;
+}
+#info{
+	width:99%;
+	height:22px;
+}
+label.info{
+	float:right;
+	font-size:10px;
+}
+input{
+	border:solid 1px #000000;
+}
+#taolunqu{
+	position:absolute;
+	margin-left:0.5%;
+	margin-top:1.5%;
+	font-family:LiSu;
+	font-size:60px;
+}

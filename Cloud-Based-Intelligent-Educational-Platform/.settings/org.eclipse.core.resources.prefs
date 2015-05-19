@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
+encoding//WebRoot/debateZone/debatehost.jsp=UTF-8
 encoding//WebRoot/host.jsp=UTF-8
-encoding//WebRoot/resourceZone/login.jsp=UTF-8
+encoding//WebRoot/login.jsp=UTF-8
 encoding//WebRoot/resourceZone/resourcecontent.jsp=UTF-8
 encoding//WebRoot/resourceZone/resourcehost.jsp=UTF-8
