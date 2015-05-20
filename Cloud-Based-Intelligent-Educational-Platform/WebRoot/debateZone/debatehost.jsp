@@ -39,8 +39,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      		
      	</div>
      </div>
-     
      <div id="resultpanel">
+	 
      </div>
+	 </div>
   </body>
 </html>
