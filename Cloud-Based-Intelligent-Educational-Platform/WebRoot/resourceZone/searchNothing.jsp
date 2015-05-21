@@ -27,22 +27,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      	</div>
      	<label id="ziyuanqu">资源区</label>
      	<div id="mainlink">
-     		<input type="button" name="host" value="首页"
-     				onclick="window.location.href='host.jsp'" />--
-     		<input type="button" name="host" value="账户"
-     				onclick="window.location.href=''" />
+     		<input class="btn" type="button" name="host" value="首页"
+     				onclick="window.location.href='host.jsp'" />
+     		<input class="btn" type="button" name="host" value="账户"
+     				onclick="window.location.href=''" /> | 
      		<form id="form1" action="SearchAction!execute.action" method="post">
-     			<input type="text" name="title" />
-     			<input type="submit" name="name" value="搜索" />
+     			<input id="search_text" type="text" name="title" />
+     			<input class="btn" type="submit" name="name" value="搜索" /> 	|
      		</form>
-     		<input id="upload" type="button" value="上传文件" 
+     		<input class="btn" type="button" value="上传文件" 
      				onclick="window.location.href='resourceZone/upload.jsp'" />
      	</div>
      </div>
      <div id="errornotice">
      	<img id="nothingpic" src="image/searchnothing.jpg" /><br><br>
      	<p id="nothing">未检索到您所要的资源!</p><br>
-     	<input id="backresource" type="button" value="返回资源区"
+     	<input class="btn" id="backresource" type="button" value="返回资源区"
      				onclick="window.location.href='ResourceAction!execute.action'"/>
      </div>
   </div>

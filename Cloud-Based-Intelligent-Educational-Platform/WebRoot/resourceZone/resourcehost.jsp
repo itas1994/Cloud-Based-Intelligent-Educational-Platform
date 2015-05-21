@@ -27,25 +27,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      	</div>
      	<label id="ziyuanqu">资源区</label>
      	<div id="mainlink">
-     		<input type="button" name="host" value="首页"
-     				onclick="window.location.href='host.jsp'" />--
-     		<input type="button" name="host" value="账户"
-     				onclick="window.location.href=''" />
+     		<input class="btn" type="button" name="host" value="首页"
+     				onclick="window.location.href='host.jsp'" />
+     		<input class="btn" type="button" name="host" value="账户"
+     				onclick="window.location.href=''" /> | 
      		<form id="form1" action="SearchAction!execute.action" method="post">
-     			<input type="text" name="title" />
-     			<input type="submit" name="name" value="搜索" />
+     			<input id="search_text" type="text" name="title" />
+     			<input class="btn" type="submit" name="name" value="搜索" /> 	|
      		</form>
-     		<input type="button" value="上传文件" 
+     		<input class="btn" type="button" value="上传文件" 
      				onclick="window.location.href='resourceZone/upload.jsp'" />
      	</div>
      </div>
      <div id="resource">
      	<s:iterator value="relist">
 		<div id="searchresult">
-			<label id="titlelabel">标题:<a href="ContentAction!execute.action?id=<s:property value="id" />">
+			<label id="titlelabel">▷<a id="a_title" href="ContentAction!execute.action?id=<s:property value="id" />">
 				<s:if test='<s:property value="title" />==NULL'>未添加标题</s:if>
 				<s:else><s:property value='title' /></s:else></a></label><br><br>
-			<label id="contentlabel">描述:
+			<label id="contentlabel">▷描述:
 				<s:if test='<s:property value="content" />==NULL'>未添加描述</s:if>
 				<s:else><s:property value='content' /></s:else></label><br><br>
 			<div id="info">

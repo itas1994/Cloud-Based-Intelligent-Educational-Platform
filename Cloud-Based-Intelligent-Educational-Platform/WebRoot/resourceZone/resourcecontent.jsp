@@ -28,15 +28,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      	</div>
      	<label id="ziyuanqu">资源区</label>
      	<div id="mainlink">
-     		<input type="button" name="host" value="首页"
-     				onclick="window.location.href='host.jsp'" />--
-     		<input type="button" name="host" value="账户"
-     				onclick="window.location.href=''" />
+     		<input class="btn" type="button" name="host" value="首页"
+     				onclick="window.location.href='host.jsp'" />
+     		<input class="btn" type="button" name="host" value="账户"
+     				onclick="window.location.href=''" /> | 
      		<form id="form1" action="SearchAction!execute.action" method="post">
-     			<input type="text" name="title" />
-     			<input type="submit" name="name" value="搜索" />
+     			<input id="search_text" type="text" name="title" />
+     			<input class="btn" type="submit" name="name" value="搜索" /> 	|
      		</form>
-     		<input type="button" value="上传文件" 
+     		<input class="btn" type="button" value="上传文件" 
      				onclick="window.location.href='resourceZone/upload.jsp'" />
      	</div>
      </div>
@@ -80,7 +80,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</tr>
 			</table>
 		</s:iterator>
-		<input id="backresource" type="button" value="返回资源区"
+		<input class="btn" id="backresource" type="button" value="返回资源区"
      			onclick="window.location.href='ResourceAction!execute.action'"/>
      </div>
    </div>
