@@ -42,10 +42,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      <div id="resource">
      	<s:iterator value="relist">
 		<div id="searchresult">
-			<label id="titlelabel">▷<a id="a_title" href="ContentAction!execute.action?id=<s:property value="id" />">
+			<label id="titlelabel">◆<a id="a_title" href="ContentAction!execute.action?id=<s:property value="id" />">
 				<s:if test='<s:property value="title" />==NULL'>未添加标题</s:if>
 				<s:else><s:property value='title' /></s:else></a></label><br><br>
-			<label id="contentlabel">▷描述:
+			<label id="contentlabel">
 				<s:if test='<s:property value="content" />==NULL'>未添加描述</s:if>
 				<s:else><s:property value='content' /></s:else></label><br><br>
 			<div id="info">

@@ -38,6 +38,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<div class="select" onclick="window.location.href='ResourceAction!execute.action'"><label class="selectlabel">资源区</label></div>
     	<div class="select" ><label class="selectlabel">作业区</label></div>
     	<div class="select" ><label class="selectlabel">测试区</label></div>
-    	<div class="select" onclick="window.location.href='debateZone/debatehost.jsp'"><label class="selectlabel">讨论区</label></div>
+    	<div class="select" onclick="window.location.href='DebateAction!execute.action'"><label class="selectlabel">讨论区</label></div>
   </body>
 </html>

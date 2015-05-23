@@ -1,4 +1,4 @@
-package action;
+package action.resource;
 
 import java.io.InputStream;
 
@@ -27,7 +27,7 @@ public class DownloadAction extends ActionSupport
 	public InputStream getDownloadFile() throws Exception  
     {
 		String name=this.getDownloadFileName();
-		String realPath="/usr/"+name;
+		String realPath="/usr/resource_file/"+name;
 		InputStream in=ServletActionContext.getServletContext().getResourceAsStream(realPath);
 		return ServletActionContext.getServletContext().getResourceAsStream(realPath);
     }  

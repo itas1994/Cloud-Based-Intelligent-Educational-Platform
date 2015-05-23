@@ -8,6 +8,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import bean.debateBean;
 import bean.resourceBean;
 
 public class Dao {
@@ -154,5 +162,56 @@ public class Dao {
 		    	System.out.println("c");
 		    }
 		    return result;
+		}
+		
+		public List<debateBean> getDebate() throws SQLException{
+			this.con();
+			List<debateBean> delist=new ArrayList<debateBean>();
+			String sql_debate="select * from debate";
+			rs=st.executeQuery(sql_debate);
+			while(rs.next()){
+				debateBean d=new debateBean();
+				d.setId(rs.getInt("id"));
+				d.setContentpath(rs.getString("contentpath"));
+				d.setTitle(rs.getString("title"));
+				d.setIssuetime(rs.getString("issuetime"));
+				d.setIssueusr(rs.getString("issueusr"));
+				d.setReplynum(rs.getInt("replynum"));
+				delist.add(d);
+			}
+			return delist;
+		}
+		
+		public List<debateBean> getDebateContent(int id,String issueusr) throws SQLException{
+			this.con();
+			List delist=new ArrayList();
+			String title="";
+			String _id=id+"";
+			String sql_debate_title="select title from debate where id="+id;
+			rs=st.executeQuery(sql_debate_title);
+			while(rs.next()){
+				title=rs.getString("title");
+			}
+			
+			//dom½âÎö
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    	try {
+	            DocumentBuilder db = dbf.newDocumentBuilder();
+	            Document doc = db.parse(issueusr+".xml");
+	            NodeList titles = doc.getElementsByTagName("title");
+	            for(int i=0;i<titles.getLength();i++){
+	            	if(titles.item(i).getNodeValue()==title && 
+	            			titles.item(i).getAttributes().toString()==_id){
+	            		NodeList replies=doc.getElementsByTagName("reply");
+	            		for(int k=0;k<replies.getLength();k++){
+	            			
+	            		}
+	            	}
+	            }
+	            NodeList financeNodes = doc.getElementsByTagName("Finance");
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
+			return null;
 		}
 }

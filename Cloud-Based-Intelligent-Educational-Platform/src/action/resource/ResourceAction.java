@@ -1,18 +1,14 @@
-package action;
+package action.resource;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.struts2.ServletActionContext;
-
 import Dao.Dao;
-
 import com.opensymphony.xwork2.ActionSupport;
 
 @SuppressWarnings("serial")
-public class ContentAction extends ActionSupport {
+public class ResourceAction extends ActionSupport {
 
 	/**
 	 * @return
@@ -26,11 +22,8 @@ public class ContentAction extends ActionSupport {
 	}
 
 	public String execute() throws SQLException {
-		HttpServletRequest request=ServletActionContext.getRequest();
-		int id=Integer.parseInt(request.getParameter("id"));
 		Dao dao = new Dao();
-		relist = (ArrayList) dao.content(id);
-		dao.addhot(id);
+		relist = (ArrayList) dao.hotresource();
 		return "success";
 	}
 }

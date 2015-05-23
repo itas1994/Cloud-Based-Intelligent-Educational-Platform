@@ -44,9 +44,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<s:iterator value="relist">
 			<table class="table"  cellspacing="15">
 				<tr>
-					<td class="td">文件信息</td><td class="td">详情</td>
-				</tr>
-				<tr>
 					<td class="t">标题</td>
 					<td class="t1"><s:property value="title"></s:property></td>
 				</tr>
@@ -72,11 +69,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</tr>
 				<tr>
 					<td class="t">文件预览</td>
-					<td class="t1"><a href="<s:property value='location' />"><s:property value="name" /></a></td>
+					<td class="t1"><a id="a_pro_location" href="<s:property value='location' />"><s:property value="name" /></a></td>
 				</tr>
 				<tr>
 					<td class="t">下载路径</td>
-					<td class="t1"><a href="DownloadAction!execute.action?fileName=<s:property value="name" />">点我下载</a></td>
+					<td class="t1"><a id="a_pro_download" href="DownloadAction!execute.action?fileName=<s:property value="name" />">点我下载</a></td>
 				</tr>
 			</table>
 		</s:iterator>

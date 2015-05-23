@@ -17,7 +17,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<link rel="stylesheet" type="text/css" href="css/debatehost.css">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
 
   </head>
   
@@ -36,19 +38,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      		<input class="btn" type="button" name="name" value="发布新讨论" />
      	</div>
      </div>
-     <div id="debate">
-     	<s:iterator value="delist">
-		<div id="debateresult">
-			<label id="titlelabel">◆<a id="a_title" href="debateContentAction!execute.action?id=<s:property value="id" />">
-				<s:property value='title' /></a></label><br><br>
-			<div id="info">
-				<label class="info">发布用户:<s:property value="issueusr"></s:property></label>
-				<label class="info">回复数量:<s:property value="replynum"></s:property>&nbsp;&nbsp;</label>
-				<label class="info">发布时间:<s:property value="issuetime"></s:property>&nbsp;&nbsp;</label>
-			</div>
-		</div>
-		</s:iterator>
+     <div id="resultpanel">
+     	
      </div>
-	 </div>
+    </div>
   </body>
 </html>

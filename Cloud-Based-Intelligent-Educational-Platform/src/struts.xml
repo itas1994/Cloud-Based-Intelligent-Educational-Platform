@@ -6,33 +6,36 @@
 	<constant name="struts.multipart.saveDir" value ="/temp"/>
 	<constant name="struts.multipart.maxSize" value="10240000" />
 	<package name="default" namespace="/" extends="struts-default">
-		<action name="SearchAction" class="action.SearchAction">
+		<action name="SearchAction" class="action.resource.SearchAction">
 			<result name="success">resourceZone/searchFinish.jsp</result>
 			<result name="error">resourceZone/searchNothing.jsp</result>
 		</action>
-		<action name="UploadAction" class="action.UploadAction">
+		<action name="UploadAction" class="action.resource.UploadAction">
 			<param name="savePath">/usr</param>
 			<result name="success">resourceZone/uploadsuccess.jsp</result>
 		</action>
-		<action name="ResourceAction" class="action.ResourceAction">
+		<action name="ResourceAction" class="action.resource.ResourceAction">
 			<result name="success">resourceZone/resourcehost.jsp</result>
 		</action>
-		<action name="DownloadAction" class="action.DownloadAction">
+		<action name="DownloadAction" class="action.resource.DownloadAction">
             <result name="success" type="stream">
-            	<param name="inputPath">/usr</param>
+            	<param name="inputPath">/usr/resource_file</param>
             	<param name="contentType">application/octet-stream;charset=ISO8859-1</param>
                 <param name="contentDisposition">attachment;fileName="${downloadFileName}"</param>
                 <param name="inputName">downloadFile</param>
                 <param name="bufferSize">4096</param>
             </result>
         </action>
-        <action name="ContentAction" class="action.ContentAction">
+        <action name="ContentAction" class="action.resource.ContentAction">
 			<result name="success">resourceZone/resourcecontent.jsp</result>
 		</action>
 		<action name="LoginAction" class="action.LoginAction">
 			<result name="success">resourceZone/host.jsp</result>
 			<result name="psd_error">resourceZone/login.jsp</result>
 			<result name="id_error">resourceZone/login.jsp</result>
+		</action>
+		<action name="DebateAction" class="action.debate.DebateAction">
+			<result name="success">debateZone/debatehost.jsp</result>
 		</action>
 	</package>
 </struts>    

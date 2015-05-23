@@ -42,10 +42,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      	<div id="resultpanel">
 		<s:iterator value="relist">
 		<div id="searchresult">
-			<label id="titlelabel">▷<a id="a_title" href="ContentAction!execute.action?id=<s:property value="id" />">
+			<label id="titlelabel">◆<a id="a_title" href="ContentAction!execute.action?id=<s:property value="id" />">
 				<s:if test='<s:property value="title" />==NULL'>未添加标题</s:if>
 				<s:else><s:property value='title' /></s:else></a></label><br><br>
-			<label id="contentlabel">▷描述:
+			<label id="contentlabel">
 				<s:if test='<s:property value="content" />==NULL'>未添加描述</s:if>
 				<s:else><s:property value='content' /></s:else></label><br><br>
 			<div id="info">
@@ -54,9 +54,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 		</div>
 		</s:iterator>
-		</div>
 		<input class="btn" id="backresource" type="button" value="返回资源区"
      			onclick="window.location.href='ResourceAction!execute.action'"/>
+		</div>
 	</div>
   </body>
 </html>

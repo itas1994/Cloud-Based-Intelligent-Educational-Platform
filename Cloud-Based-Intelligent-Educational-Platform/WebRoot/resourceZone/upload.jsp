@@ -27,30 +27,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      	</div>
      	<label id="ziyuanqu">资源区</label>
      	<div id="mainlink">
-     		<input type="button" name="host" value="首页"
-     				onclick="window.location.href='host.jsp'" />--
-     		<input type="button" name="host" value="账户"
-     				onclick="window.location.href=''" />
+     		<input class="btn" type="button" name="host" value="首页"
+     				onclick="window.location.href='host.jsp'" />
+     		<input class="btn" type="button" name="host" value="账户"
+     				onclick="window.location.href=''" /> | 
      		<form id="form1" action="SearchAction!execute.action" method="post">
-     			<input type="text" name="name" />
-     			<input type="submit" name="name" value="搜索" />
+     			<input id="search_text" type="text" name="title" />
+     			<input class="btn" type="submit" name="name" value="搜索" /> 	|
      		</form>
-     		<input type="button" value="上传文件"
+     		<input class="btn" type="button" value="上传文件" 
      				onclick="window.location.href='resourceZone/upload.jsp'" />
      	</div>
      </div>
      <div id="upload">
-     	<h2 id="uploadtitle">填写文件信息</h2><br>
     	<form id="form2" action="UploadAction!execute.action"
      				enctype="multipart/form-data" method="post">
-     		资源标题:<textarea id="title" name="title" cols="54" rows="1"></textarea><br><br>
-     		内容描述:&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
-     		<textarea id="content" name="content" cols="64" rows="24"></textarea><br><br>
-			选择文件:<input type="file" name="upload" />
-     			  <input type="submit" value="确认上传" />
-     			  &nbsp;<input id="backresource" type="button" value="返回资源区"
-     							onclick="window.location.href='ResourceAction!execute.action'"/>
+     		<label class="upload_info">资源标题: </label><textarea id="title" name="title" cols="54" rows="1"></textarea><br><br>
+     		<label class="upload_info">内容描述:</label>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
+     		<textarea id="content" name="content" cols="64" rows="12"></textarea><br><br>
+			<label class="upload_info">选择文件: </label><input type="file" name="upload" />
+     			  <input class="btn" type="submit" value="确认上传" />
     	</form><br>
+    	<input class="btn" id="backresource" type="button" value="返回资源区"
+     							onclick="window.location.href='ResourceAction!execute.action'"/>
     </div>
      </div>
     
