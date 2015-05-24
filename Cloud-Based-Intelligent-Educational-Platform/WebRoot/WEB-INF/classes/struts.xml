@@ -37,5 +37,14 @@
 		<action name="DebateAction" class="action.debate.DebateAction">
 			<result name="success">debateZone/debatehost.jsp</result>
 		</action>
+		<action name="debateContentAction" class="action.debate.debateContentAction">
+			<result name="success">debateZone/debatecontent.jsp</result>
+		</action>
+		<action name="debateReplyAction" class="action.debate.debateReplyAction">
+			<result name="success">/debateZone/debatecontent.jsp</result>
+		</action>
+		<action name="IssueAction" class="action.debate.IssueAction">
+			<result name="success">/debateZone/debateissue.jsp</result>
+		</action>
 	</package>
 </struts>    

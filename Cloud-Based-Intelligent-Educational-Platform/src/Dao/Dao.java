@@ -16,6 +16,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import bean.debateBean;
+import bean.debateReplyBean;
 import bean.resourceBean;
 
 public class Dao {
@@ -182,12 +183,12 @@ public class Dao {
 			return delist;
 		}
 		
-		public List<debateBean> getDebateContent(int id,String issueusr) throws SQLException{
+		public List<debateReplyBean> getDebateContent(int id,String issueusr) throws SQLException{
 			this.con();
-			List delist=new ArrayList();
+			List<debateReplyBean> delist=new ArrayList<debateReplyBean>();
 			String title="";
 			String _id=id+"";
-			String sql_debate_title="select title from debate where id="+id;
+			String sql_debate_title="select title from debate where id="+_id;
 			rs=st.executeQuery(sql_debate_title);
 			while(rs.next()){
 				title=rs.getString("title");
@@ -197,21 +198,36 @@ public class Dao {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 	    	try {
 	            DocumentBuilder db = dbf.newDocumentBuilder();
-	            Document doc = db.parse(issueusr+".xml");
+	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//usr//debate_reply_content//"+issueusr+".xml");
 	            NodeList titles = doc.getElementsByTagName("title");
 	            for(int i=0;i<titles.getLength();i++){
 	            	if(titles.item(i).getNodeValue()==title && 
 	            			titles.item(i).getAttributes().toString()==_id){
 	            		NodeList replies=doc.getElementsByTagName("reply");
 	            		for(int k=0;k<replies.getLength();k++){
-	            			
+	            			Node reply=replies.item(k);
+	            			debateReplyBean dr=new debateReplyBean();
+	            			dr.setReplyusr(reply.getChildNodes().item(0).toString());
+	            			dr.setReplytime(reply.getChildNodes().item(1).toString());
+	            			dr.setReplycontent(reply.getChildNodes().item(2).toString());
+	            			delist.add(dr);
 	            		}
 	            	}
 	            }
-	            NodeList financeNodes = doc.getElementsByTagName("Finance");
 	    	}catch(Exception e){
 	    		e.printStackTrace();
 	    	}
-			return null;
+			return delist;
+		}
+		
+		public String getDebateTitle(int id) throws SQLException{
+			this.con();
+			String title="";
+			String sql_debate_title="select title from debate where id="+id;
+			rs=st.executeQuery(sql_debate_title);
+			while(rs.next()){
+				title=rs.getString("title");
+			}
+			return title;
 		}
 }

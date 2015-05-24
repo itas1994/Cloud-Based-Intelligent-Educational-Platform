@@ -33,7 +33,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      				onclick="window.location.href='host.jsp'" />
      		<input class="btn" type="button" name="host" value="账户"
      				onclick="window.location.href=''" /> | 
-     		<input class="btn" type="button" name="name" value="发布新讨论" />
+     		<input class="btn" type="button" name="name" value="发布新讨论" 
+     			onclick="windows.location.href='IssueAction!execute.action'"/>
      	</div>
      </div>
      <div id="debate">
