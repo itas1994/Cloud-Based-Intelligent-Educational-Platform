@@ -20,7 +20,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="css/debatecontent.css">
 
   </head>
-  
+  <script language="javascript">
+  		function getTitle(){
+  			var title=document.getElementsByTagName("titlelabel").valueOf().toString();
+  			return title;
+  		}
+  		function getId(){
+  			var id=document.getElementsByTagName("id").valueOf();
+  			return id;
+  		}
+  </script>
   <body>
     <div id="main">
    	 <div id="topMenu">
@@ -34,18 +43,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      		<input class="btn" type="button" name="host" value="账户"
      				onclick="window.location.href=''" /> | 
      		<input class="btn" type="button" name="name" value="发布新讨论" 
-     			onclick="windows.location.href='IssueAction!execute.action'"/>
+     			onclick="window.location.href='debateZone/debateissue.jsp'"/>
      	</div>
      </div>
      <div id="resultpanel">
 		<div id="debateresult"	>
-			<label id="titlelabel">◆<s:property value='title' /></label><br><br>
+			<label id="titlestar">◆</label>
+			<label id="titlelabel"><s:property value='title' /></label><br><br>
+			<label id="id"><s:property value="id" /></label>
 			<form id="form2" action="debateReplyAction!execute.action" method="post">
-				<textarea id="replytextarea" cols="100" rows="15"></textarea><br>
+				<input type="hidden" name="title" value=getTitle(); />
+				<input type="hidden" name="id" value=getId(); />
+				<textarea id="replytextarea" name="replycontent" cols="100" rows="15"></textarea><br>
 				<input class="btn" id="submitreply" type="submit" value="提交回复"/>
 			</form><br>
 			<s:iterator value="delist">
-				<label id="replyusr"><s:property value="issueusr"></s:property> 回复:</label><br>
+				<label id="replyusr"><s:property value="replyusr"></s:property> 回复:</label><br>
 				<label id="replycontent"><s:property value="replycontent"></s:property></label><br>
 				<label id="replytime">回复时间:<s:property value="replytime"></s:property>&nbsp;&nbsp;</label>
 			</s:iterator>

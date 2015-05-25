@@ -13,6 +13,7 @@ import Dao.Dao;
 public class debateContentAction {
 	private List delist=new ArrayList();
 	private String title;
+	private int id;
 	public List getDelist() {
 		return delist;
 	}
@@ -30,9 +31,17 @@ public class debateContentAction {
 		this.title = title;
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String execute() throws SQLException{
 		HttpServletRequest rq=ServletActionContext.getRequest();
-		int id=Integer.parseInt(rq.getParameter("id"));
+		id=Integer.parseInt(rq.getParameter("id"));
 		String issueusr="itas1994";
 		Dao dao=new Dao();
 		delist=dao.getDebateContent(id, issueusr);

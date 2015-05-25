@@ -1,5 +1,7 @@
 package Dao;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -10,8 +12,21 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -162,6 +177,7 @@ public class Dao {
 		    	result="id_error";
 		    	System.out.println("c");
 		    }
+		    this.destroyQuery();
 		    return result;
 		}
 		
@@ -180,6 +196,7 @@ public class Dao {
 				d.setReplynum(rs.getInt("replynum"));
 				delist.add(d);
 			}
+			this.destroyQuery();
 			return delist;
 		}
 		
@@ -193,12 +210,14 @@ public class Dao {
 			while(rs.next()){
 				title=rs.getString("title");
 			}
+			this.destroyQuery();
 			
 			//dom½âÎö
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 	    	try {
 	            DocumentBuilder db = dbf.newDocumentBuilder();
-	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//usr//debate_reply_content//"+issueusr+".xml");
+	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+	            		+ "usr//debate_reply_content//"+issueusr+".xml");
 	            NodeList titles = doc.getElementsByTagName("title");
 	            for(int i=0;i<titles.getLength();i++){
 	            	if(titles.item(i).getNodeValue()==title && 
@@ -228,6 +247,147 @@ public class Dao {
 			while(rs.next()){
 				title=rs.getString("title");
 			}
+			this.destroyQuery();
 			return title;
+		}
+		
+		/*begin for issue*/
+		public void creatNewXml(String usrid) throws ParserConfigurationException, TransformerException, SAXException, IOException{
+			String filepath="./usr/debate_reply_content/"+usrid+".xml";
+			DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder=factory.newDocumentBuilder();
+			Document doc=builder.newDocument();
+			Element Debates=doc.createElement("Debates");
+			doc.appendChild(Debates);
+			
+			Transformer transformer=TransformerFactory.newInstance().newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8"); 
+			StreamResult fileResult=new StreamResult(new File(filepath));
+			DOMSource source=new DOMSource(doc);
+			transformer.transform(source,fileResult);
+		}
+		
+		public void db4issue(String title,String content,String usrid) throws SQLException{
+			this.con();
+			String sql_issue="insert debate values(null,'"+title+"','usr/debate_reply_content/"+usrid+".xml',"
+					+ "now(),0,'"+usrid+"')";
+			st.executeUpdate(sql_issue);
+			this.destroyUpdate();
+		}
+		
+		public void dom4issue(String title,String content,String usrid) throws SQLException{
+			this.con();
+			int id = 0;
+			String _id="";
+			String sql_id="select id from debate where title = '"+title+"'";
+			rs=st.executeQuery(sql_id);
+			while(rs.next()){
+				id=rs.getInt("id");
+			}
+			_id=id+"";
+			this.destroyQuery();
+			
+			//domÐÞ¸Äxml
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    	try {
+	            DocumentBuilder db = dbf.newDocumentBuilder();
+	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+	            		+ "usr//debate_reply_content//"+usrid+".xml");
+	            if(null==doc){
+	            	creatNewXml(usrid);
+	            }
+	            Node debates=doc.getElementsByTagName("Debates").item(0);
+	            Element ti=doc.createElement("title");//title
+	            ti.appendChild(doc.createTextNode(title));
+	            ti.setAttribute("id", _id);
+	            Element cont=doc.createElement("content");//title--content
+	            cont.appendChild(doc.createTextNode(content));
+	            ti.appendChild(cont);//content->title
+	            debates.appendChild(ti);//title->Debates
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
+		}
+		/*end of issue*/
+		
+		/*begin of reply*/
+		public String getIssueusr(int id) throws SQLException{
+			this.con();
+			String _id=id+"";
+			String issueusr="";
+			String sql_debate_issueusr="select issueusr from debate where id="+_id;
+			rs=st.executeQuery(sql_debate_issueusr);
+			while(rs.next()){
+				issueusr=rs.getString("issueusr");
+			}
+			this.destroyQuery();
+			return issueusr;
+		}
+		
+		public void insertReply(int id,String title,String replycontent
+				,String replyusr,String replytime,String issueusr) throws SAXException, IOException{
+			String _id=id+"";
+			
+			DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
+			try {
+				DocumentBuilder db=dbf.newDocumentBuilder();
+				Document doc=db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+	            		+ "usr//debate_reply_content//"+issueusr+".xml");
+				Node debates=doc.getElementsByTagName("Debates").item(0);
+				NodeList ti=debates.getChildNodes();
+				for(int i=0;i<ti.getLength();i++){
+					Node tit=ti.item(i);
+					if(tit.getAttributes().toString().equals(_id)
+							&& tit.getNodeValue().toString().equals(title)){
+						Node _replyusr=doc.createElement("replyusr");
+						_replyusr.appendChild(doc.createTextNode(replyusr));
+						Node _replytime=doc.createElement("replytime");
+						_replytime.appendChild(doc.createTextNode(replytime));
+						Node _replycontent=doc.createElement("replycontent");
+						_replycontent.appendChild(doc.createTextNode(replycontent));
+						
+						Node reply=doc.createElement("reply");
+						reply.appendChild(_replyusr);
+						reply.appendChild(_replytime);
+						reply.appendChild(_replycontent);
+						
+						tit.appendChild(reply);
+					}
+				}
+			} catch (ParserConfigurationException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		public List<debateReplyBean> reply(int id,String title,String issueusr) throws SQLException{
+			String _id=id+"";
+			List<debateReplyBean> delist=new ArrayList<debateReplyBean>();
+
+			//dom½âÎö
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    	try {
+	            DocumentBuilder db = dbf.newDocumentBuilder();
+	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+	            		+ "usr//debate_reply_content//"+issueusr+".xml");
+	            NodeList titles = doc.getElementsByTagName("title");
+	            for(int i=0;i<titles.getLength();i++){
+	            	if(titles.item(i).getNodeValue()==title && 
+	            			titles.item(i).getAttributes().toString()==_id){
+	            		NodeList replies=doc.getElementsByTagName("reply");
+	            		for(int k=0;k<replies.getLength();k++){
+	            			Node reply=replies.item(k);
+	            			debateReplyBean dr=new debateReplyBean();
+	            			dr.setReplyusr(reply.getChildNodes().item(0).toString());
+	            			dr.setReplytime(reply.getChildNodes().item(1).toString());
+	            			dr.setReplycontent(reply.getChildNodes().item(2).toString());
+	            			delist.add(dr);
+	            		}
+	            	}
+	            }
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
+			return delist;
 		}
 }
