@@ -30,6 +30,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import bean.User;
+import bean.classes;
 import bean.debateBean;
 import bean.debateReplyBean;
 import bean.resourceBean;
@@ -40,7 +42,7 @@ public class Dao {
 		Statement st=null;
 		ResultSet rs=null;
 	
-		public void con() throws SQLException{//½¨Á¢mysqlÁ¬½Ó
+		public void con() throws SQLException{//ï¿½ï¿½ï¿½ï¿½mysqlï¿½ï¿½ï¿½ï¿½
 			String url="jdbc:mysql://127.0.0.1:3306/project";
 			String usr="root";
 			String psd="lzw0201";
@@ -55,7 +57,7 @@ public class Dao {
 			
 		}
 		
-		public void destroyQuery(){//¶Ï¿ªmysqlÁ¬½Ó
+		public void destroyQuery(){//ï¿½Ï¿ï¿½mysqlï¿½ï¿½ï¿½ï¿½
 			try {
 				rs.close();
 				st.close();
@@ -66,7 +68,7 @@ public class Dao {
 			}
 		}
 		
-		public void destroyUpdate(){//¶Ï¿ªmysqlÁ¬½Ó
+		public void destroyUpdate(){//ï¿½Ï¿ï¿½mysqlï¿½ï¿½ï¿½ï¿½
 			try {
 				st.close();
 				con.close();
@@ -212,7 +214,7 @@ public class Dao {
 			}
 			this.destroyQuery();
 			
-			//dom½âÎö
+			//domï¿½ï¿½ï¿½ï¿½
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 	    	try {
 	            DocumentBuilder db = dbf.newDocumentBuilder();
@@ -288,7 +290,7 @@ public class Dao {
 			_id=id+"";
 			this.destroyQuery();
 			
-			//domÐÞ¸Äxml
+			//domï¿½Þ¸ï¿½xml
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 	    	try {
 	            DocumentBuilder db = dbf.newDocumentBuilder();
@@ -364,7 +366,7 @@ public class Dao {
 			String _id=id+"";
 			List<debateReplyBean> delist=new ArrayList<debateReplyBean>();
 
-			//dom½âÎö
+			//domï¿½ï¿½ï¿½ï¿½
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 	    	try {
 	            DocumentBuilder db = dbf.newDocumentBuilder();
@@ -389,5 +391,96 @@ public class Dao {
 	    		e.printStackTrace();
 	    	}
 			return delist;
+		}
+		
+		//ï¿½ï¿½ï¿½ï¿½
+		public ArrayList<User> alluser() throws SQLException{
+			this.con();
+			ArrayList<User> list=new ArrayList<User>();
+			String sql_search="select * from usr";
+			rs=st.executeQuery(sql_search);
+				while(rs.next()){
+					User r=new User();
+					r.setID(rs.getString("id"));
+					r.setName(rs.getString("name"));
+					r.setAge(rs.getString("age"));
+					r.setSex(rs.getString("sex"));
+					r.setEmail(rs.getString("email"));
+					r.setNation(rs.getString("nation"));
+					r.setTel(rs.getString("tel"));
+					list.add(r);
+				}
+			this.destroyQuery();
+			return list;
+		}
+		
+		public int numbers() throws SQLException{
+			this.con();
+			int num=0;
+			ArrayList<User> list=new ArrayList<User>();
+			String sql_search="select * from usr";
+			rs=st.executeQuery(sql_search);
+				while(rs.next()){
+					User r=new User();
+					r.setID(rs.getString("id"));
+					r.setName(rs.getString("name"));
+					r.setAge(rs.getString("age"));
+					r.setSex(rs.getString("sex"));
+					r.setEmail(rs.getString("email"));
+					r.setNation(rs.getString("nation"));
+					r.setTel(rs.getString("tel"));
+					list.add(r);
+					num++;
+				}
+			this.destroyQuery();
+			return num;
+		}
+		
+		public List<classes> getClasses() throws SQLException{
+			this.con();
+			List<classes> delist=new ArrayList<classes>();
+			String sql_debate="select * from classes";
+			rs=st.executeQuery(sql_debate);
+			while(rs.next()){
+				classes ca = new classes();
+				ca.setS_class1(rs.getString("subject1"));
+				ca.setS_class2(rs.getString("subject2"));
+				ca.setS_class3(rs.getString("subject3"));
+				delist.add(ca);
+			}
+			this.destroyQuery();
+			return delist;
+		}
+		
+		
+		public ArrayList<User> Groupinguser() throws SQLException{
+			this.con();
+			ArrayList<User> list=new ArrayList<User>();
+			String sql_search="SELECT * FROM usr ORDER BY RAND()  LIMIT 40";
+			rs=st.executeQuery(sql_search);
+				while(rs.next()){
+					User r=new User();
+					r.setID(rs.getString("id"));
+					r.setName(rs.getString("name"));
+					r.setAge(rs.getString("age"));
+					r.setSex(rs.getString("sex"));
+					r.setEmail(rs.getString("email"));
+					r.setNation(rs.getString("nation"));
+					r.setTel(rs.getString("tel"));
+					list.add(r);
+				}
+			this.destroyQuery();
+			return list;
+		}
+		
+		
+		public void insert() throws SQLException{
+			this.con();
+			for (int i = 0; i < 40; i++) {
+				int j = 100+i;
+				String sql = "insert into usr (id,psd) values ("+j+","+j+")";
+				st.executeUpdate(sql);
+			}
+			this.destroyUpdate();;
 		}
 }

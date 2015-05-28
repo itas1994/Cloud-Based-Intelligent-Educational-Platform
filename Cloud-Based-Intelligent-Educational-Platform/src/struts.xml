@@ -46,5 +46,18 @@
 		<action name="IssueAction" class="action.debate.IssueAction">
 			<result name="success">/debateZone/debateissue.jsp</result>
 		</action>
+		
+		<action name="DmAction" class="action.DmAction">
+			<result name="dmsuc">dmZone/dmsuc.jsp</result>
+		</action>
+		<action name="SigninAction" class="action.SigninAction">
+			<result name="dmsuc">Sign/sign.jsp</result>
+		</action>
+		<action name="GroupingAction" class="action.groupingAction">
+			<result name="suc">group/grouping.jsp</result>
+		</action>
+		<action name="GroupedAction" class="action.groupedAction">
+			<result name="suc">group/grouped.jsp</result>
+		</action>
 	</package>
 </struts>    

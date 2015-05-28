@@ -32,9 +32,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      					onclick="window.location.href='login.jsp'" />
      		</div>
      	</div>
-    	<div class="select" ><label class="selectlabel">自主签到</label></div>
-    	<div class="select" ><label class="selectlabel">随机点名</label></div>
-    	<div class="select" ><label class="selectlabel">课堂分组</label></div>
+    	<div class="select" onclick="window.location.href='SigninAction!execute.action'"><label class="selectlabel">自主签到</label></div>
+    	<div class="select" onclick="window.location.href='dmZone/dm.jsp'"><label class="selectlabel">随机点名</label></div>
+    	<div class="select" onclick="window.location.href='group/grouping.jsp'"><label class="selectlabel">课堂分组</label></div>
     	<div class="select" onclick="window.location.href='ResourceAction!execute.action'"><label class="selectlabel">资源区</label></div>
     	<div class="select" ><label class="selectlabel">作业区</label></div>
     	<div class="select" ><label class="selectlabel">测试区</label></div>
