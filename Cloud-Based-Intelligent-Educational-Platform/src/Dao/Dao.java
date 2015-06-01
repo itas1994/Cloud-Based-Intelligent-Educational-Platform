@@ -34,6 +34,8 @@ import bean.User;
 import bean.classes;
 import bean.debateBean;
 import bean.debateReplyBean;
+import bean.homeworkAnswerBean;
+import bean.homeworkBean;
 import bean.resourceBean;
 
 public class Dao {
@@ -392,6 +394,7 @@ public class Dao {
 	    	}
 			return delist;
 		}
+		//end of reply
 		
 		//����
 		public ArrayList<User> alluser() throws SQLException{
@@ -473,14 +476,134 @@ public class Dao {
 			return list;
 		}
 		
-		
-		public void insert() throws SQLException{
+		public String getAuthority(String usrid) throws SQLException{
+			String authority="";
 			this.con();
-			for (int i = 0; i < 40; i++) {
-				int j = 100+i;
-				String sql = "insert into usr (id,psd) values ("+j+","+j+")";
-				st.executeUpdate(sql);
+			String sql_authority="select authority from usr where id = '"+usrid+"'";
+			rs=st.executeQuery(sql_authority);
+			while(rs.next()){
+				authority=rs.getString("authority");
 			}
-			this.destroyUpdate();;
+			return authority;
+		}
+		
+		public List<homeworkBean> allHomework() throws SQLException{
+			this.con();
+			List<homeworkBean> holist=new ArrayList<homeworkBean>();
+			String sql_all="select * from homework";
+			rs=st.executeQuery(sql_all);
+				while(rs.next()){
+					homeworkBean h=new homeworkBean();
+					h.setId(rs.getInt("id"));
+					h.setTitle(rs.getString("title"));
+					h.setIssuetime(rs.getString("issuetime"));
+					h.setDeadline(rs.getString("deadline"));
+					h.setIssueteacher(rs.getString("issueteacher"));
+					holist.add(h);
+				}
+			this.destroyQuery();
+			return holist;
+		}
+		
+		public List<homeworkBean> getOwnHomework(String usrid) throws SQLException{
+			this.con();
+			List<homeworkBean> holist=new ArrayList<homeworkBean>();
+			String sql_own="select * from homework where id = '"+usrid+"'";
+			rs=st.executeQuery(sql_own);
+				while(rs.next()){
+					homeworkBean h=new homeworkBean();
+					h.setId(rs.getInt("id"));
+					h.setTitle(rs.getString("title"));
+					h.setIssuetime(rs.getString("issuetime"));
+					h.setDeadline(rs.getString("deadline"));
+					h.setIssueteacher(rs.getString("issueteacher"));
+					holist.add(h);
+				}
+			this.destroyQuery();
+			return holist;
+		}
+		
+		//begin of homework content
+		public List<homeworkAnswerBean> answer(int id,String issueteacher) throws SQLException{
+			String _id=id+"";
+			List<homeworkAnswerBean> holist=new ArrayList<homeworkAnswerBean>();
+
+			//dom����
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    	try {
+	            DocumentBuilder db = dbf.newDocumentBuilder();
+	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+	            		+ "usr//homework_answer_content//"+issueteacher+".xml");
+	            NodeList titles = doc.getElementsByTagName("title");
+	            for(int i=0;i<titles.getLength();i++){
+	            	if(titles.item(i).getAttributes().toString()==_id){
+	            		NodeList answers=doc.getElementsByTagName("answer");
+	            		for(int k=0;k<answers.getLength();k++){
+	            			Node answer=answers.item(k);
+	            			homeworkAnswerBean ha=new homeworkAnswerBean();
+	            			ha.setAusr(answer.getChildNodes().item(0).toString());
+	            			ha.setAtime(answer.getChildNodes().item(1).toString());
+	            			ha.setAcontent(answer.getChildNodes().item(2).toString());
+	            			ha.setAremark(answer.getChildNodes().item(4).toString());
+	            			holist.add(ha);
+	            		}
+	            	}
+	            }
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
+			return holist;
+		}
+		
+		public String getHomeworkTitle(int id) throws SQLException{
+			this.con();
+			String title="";
+			String sql_ho_title="select title from homework where id = "+id+"";
+			rs=st.executeQuery(sql_ho_title);
+			while(rs.next()){
+				title=rs.getString("title");
+			}
+			this.destroyQuery();
+			return title;
+		}
+		
+		public String getHomeworkIssueTeacher(int id) throws SQLException{
+			this.con();
+			String issueteacher="";
+			String sql_ho_issueteacher="select issueteacher from homework where id = "+id+"";
+			rs=st.executeQuery(sql_ho_issueteacher);
+			while(rs.next()){
+				issueteacher=rs.getString("issueteacher");
+			}
+			this.destroyQuery();
+			return issueteacher;
+		}
+		
+		public String getHomeworkContent(int id,String issueteacher){
+			String _id=id+"";
+			String content_="";
+
+			//dom����
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    	try {
+	            DocumentBuilder db = dbf.newDocumentBuilder();
+	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+	            		+ "usr//homework_answer_content//"+issueteacher+".xml");
+	            NodeList titles = doc.getElementsByTagName("title");
+	            for(int i=0;i<titles.getLength();i++){
+	            	if(titles.item(i).getAttributes().toString()==_id){
+	            		Node content=titles.item(i).getChildNodes().item(0);
+	            		content_=content.getTextContent().toString();
+	            	}
+	            }
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
+			return content_;
+		}
+		//end of homework content
+		
+		public void insertTeacherRemark(){
+			
 		}
 }

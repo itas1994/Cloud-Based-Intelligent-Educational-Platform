@@ -59,5 +59,15 @@
 		<action name="GroupedAction" class="action.groupedAction">
 			<result name="suc">group/grouped.jsp</result>
 		</action>
+		<action name="HomeworkAction" class="action.homework.HomeworkAction">
+			<result name="student">homeworkZone/S_homeworkhost.jsp</result>
+			<result name="teacher">homeworkZone/T_homeworkhost.jsp</result>
+		</action>
+		<action name="homeworkContentAction" class="action.homework.homeworkContentAction">
+			<result name="success">homeworkZone/T_homeworkcontent.jsp</result>
+		</action>
+		<action name="homeworkRemarkAction" class="action.homework.homeworkRemarkAction">
+			<result name="success">homeworkZone/T_homeworkcontent.jsp</result>
+		</action>
 	</package>
 </struts>    

@@ -21,7 +21,7 @@ public class ContentAction extends ActionSupport {
 	public ArrayList getRelist(){
 		return relist;
 	}
-	public void setRelist(ArrayList relist){ 
+	public void setRelist(ArrayList relist){
 		this.relist=relist;
 	}
 

@@ -1,4 +1,4 @@
-*{
+﻿*{
 	margin:0px;
 	padding:0px;
 	border:0px;
@@ -46,7 +46,7 @@ img.pic{
 	width:100px;
 	height:100px;
 }
-#resource{
+#homework{
 	width:100%;
 	background-color:C5C1AA;
 	padding-top:1px;
@@ -80,11 +80,6 @@ img.pic{
 	font-weight:bold;
 	color:2E8B57;
 	font-size:25px;
-}
-#contentlabel{
-	font-size:20;
-	font-family:youyuan;
-	margin-left:40px;
 }
 #search_text{
 	height:25px;
@@ -128,7 +123,7 @@ input.btn:active {
 	
 	color: #000000;
 }
-#ziyuanqu{
+#zuoyequ{
 	position:absolute;
 	margin-left:0.5%;
 	margin-top:1.5%;

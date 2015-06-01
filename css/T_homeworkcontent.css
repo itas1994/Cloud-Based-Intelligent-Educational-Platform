@@ -1,10 +1,11 @@
-*{
+﻿*{
 	margin:0px;
 	padding:0px;
 	border:0px;
 }
 html{
 	background-color:#FFEC8B;
+	background-image:url(/Cloud-Based-Intelligent-Educational-Platform/image/context.jpg);
 }
 #main{	
 	background-color:#FFFFFF;
@@ -26,33 +27,64 @@ html{
 }
 #mainlink{
 	position:absolute;
-	left:567px;
+	left:850px;
 	top:73px;
 	display:inline;
 }
-#form1{
-	width:241px;
-	display:inline;
-}
-#picwall{
-	width:99%;
-	background-color:#EAEAEA;
-	margin-left:auto;
-	margin-right:auto;
-	padding-top:5px;
-	padding-bottom:5px;
+#search_text{
+	height:25px;
+	border:solid 1px;
+	border-color:#FFa07a;
 }
 img.pic{
 	width:100px;
 	height:100px;
 }
-#resource{
+#resultpanel{
 	width:100%;
+	height:83.3%;
 	background-color:C5C1AA;
 	padding-top:1px;
-	padding-bottom:1px;
 }
-#searchresult{
+#titlestar{
+	color:2E8B57;
+	font-size:20px;
+	font-weight:bold;
+	margin-left:10px;
+	margin-top:10px;
+}
+#titlelabel{
+	color:2E8B57;
+	font-family:张海山锐线体简;
+	font-size:25px;
+	font-weight:bold;
+	margin-left:10px;
+	margin-top:10px;
+}
+#contentlabel{
+	color:2E8B57;
+	font-family:张海山锐线体简;
+	font-size:25px;
+	font-weight:bold;
+	margin-left:10px;
+	margin-top:10px;
+}
+#id{
+	display:none;
+}
+#answertextarea{
+	border:solid 1px #FFa07a;
+	overflow:none;
+	resize:none;
+	width:98%;
+	margin-left:10px;
+	margin-bottom:10px;
+}
+#submitanswer{
+	margin-bottom:10px;
+	margin-left:44.5%;
+}
+#answerresult{
 	width:98%;
 	background-color:#EEEEE0;
 	margin-top:10px;
@@ -60,44 +92,26 @@ img.pic{
 	margin-left:auto;
 	margin-right:auto;
 }
-#title{
-	width:99%;
-	overflow:none;
-	border:none;
-	font-size:12;
-	margin-top:5px;
-	margin-left:auto;
-	margin-right:auto;
-}
-#titlelabel{
-	color:2E8B57;
-	margin-left:10px;
-	margin-top:5px;
-}
-#a_title{
-	text-decoration:none;
+#ausr{
 	font-family:张海山锐线体简;
 	font-weight:bold;
 	color:2E8B57;
 	font-size:25px;
 }
-#contentlabel{
+#atime{
+	float:right;
+	font-size:10px;
+	height:22px;
+	width:99%;
+}
+#acontent{
 	font-size:20;
 	font-family:youyuan;
 	margin-left:40px;
 }
-#search_text{
-	height:25px;
-	border:solid 1px;
-	border-color:#FFa07a;
-}
-#info{
-	width:99%;
-	height:22px;
-}
-label.info{
-	float:right;
-	font-size:10px;
+#backhomework{
+	margin-bottom:10px;
+	margin-left:44%;
 }
 input.btn{
 	display: inline-block;
@@ -128,7 +142,7 @@ input.btn:active {
 	
 	color: #000000;
 }
-#ziyuanqu{
+#zuoyequ{
 	position:absolute;
 	margin-left:0.5%;
 	margin-top:1.5%;

@@ -63,13 +63,13 @@ public class UploadAction extends ActionSupport {
         }  
         fi.close();  
         os.close();  
-        //Êý¾Ý¿â²Ù×÷
+        //ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½
         String size=null;
         int s=0;
         HttpServletRequest request = ServletActionContext.getRequest();
         String content=request.getParameter("content");
         String title=request.getParameter("title");
-        String location="usr/"+name;
+        String location="usr/resource_file/"+name;
         s=(int) this.upload.length();
         if(s<1024){
         	size=s+"B";
