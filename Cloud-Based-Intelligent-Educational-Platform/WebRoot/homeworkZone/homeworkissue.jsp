@@ -38,14 +38,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      	</div>
      </div>
      <div id="issue">
-    	<form id="form2" action="IssueAction!execute.action" method="post">
-     		<label class="issue_info">讨论标题: </label><textarea id="title" name="title" cols="54" rows="1"></textarea><br><br>
-     		<label class="issue_info">讨论内容:</label>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
+    	<form id="form2" action="homeworkIssueAction!execute.action" method="post">
+     		<label class="issue_info">作业标题: </label><textarea id="title" name="title" cols="54" rows="1"></textarea><br><br>
+     		<label class="issue_info">作业内容:</label>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
      		<textarea id="content" name="content" cols="64" rows="12"></textarea><br><br>
+     		<label class="issue_info">截止日期:</label>
+     		<textarea id="deadline" name="deadline" cols="54" rows="1"></textarea><br><br>
      		<input class="btn" id="submitissue" type="submit" value="确认发布" />
     	</form><br>
-    	<input class="btn" id="backresource" type="button" value="返回讨论区"
-     							onclick="window.location.href='DebateAction!execute.action'"/>
+    	<input class="btn" id="backhomework" type="button" value="返回作业区"
+     							onclick="window.location.href='HomeworkAction!execute.action'"/>
     </div>
     </div>
   </body>

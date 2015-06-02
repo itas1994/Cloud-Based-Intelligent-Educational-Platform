@@ -69,5 +69,11 @@
 		<action name="homeworkRemarkAction" class="action.homework.homeworkRemarkAction">
 			<result name="success">homeworkZone/T_homeworkcontent.jsp</result>
 		</action>
+		<action name="homeworkIssueAction" class="action.homework.homeworkIssueAction">
+			<result name="success">homeworkZone/T_homeworkhost.jsp</result>
+		</action>
+		<action name="homeworkAnswerAction" class="action.homework.homeworkAnswerAction">
+			<result name="success">homeworkZone/S_homeworkcontent.jsp</result>
+		</action>
 	</package>
 </struts>    

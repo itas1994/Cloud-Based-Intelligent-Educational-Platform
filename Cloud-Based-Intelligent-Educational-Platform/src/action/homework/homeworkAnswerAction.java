@@ -9,15 +9,13 @@ import org.apache.struts2.ServletActionContext;
 
 import Dao.Dao;
 
-public class homeworkContentAction {
+public class homeworkAnswerAction {
 	
 	private int id;
 	private String title;
-	private boolean hasMine;
 	private String content;
 	private ArrayList holist;
-	
-	
+
 	public int getId() {
 		return id;
 	}
@@ -48,26 +46,20 @@ public class homeworkContentAction {
 	public void setHolist(ArrayList holist) {
 		this.holist = holist;
 	}
-	
 
-	public boolean isHasMine() {
-		return hasMine;
-	}
-
-	public void setHasMine(boolean hasMine) {
-		this.hasMine = hasMine;
-	}
-	
 	public String execute() throws SQLException{
 		HttpServletRequest rq=ServletActionContext.getRequest();
 		id=Integer.parseInt(rq.getParameter("id"));
+		String acontent=rq.getParameter("acontent");
 		Dao dao=new Dao();
 		title=dao.getHomeworkTitle(id);
 		String issueteacher=dao.getIssueusr(id);
 		String ausr="itas1994";
-		hasMine=dao.isMyAnswer(id, issueteacher, ausr);
+		dao.insertStudentAnswer(id, issueteacher,ausr, acontent);
+		
 		content=dao.getHomeworkContent(id, issueteacher);
 		holist=(ArrayList) dao.answer(id, issueteacher);
 		return "success";
 	}
+
 }

@@ -37,9 +37,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      		<input class="btn" type="button" name="host" value="首页"
      				onclick="window.location.href='host.jsp'" />
      		<input class="btn" type="button" name="host" value="账户"
-     				onclick="window.location.href=''" /> | 
-     		<input class="btn" type="button" name="name" value="发布新作业" 
-     			onclick="window.location.href='homeworkZone/homeworkissue.jsp'"/>
+     				onclick="window.location.href=''" />
      	</div>
      </div>
      <div id="resultpanel">
@@ -48,19 +46,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<label id="titlelabel"><s:property value="title" /></label><br><br>
 			<label id="contentlabel"><s:property value="content" /></label>
 			<label id="id"><s:property value="id" /></label>
-			<!-- id='ausr'取值问题还没有解决 -->
+			<s:if test='<s:property value="hasMine" />== true'>
+				<form id="form2" action="homeworkRemarkAction!execute.action" method="post">
+					<input type="hidden" name="id" value=getId() />
+					<textarea id="atextarea" name="acontent" cols="100" rows="12"></textarea><br>
+					<input class="btn" id="submitanswer" type="submit" value="提交作业评价"/>
+				</form><br>
+			</s:if>
 			<s:iterator value="holist">
 				<label id="ausr"><s:property value="ausr"></s:property> 提交答案:</label><br>
 				<label id="acontent"><s:property value="acontent"></s:property></label><br>
 				<label id="atime">提交时间:<s:property value="atime"></s:property>&nbsp;&nbsp;</label><br><br>
 				<label id="aremark"><s:property value="aremark"></s:property></label><br>
-				<s:if test='<s:property value="aremark" />==NULL'>
-					<form id="form2" action="homeworkRemarkAction!execute.action" method="post">
-						<input type="hidden" name="id" value=getId() />
-						<textarea id="atextarea" name="aremark" cols="100" rows="2"></textarea><br>
-						<input class="btn" id="submitanswer" type="submit" value="提交作业评价"/>
-					</form><br>
-				</s:if>
 			</s:iterator>
 		</div>
 		<input class="btn" id="backhomework" type="button" value="返回作业区"

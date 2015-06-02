@@ -284,7 +284,7 @@ public class Dao {
 			this.con();
 			int id = 0;
 			String _id="";
-			String sql_id="select id from debate where title = '"+title+"'";
+			String sql_id="select id from debate where title = '"+title+"' order by issuetime DESC LIMIT 1";
 			rs=st.executeQuery(sql_id);
 			while(rs.next()){
 				id=rs.getInt("id");
@@ -601,9 +601,140 @@ public class Dao {
 	    	}
 			return content_;
 		}
+		
+		public boolean isMyAnswer(int id,String issueteacher,String ausr){
+			String _id=id+"";
+			boolean hasMine=true;
+			
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    	try {
+	            DocumentBuilder db = dbf.newDocumentBuilder();
+	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+	            		+ "usr//homework_answer_content//"+issueteacher+".xml");
+	            NodeList titles = doc.getElementsByTagName("title");
+	            for(int i=0;i<titles.getLength();i++){
+	            	if(titles.item(i).getAttributes().toString()==_id){
+	            		NodeList answers=titles.item(i).getChildNodes();
+	            		for(int k=0;k<answers.getLength();k++){
+	            			Node answer=answers.item(k);
+	            			if(answer.getChildNodes().item(0).toString()== ausr
+	            					&& answer.getChildNodes().item(2).toString() == "")
+	            				hasMine=false;
+	            		}
+	            	}
+	            }
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
+			return hasMine;
+		}
 		//end of homework content
 		
-		public void insertTeacherRemark(){
+		public void insertTeacherRemark(int id,String issueteacher,String aremark){
+			String _id=id+"";
 			
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    	try {
+	            DocumentBuilder db = dbf.newDocumentBuilder();
+	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+	            		+ "usr//homework_answer_content//"+issueteacher+".xml");
+	            NodeList titles = doc.getElementsByTagName("title");
+	            for(int i=0;i<titles.getLength();i++){
+	            	if(titles.item(i).getAttributes().toString()==_id){
+	            		NodeList answers=doc.getElementsByTagName("answer");
+	            		for(int k=0;k<answers.getLength();k++){
+	            			Node answer=answers.item(k);
+	            			Node _aremark=answer.getChildNodes().item(3);
+	            			_aremark.setNodeValue(aremark);
+	            		}
+	            	}
+	            }
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
+		}
+		
+		/*begin for issue homework*/
+		public void creatNewXml4homework(String issueteacher) throws ParserConfigurationException, TransformerException, SAXException, IOException{
+			String filepath="./usr/homework_answer_content/"+issueteacher+".xml";
+			DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder=factory.newDocumentBuilder();
+			Document doc=builder.newDocument();
+			Element Homeworks=doc.createElement("Homeworks");
+			doc.appendChild(Homeworks);
+			
+			Transformer transformer=TransformerFactory.newInstance().newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8"); 
+			StreamResult fileResult=new StreamResult(new File(filepath));
+			DOMSource source=new DOMSource(doc);
+			transformer.transform(source,fileResult);
+		}
+		
+		public void db4issueHomework(String title,String content,String issueteacher,String deadline) throws SQLException{
+			this.con();
+			String sql_issue="insert homework values(null,'"+title+"','usr/homework_answer_content/"+issueteacher+".xml',"
+					+ "now(),'"+deadline+"','"+issueteacher+"')";
+			st.executeUpdate(sql_issue);
+			this.destroyUpdate();
+		}
+		
+		public void dom4issueHomework(String title,String content,String issueteacher) throws SQLException{
+			this.con();
+			int id = 0;
+			String _id="";
+			String sql_id="select id from homework where title = '"+title+"' order by issuetime DESC LIMIT 1";
+			rs=st.executeQuery(sql_id);
+			while(rs.next()){
+				id=rs.getInt("id");
+			}
+			_id=id+"";
+			this.destroyQuery();
+			
+			//dom�޸�xml
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    	try{
+	            DocumentBuilder db = dbf.newDocumentBuilder();
+	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+	            		+ "usr//homework_answer_content//"+issueteacher+".xml");
+	            if(null==doc){
+	            	creatNewXml(issueteacher);
+	            }
+	            Node homeworks=doc.getElementsByTagName("Homeworks").item(0);
+	            Element ti=doc.createElement("title");//title
+	            ti.appendChild(doc.createTextNode(title));
+	            ti.setAttribute("id", _id);
+	            Element cont=doc.createElement("content");//title--content
+	            cont.appendChild(doc.createTextNode(content));
+	            ti.appendChild(cont);//content->title
+	            homeworks.appendChild(ti);//title->Debates
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
+		}
+		/*end of issue homework*/
+		
+		public void insertStudentAnswer(int id,String issueteacher,String ausr,String acontent){
+			String _id=id+"";
+			
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    	try {
+	            DocumentBuilder db = dbf.newDocumentBuilder();
+	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+	            		+ "usr//homework_answer_content//"+issueteacher+".xml");
+	            NodeList titles = doc.getElementsByTagName("title");
+	            for(int i=0;i<titles.getLength();i++){
+	            	if(titles.item(i).getAttributes().toString()==_id){
+	            		NodeList answers=doc.getElementsByTagName("answer");
+	            		for(int k=0;k<answers.getLength();k++){
+	            			Node answer=answers.item(k);
+	            			if(ausr==answer.getChildNodes().item(0).toString())
+	            				answer.getChildNodes().item(2).setNodeValue(acontent);
+	            		}
+	            	}
+	            }
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
 		}
 }
