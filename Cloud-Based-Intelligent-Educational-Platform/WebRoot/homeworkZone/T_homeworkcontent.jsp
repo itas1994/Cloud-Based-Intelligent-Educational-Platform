@@ -20,12 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="css/T_homeworkcontent.css">
 
   </head>
-  <script language="javascript">
-  		function getId(){
-  			var id=document.getElementsByTagName("id").value();
-  			return id;
-  		}
-  </script>
+  
   <body>
     <div id="main">
    	 <div id="topMenu">
@@ -47,16 +42,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<label id="titlestar">◆</label>
 			<label id="titlelabel"><s:property value="title" /></label><br><br>
 			<label id="contentlabel"><s:property value="content" /></label>
-			<label id="id"><s:property value="id" /></label>
-			<!-- id='ausr'取值问题还没有解决 -->
 			<s:iterator value="holist">
 				<label id="ausr"><s:property value="ausr"></s:property> 提交答案:</label><br>
 				<label id="acontent"><s:property value="acontent"></s:property></label><br>
 				<label id="atime">提交时间:<s:property value="atime"></s:property>&nbsp;&nbsp;</label><br><br>
-				<label id="aremark"><s:property value="aremark"></s:property></label><br>
+				<label id="aremark">教师评语:<s:property value="aremark"></s:property></label><br>
 				<s:if test='<s:property value="aremark" />==NULL'>
 					<form id="form2" action="homeworkRemarkAction!execute.action" method="post">
-						<input type="hidden" name="id" value=getId() />
+						<input type="hidden" name="id" value="<s:property value='id' />" />
+						<input type="hidden" name="ausr" value="<s:property value='ausr' />" />
 						<textarea id="atextarea" name="aremark" cols="100" rows="2"></textarea><br>
 						<input class="btn" id="submitanswer" type="submit" value="提交作业评价"/>
 					</form><br>

@@ -630,7 +630,7 @@ public class Dao {
 		}
 		//end of homework content
 		
-		public void insertTeacherRemark(int id,String issueteacher,String aremark){
+		public void insertTeacherRemark(int id,String issueteacher,String ausr,String aremark){
 			String _id=id+"";
 			
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -644,8 +644,8 @@ public class Dao {
 	            		NodeList answers=doc.getElementsByTagName("answer");
 	            		for(int k=0;k<answers.getLength();k++){
 	            			Node answer=answers.item(k);
-	            			Node _aremark=answer.getChildNodes().item(3);
-	            			_aremark.setNodeValue(aremark);
+	            			if(ausr == answer.getChildNodes().item(0).toString())
+	            				answer.getChildNodes().item(3).setNodeValue(aremark);
 	            		}
 	            	}
 	            }

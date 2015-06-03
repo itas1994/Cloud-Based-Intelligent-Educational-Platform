@@ -50,11 +50,12 @@ public class homeworkRemarkAction {
 	public String execute() throws SQLException{
 		HttpServletRequest rq=ServletActionContext.getRequest();
 		id=Integer.parseInt(rq.getParameter("id"));
+		String ausr=rq.getParameter("ausr");
 		String aremark=rq.getParameter("aremark");
 		Dao dao=new Dao();
 		title=dao.getHomeworkTitle(id);
 		String issueteacher=dao.getIssueusr(id);
-		dao.insertTeacherRemark(id, issueteacher, aremark);
+		dao.insertTeacherRemark(id, issueteacher,ausr,aremark);
 		
 		content=dao.getHomeworkContent(id, issueteacher);
 		holist=(ArrayList) dao.answer(id, issueteacher);
