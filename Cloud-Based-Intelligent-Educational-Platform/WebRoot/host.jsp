@@ -37,7 +37,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<div class="select" onclick="window.location.href='group/grouping.jsp'"><label class="selectlabel">课堂分组</label></div>
     	<div class="select" onclick="window.location.href='ResourceAction!execute.action'"><label class="selectlabel">资源区</label></div>
     	<div class="select" onclick="window.location.href='HomeworkAction!execute.action'"><label class="selectlabel">作业区</label></div>
-    	<div class="select" ><label class="selectlabel">测试区</label></div>
+    	<div class="select" onclick="window.location.href='TestAction!execute.action'"><label class="selectlabel">测试区</label></div>
     	<div class="select" onclick="window.location.href='DebateAction!execute.action'"><label class="selectlabel">讨论区</label></div>
   </body>
 </html>

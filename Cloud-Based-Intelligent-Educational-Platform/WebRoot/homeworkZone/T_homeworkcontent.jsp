@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      	<div id="icon">
      		<img class="icon" src="image/1.jpg" />
      	</div>
-     	<label id="taolunqu">作业区</label>
+     	<label id="zuoyequ">作业区</label>
      	<div id="mainlink">
      		<input class="btn" type="button" name="host" value="首页"
      				onclick="window.location.href='host.jsp'" />

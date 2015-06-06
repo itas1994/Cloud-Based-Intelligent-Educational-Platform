@@ -1,11 +1,14 @@
 package action.homework;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.struts2.ServletActionContext;
+import org.xml.sax.SAXException;
 
 import Dao.Dao;
 
@@ -58,16 +61,23 @@ public class homeworkContentAction {
 		this.hasMine = hasMine;
 	}
 	
-	public String execute() throws SQLException{
+	public String execute() throws SQLException, ParserConfigurationException, SAXException, IOException{
 		HttpServletRequest rq=ServletActionContext.getRequest();
 		id=Integer.parseInt(rq.getParameter("id"));
 		Dao dao=new Dao();
-		title=dao.getHomeworkTitle(id);
-		String issueteacher=dao.getIssueusr(id);
+		String datatable="homework";
+		title=dao.getHOandTETitle(datatable, id);
+		String issueteacher=dao.getHOandTEIssueTeacher(datatable, id);
 		String ausr="itas1994";
-		hasMine=dao.isMyAnswer(id, issueteacher, ausr);
-		content=dao.getHomeworkContent(id, issueteacher);
+		String filename="homework_answer_content";
+		hasMine=dao.isMyAnswer(filename,id, issueteacher, ausr);
+		content=dao.getHOandTEContent(filename, id, issueteacher);
 		holist=(ArrayList) dao.answer(id, issueteacher);
-		return "success";
+		
+		String usrid="t001";
+		String result="";
+		String authority=dao.getAuthority(usrid);
+		
+		return authority;
 	}
 }

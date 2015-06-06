@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<link rel="stylesheet" type="text/css" href="css/T_homeworkhost.css">
+	<link rel="stylesheet" type="text/css" href="css/homeworkhost.css">
 
   </head>
   
@@ -38,13 +38,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      	</div>
      </div>
      <div id="homework">
-     	<s:iterator value="holist">
+     	<s:iterator value="tholist">
 		<div id="searchresult">
 			<label id="titlelabel">◆<a id="a_title" href="homeworkContentAction!execute.action?id=<s:property value="id" />">
 				<s:property value='title' /></a></label><br><br>
 			<div id="info">
 				<label class="info">发布教师:<s:property value="issueteacher"></s:property></label>
-				<label class="info">发布日期:<s:property value="issuetime"></s:property></label>
+				<label class="info">发布日期:<s:property value="issuetime"></s:property>&nbsp;&nbsp;</label>
 				<label class="info">截至日期:<s:property value="deadline"></s:property>&nbsp;&nbsp;</label>
 			</div>
 		</div>

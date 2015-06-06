@@ -1,4 +1,4 @@
-package action.homework;
+package action.test;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,12 +9,12 @@ import org.apache.struts2.ServletActionContext;
 
 import Dao.Dao;
 
-public class homeworkRemarkAction {
+public class testAnswerAction {
 	
 	private int id;
 	private String title;
 	private String content;
-	private ArrayList holist;
+	private ArrayList telist;
 
 	public int getId() {
 		return id;
@@ -39,28 +39,28 @@ public class homeworkRemarkAction {
 		this.content = content;
 	}
 
-	public ArrayList getHolist() {
-		return holist;
+	public ArrayList getTelist() {
+		return telist;
 	}
 
-	public void setHolist(ArrayList holist) {
-		this.holist = holist;
+	public void setTelist(ArrayList telist) {
+		this.telist = telist;
 	}
 
 	public String execute() throws SQLException{
 		HttpServletRequest rq=ServletActionContext.getRequest();
 		id=Integer.parseInt(rq.getParameter("id"));
-		String ausr=rq.getParameter("ausr");
-		String aremark=rq.getParameter("aremark");
+		String acontent=rq.getParameter("acontent");
 		Dao dao=new Dao();
-		String datatable="homework";
+		String datatable="test";
 		title=dao.getHOandTETitle(datatable, id);
-		String issueteacher=dao.getIssueusr(id);
-		String filename="homework_answer_content";
-		dao.insertTeacherRemark(id, issueteacher,ausr,aremark);
+		String issueteacher=dao.getHOandTEIssueTeacher(datatable, id);
+		String ausr="itas1994";
+		String filename="test_answer_content";
+		dao.insertStudentAnswer(filename, id, issueteacher, ausr, acontent);
 		
 		content=dao.getHOandTEContent(filename, id, issueteacher);
-		holist=(ArrayList) dao.answer(id, issueteacher);
+		telist=(ArrayList) dao.answer(id, issueteacher);
 		return "success";
 	}
 

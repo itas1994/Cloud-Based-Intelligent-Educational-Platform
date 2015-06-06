@@ -9,29 +9,37 @@ import Dao.Dao;
 
 public class HomeworkAction {
 		
-	private ArrayList holist;
+	private ArrayList<homeworkBean> sholist;
+	private ArrayList<homeworkBean> tholist;
 	
-	public ArrayList getHolist() {
-		return holist;
+
+	public ArrayList<homeworkBean> getSholist() {
+		return sholist;
 	}
 
-	public void setHolist(ArrayList holist) {
-		this.holist = holist;
+
+	public void setSholist(ArrayList<homeworkBean> sholist) {
+		this.sholist = sholist;
 	}
+
+
+	public ArrayList<homeworkBean> getTholist() {
+		return tholist;
+	}
+
+
+	public void setTholist(ArrayList<homeworkBean> tholist) {
+		this.tholist = tholist;
+	}
+
 
 	public String execute() throws SQLException{
 		String usrid="t001";
-		String result="";
 		Dao dao=new Dao();
 		String authority=dao.getAuthority(usrid);
-		if("s"==authority){
-			holist=(ArrayList) dao.allHomework();
-			result="student";
-		}
-		else if("t" == authority){
-			holist=(ArrayList) dao.getOwnHomework(usrid);
-			result="teacher";
-		}
-		return result;
+		sholist=(ArrayList<homeworkBean>) dao.allHomework();
+		tholist=(ArrayList<homeworkBean>) dao.getOwnHomework(usrid);
+		
+		return authority;
 	}
 }

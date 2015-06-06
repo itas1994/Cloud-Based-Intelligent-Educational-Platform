@@ -10,19 +10,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>发布新作业</title>
+    <title>作业区</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<link rel="stylesheet" type="text/css" href="css/homeworkissue.css">
+	<link rel="stylesheet" type="text/css" href="css/T_testhost.css">
 
   </head>
   
   <body>
-    <div id="main">
+  	<div id="main">
    	 <div id="topMenu">
      	<div id="icon">
      		<img class="icon" src="image/1.jpg" />
@@ -34,21 +34,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      		<input class="btn" type="button" name="host" value="账户"
      				onclick="window.location.href=''" /> | 
      		<input class="btn" type="button" name="name" value="发布新作业" 
-     			onClick="window.location.href='homeworkZone/homeworkissue.jsp'"/>
+     			onclick="window.location.href='testZone/testissue.jsp'"/>
      	</div>
      </div>
-     <div id="issue">
-    	<form id="form2" action="homeworkIssueAction!execute.action" method="post">
-     		<label class="issue_info">作业标题: </label><textarea id="title" name="title" cols="54" rows="1"></textarea><br><br>
-     		<label class="issue_info">作业内容:</label>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
-     		<textarea id="content" name="content" cols="64" rows="12"></textarea><br><br>
-     		<label class="issue_info">截止日期:</label>
-     		<textarea id="deadline" name="deadline" cols="54" rows="1"></textarea><br><br>
-     		<input class="btn" id="submitissue" type="submit" value="确认发布" />
-    	</form><br>
-    	<input class="btn" id="backhomework" type="button" value="返回作业区"
-     							onclick="window.location.href='HomeworkAction!execute.action'"/>
-    </div>
-    </div>
+     <div id="test">
+     	<s:iterator value="telist">
+		<div id="searchresult">
+			<label id="titlelabel">◆<a id="a_title" href="testContentAction!execute.action?id=<s:property value="id" />">
+				<s:property value='title' /></a></label><br><br>
+			<div id="info">
+				<label class="info">发布教师:<s:property value="issueteacher"></s:property></label>
+				<label class="info">发布日期:<s:property value="issuetime"></s:property></label>
+			</div>
+		</div>
+		</s:iterator>
+     </div>
+	 </div>
   </body>
 </html>

@@ -1,4 +1,4 @@
-package action.homework;
+package action.test;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,13 +9,14 @@ import org.apache.struts2.ServletActionContext;
 
 import Dao.Dao;
 
-public class homeworkAnswerAction {
+public class testContentAction {
 	
 	private int id;
 	private String title;
+	private boolean hasMine;
 	private String content;
-	private ArrayList holist;
-
+	private ArrayList telist;
+	
 	public int getId() {
 		return id;
 	}
@@ -39,29 +40,42 @@ public class homeworkAnswerAction {
 		this.content = content;
 	}
 
-	public ArrayList getHolist() {
-		return holist;
+	public boolean isHasMine() {
+		return hasMine;
 	}
 
-	public void setHolist(ArrayList holist) {
-		this.holist = holist;
+	public void setHasMine(boolean hasMine) {
+		this.hasMine = hasMine;
+	}
+	
+	public ArrayList getTelist() {
+		return telist;
 	}
 
+	public void setTelist(ArrayList telist) {
+		this.telist = telist;
+	}
+	
 	public String execute() throws SQLException{
 		HttpServletRequest rq=ServletActionContext.getRequest();
 		id=Integer.parseInt(rq.getParameter("id"));
-		String acontent=rq.getParameter("acontent");
 		Dao dao=new Dao();
-		String datatable="homework";
-		title=dao.getHOandTETitle(datatable, id);
-		String issueteacher=dao.getHOandTEIssueTeacher(datatable, id);
+		title=dao.getTestTitle(id);
+		String issueteacher=dao.getTestIssueTeacher(id);
 		String ausr="itas1994";
-		String filename="homework_answer_content";
-		dao.insertStudentAnswer(filename, id, issueteacher, ausr, acontent);
-		
+		String filename="test_answer_content";
+		hasMine=dao.isMyAnswer(filename,id, issueteacher, ausr);
 		content=dao.getHOandTEContent(filename, id, issueteacher);
-		holist=(ArrayList) dao.answer(id, issueteacher);
-		return "success";
+		telist=(ArrayList) dao.answer(id, issueteacher);
+		
+		String usrid="t001";
+		String result="";
+		String authority=dao.getAuthority(usrid);
+		if("s"==authority)
+			result= "student";
+		else if("t"==authority)
+			result="teacher";
+		
+		return result;
 	}
-
 }

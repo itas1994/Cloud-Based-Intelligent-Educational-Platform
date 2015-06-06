@@ -60,20 +60,32 @@
 			<result name="suc">group/grouped.jsp</result>
 		</action>
 		<action name="HomeworkAction" class="action.homework.HomeworkAction">
-			<result name="student">homeworkZone/S_homeworkhost.jsp</result>
-			<result name="teacher">homeworkZone/T_homeworkhost.jsp</result>
+			<result name="s">homeworkZone/S_homeworkhost.jsp</result>
+			<result name="t">homeworkZone/T_homeworkhost.jsp</result>
 		</action>
 		<action name="homeworkContentAction" class="action.homework.homeworkContentAction">
-			<result name="success">homeworkZone/T_homeworkcontent.jsp</result>
+			<result name="s">homeworkZone/S_homeworkcontent.jsp</result>
+			<result name="t">homeworkZone/T_homeworkcontent.jsp</result>
 		</action>
 		<action name="homeworkRemarkAction" class="action.homework.homeworkRemarkAction">
 			<result name="success">homeworkZone/T_homeworkcontent.jsp</result>
 		</action>
 		<action name="homeworkIssueAction" class="action.homework.homeworkIssueAction">
-			<result name="success">homeworkZone/T_homeworkhost.jsp</result>
+			<result name="success">homeworkZone/issueSucceed.jsp</result>
 		</action>
 		<action name="homeworkAnswerAction" class="action.homework.homeworkAnswerAction">
 			<result name="success">homeworkZone/S_homeworkcontent.jsp</result>
+		</action>
+		<action name="TestAction" class="action.test.TestAction">
+			<result name="student">testZone/testhost.jsp</result>
+			<result name="teacher">testZone/testhost.jsp</result>
+		</action>
+		<action name="testContentAction" class="action.test.testContentAction">
+			<result name="teacher">testZone/T_testcontent.jsp</result>
+			<result name="student">homeworkZone/S_testcontent.jsp</result>
+		</action>
+		<action name="testIssueAction" class="action.test.testIssueAction">
+			<result name="success">testZone/testhost.jsp</result>
 		</action>
 	</package>
 </struts>    
