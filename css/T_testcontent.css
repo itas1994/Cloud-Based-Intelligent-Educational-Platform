@@ -84,7 +84,7 @@ img.pic{
 	margin-bottom:10px;
 	margin-left:44.5%;
 }
-#answerresult,#homeworkresult{
+#testresult,#answerresult{
 	width:98%;
 	background-color:#EEEEE0;
 	margin-top:10px;
@@ -109,7 +109,7 @@ img.pic{
 	font-family:youyuan;
 	margin-left:40px;
 }
-#backhomework{
+#backtest{
 	margin-bottom:10px;
 	margin-left:44%;
 }
@@ -142,7 +142,7 @@ input.btn:active {
 	
 	color: #000000;
 }
-#zuoyequ{
+#ceshiqu{
 	position:absolute;
 	margin-left:0.5%;
 	margin-top:1.5%;

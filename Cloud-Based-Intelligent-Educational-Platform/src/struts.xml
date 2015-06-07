@@ -44,9 +44,8 @@
 			<result name="success">/debateZone/debatecontent.jsp</result>
 		</action>
 		<action name="IssueAction" class="action.debate.IssueAction">
-			<result name="success">/debateZone/debateissue.jsp</result>
+			<result name="success">/debateZone/issueSucceed.jsp</result>
 		</action>
-		
 		<action name="DmAction" class="action.DmAction">
 			<result name="dmsuc">dmZone/dmsuc.jsp</result>
 		</action>
@@ -77,15 +76,15 @@
 			<result name="success">homeworkZone/S_homeworkcontent.jsp</result>
 		</action>
 		<action name="TestAction" class="action.test.TestAction">
-			<result name="student">testZone/testhost.jsp</result>
-			<result name="teacher">testZone/testhost.jsp</result>
+			<result name="s">testZone/S_testhost.jsp</result>
+			<result name="t">testZone/T_testhost.jsp</result>
 		</action>
 		<action name="testContentAction" class="action.test.testContentAction">
-			<result name="teacher">testZone/T_testcontent.jsp</result>
-			<result name="student">homeworkZone/S_testcontent.jsp</result>
+			<result name="t">testZone/T_testcontent.jsp</result>
+			<result name="s">homeworkZone/S_testcontent.jsp</result>
 		</action>
 		<action name="testIssueAction" class="action.test.testIssueAction">
-			<result name="success">testZone/testhost.jsp</result>
+			<result name="success">testZone/issueSucceed.jsp</result>
 		</action>
 	</package>
 </struts>    

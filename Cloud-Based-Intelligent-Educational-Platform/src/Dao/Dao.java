@@ -206,7 +206,7 @@ public class Dao {
 			return delist;
 		}
 		
-		public List<debateReplyBean> getDebateContent(int id,String issueusr) throws SQLException{
+		public List<debateReplyBean> getDebateReply(int id,String issueusr) throws SQLException{
 			this.con();
 			List<debateReplyBean> delist=new ArrayList<debateReplyBean>();
 			String title="";
@@ -224,17 +224,18 @@ public class Dao {
 	            DocumentBuilder db = dbf.newDocumentBuilder();
 	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
 	            		+ "usr//debate_reply_content//"+issueusr+".xml");
-	            NodeList titles = doc.getElementsByTagName("title");
-	            for(int i=0;i<titles.getLength();i++){
-	            	if(titles.item(i).getNodeValue()==title && 
-	            			titles.item(i).getAttributes().toString()==_id){
+	            NodeList debate = doc.getElementsByTagName("debate");
+	            for(int i=0;i<debate.getLength();i++){
+	            	if(debate.item(i).getTextContent().equals(title) && 
+	            					debate.item(i).getAttributes().getNamedItem("id")
+	            								.getNodeValue().toString().equals(_id)){
 	            		NodeList replies=doc.getElementsByTagName("reply");
 	            		for(int k=0;k<replies.getLength();k++){
 	            			Node reply=replies.item(k);
 	            			debateReplyBean dr=new debateReplyBean();
-	            			dr.setReplyusr(reply.getChildNodes().item(0).toString());
-	            			dr.setReplytime(reply.getChildNodes().item(1).toString());
-	            			dr.setReplycontent(reply.getChildNodes().item(2).toString());
+	            			dr.setReplyusr(reply.getChildNodes().item(0).getNodeValue().toString());
+	            			dr.setReplytime(reply.getChildNodes().item(1).getNodeValue().toString());
+	            			dr.setReplycontent(reply.getChildNodes().item(2).getNodeValue().toString());
 	            			delist.add(dr);
 	            		}
 	            	}
@@ -243,6 +244,35 @@ public class Dao {
 	    		e.printStackTrace();
 	    	}
 			return delist;
+		}
+		
+		public String getDebateContent(int id,String issueusr) throws 
+				SQLException, ParserConfigurationException, SAXException, IOException{
+			this.con();
+			String content="";
+			String title="";
+			String _id=id+"";
+			String sql_debate_title="select title from debate where id="+_id;
+			rs=st.executeQuery(sql_debate_title);
+			while(rs.next()){
+				title=rs.getString("title");
+			}
+			this.destroyQuery();
+			
+			//dom����
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+            		+ "usr//debate_reply_content//"+issueusr+".xml");
+            NodeList debate = doc.getElementsByTagName("debate");
+            for(int i=0;i<debate.getLength();i++){
+            	if(debate.item(i).getChildNodes().item(0).getTextContent().equals(title) && 
+            					debate.item(i).getChildNodes().item(0).getAttributes().getNamedItem("id")
+            								.getNodeValue().toString().equals(_id)){
+            		content=debate.item(i).getChildNodes().item(1).getTextContent();
+            	}
+            }    
+			return content;
 		}
 		
 		public String getDebateTitle(int id) throws SQLException{
@@ -259,7 +289,8 @@ public class Dao {
 		
 		/*begin for issue*/
 		public void creatNewXml(String usrid) throws ParserConfigurationException, TransformerException, SAXException, IOException{
-			String filepath="./usr/debate_reply_content/"+usrid+".xml";
+			String filepath="D://apache-tomcat-6.0.29/webapps//Cloud-Based-Intelligent-Educational-Platform"
+					+ "//usr//debate_reply_content//"+usrid+".xml";
 			DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder=factory.newDocumentBuilder();
 			Document doc=builder.newDocument();
@@ -276,7 +307,7 @@ public class Dao {
 		
 		public void db4issue(String title,String content,String usrid) throws SQLException{
 			this.con();
-			String sql_issue="insert debate values(null,'"+title+"','usr/debate_reply_content/"+usrid+".xml',"
+			String sql_issue="insert into debate values(null,'"+title+"','usr/debate_reply_content/"+usrid+".xml',"
 					+ "now(),0,'"+usrid+"')";
 			st.executeUpdate(sql_issue);
 			this.destroyUpdate();
@@ -296,21 +327,26 @@ public class Dao {
 			
 			//dom�޸�xml
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			String fileName="D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+            		+ "usr//debate_reply_content//"+usrid+".xml";
 	    	try {
 	            DocumentBuilder db = dbf.newDocumentBuilder();
-	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
-	            		+ "usr//debate_reply_content//"+usrid+".xml");
-	            if(null==doc){
-	            	creatNewXml(usrid);
+	            File xml=new File(fileName);
+	            if(false==xml.exists()){
+	            	this.creatNewXml(usrid);
 	            }
+	            Document doc = db.parse(fileName);
 	            Node debates=doc.getElementsByTagName("Debates").item(0);
+	            Element debate=doc.createElement("debate");
 	            Element ti=doc.createElement("title");//title
-	            ti.appendChild(doc.createTextNode(title));
 	            ti.setAttribute("id", _id);
+	            ti.setTextContent(title);
 	            Element cont=doc.createElement("content");//title--content
-	            cont.appendChild(doc.createTextNode(content));
-	            ti.appendChild(cont);//content->title
-	            debates.appendChild(ti);//title->Debates
+	            cont.setTextContent(content);
+	            debate.appendChild(ti);//content->title
+	            debate.appendChild(cont);//title->Debates
+	            debates.appendChild(debate);
+	            this.doc2XmlFile(doc, fileName);
 	    	}catch(Exception e){
 	    		e.printStackTrace();
 	    	}
@@ -526,7 +562,7 @@ public class Dao {
 		}
 		
 		//begin of homework content
-		public List<homeworkAnswerBean> answer(int id,String issueteacher) throws SQLException{
+		public List<homeworkAnswerBean> answer4Homework(int id,String issueteacher) throws SQLException{
 			String _id=id+"";
 			List<homeworkAnswerBean> holist=new ArrayList<homeworkAnswerBean>();
 
@@ -582,7 +618,7 @@ public class Dao {
 			return issueteacher;
 		}
 		
-		public String getHOandTEContent(String filename,int id,String issueteacher) 
+		public String getHomeworkContent(int id,String issueteacher) 
 				throws ParserConfigurationException, SAXException, IOException{
 			String _id=id+"";
 			String content="";
@@ -591,7 +627,7 @@ public class Dao {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
-            		+ "usr//"+filename+"//"+issueteacher+".xml");
+            		+ "usr//homework_answer_content//"+issueteacher+".xml");
             NodeList homework = doc.getElementsByTagName("homework");
             for(int i=0;i<homework.getLength();i++){
             	Node title=homework.item(i).getChildNodes().item(0);
@@ -604,7 +640,7 @@ public class Dao {
             return content;
 		}
 		
-		public boolean isMyAnswer(String filename,int id,String issueteacher,String ausr){
+		public boolean isMyAnswer4Homework(String filename,int id,String issueteacher,String ausr){
 			String _id=id+"";
 			boolean hasMine=true;
 			
@@ -849,5 +885,150 @@ public class Dao {
 	    		e.printStackTrace();
 	    	}
 			return telist;
+		}
+		
+		//begin of issue test
+		public void creatNewXml4Test(String issueteacher) throws ParserConfigurationException, TransformerException, SAXException, IOException{
+			String filepath="D://apache-tomcat-6.0.29/webapps//Cloud-Based-Intelligent-Educational-Platform"
+					+ "//usr/test_answer_content//"+issueteacher+".xml";
+			DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder=factory.newDocumentBuilder();
+			Document doc=builder.newDocument();
+			Element Homeworks=doc.createElement("Tests");
+			doc.appendChild(Homeworks);
+			
+			Transformer transformer=TransformerFactory.newInstance().newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8"); 
+			StreamResult fileResult=new StreamResult(new File(filepath));
+			DOMSource source=new DOMSource(doc);
+			transformer.transform(source,fileResult);
+		}
+		
+		public void db4issueTest(String title,String content,String issueteacher,String limittime) throws SQLException{
+			this.con();
+			String sql_issue="insert into test values(null,'"+title+"','usr/test_answer_content/"+issueteacher+".xml',"
+					+ "now(),'"+limittime+"','"+issueteacher+"')";
+			st.executeUpdate(sql_issue);
+			this.destroyUpdate();
+		}
+		
+		public void dom4issueTest(String title,String content,String issueteacher) throws SQLException{
+			this.con();
+			int id = 0;
+			String _id="";
+			String sql_id="select id from test where title = '"+title+"' order by issuetime DESC LIMIT 1";
+			rs=st.executeQuery(sql_id);
+			while(rs.next()){
+				id=rs.getInt("id");
+			}
+			_id=id+"";
+			this.destroyQuery();
+			
+			//dom�޸�xml
+			String fileName="D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+            		+ "usr//test_answer_content//"+issueteacher+".xml";
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    	try{
+	            DocumentBuilder db = dbf.newDocumentBuilder();
+	            File xml=new File(fileName);
+	            if(false==xml.exists()){
+	            	this.creatNewXml4Test(issueteacher);
+	            }
+	            Document doc = db.parse(fileName);
+	            Node tests=doc.getElementsByTagName("Tests").item(0);
+	            Element test=doc.createElement("test");
+	            Element ti=doc.createElement("title");//title
+	            ti.setTextContent(title);
+	            ti.setAttribute("id", _id);
+	            Element cont=doc.createElement("content");//title--content
+	            cont.setTextContent(content);
+	            test.appendChild(ti);//title->Debates
+	            test.appendChild(cont);
+	            tests.appendChild(test);
+	            this.doc2XmlFile(doc, fileName);
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
+		}
+		//end of issue test
+		
+		public boolean isMyAnswer4Test(String filename,int id,String issueteacher,String ausr){
+			String _id=id+"";
+			boolean hasMine=true;
+			
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    	try {
+	            DocumentBuilder db = dbf.newDocumentBuilder();
+	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+	            		+ "usr//"+filename+"//"+issueteacher+".xml");
+	            NodeList test = doc.getElementsByTagName("test");
+	            for(int i=0;i<test.getLength();i++){
+	            	Node title=test.item(i).getChildNodes().item(0);
+	            	if(title.getAttributes().toString()==_id){
+	            		Node answer=test.item(i).getChildNodes().item(2);
+	            		if(answer.getChildNodes().item(0).toString()== ausr
+	            					&& answer.getChildNodes().item(2).toString() == "")
+	            				hasMine=false;
+	            	}
+	            }
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
+			return hasMine;
+		}
+		
+		public List<testAnswerBean> answer4Test(int id,String issueteacher) throws SQLException{
+			String _id=id+"";
+			List<testAnswerBean> telist=new ArrayList<testAnswerBean>();
+
+			//dom����
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    	try {
+	            DocumentBuilder db = dbf.newDocumentBuilder();
+	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+	            		+ "usr//test_answer_content//"+issueteacher+".xml");
+	            NodeList homework = doc.getElementsByTagName("test");
+	            for(int i=0;i<homework.getLength();i++){
+	            	Node title=homework.item(i).getChildNodes().item(0);
+	            	if(title.getAttributes().toString()==_id){
+	            		NodeList answers=doc.getElementsByTagName("answer");
+	            		for(int k=0;k<answers.getLength();k++){
+	            			Node answer=answers.item(k);
+	            			testAnswerBean te=new testAnswerBean();
+	            			te.setAusr(answer.getChildNodes().item(0).toString());
+	            			te.setAtime(answer.getChildNodes().item(1).toString());
+	            			te.setAcontent(answer.getChildNodes().item(2).toString());
+	            			te.setAscore(answer.getChildNodes().item(4).toString());
+	            			telist.add(te);
+	            		}
+	            	}
+	            }
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
+			return telist;
+		}
+		
+		public String getTestContent(int id,String issueteacher) 
+				throws ParserConfigurationException, SAXException, IOException{
+			String _id=id+"";
+			String content="";
+
+			//dom����
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+            		+ "usr//test_answer_content//"+issueteacher+".xml");
+            NodeList homework = doc.getElementsByTagName("test");
+            for(int i=0;i<homework.getLength();i++){
+            	Node title=homework.item(i).getChildNodes().item(0);
+            	if(title.getAttributes().getNamedItem("id").getNodeValue().equals(_id)){
+            		Node cont=homework.item(i).getChildNodes().item(1);
+            		content=cont.getTextContent().toString();
+            	}
+            }    
+	    	
+            return content;
 		}
 }

@@ -15,12 +15,12 @@ public class testIssueAction {
 		HttpServletRequest rq=ServletActionContext.getRequest();
 		String title=rq.getParameter("title");
 		String content=rq.getParameter("content");
-		String deadline=rq.getParameter("deadline");//
-		//limittime的输入方式还没有定
+		String limittime=rq.getParameter("limittime");//
+		//limittime的输入方式为输入分钟
 		String issueteacher="t001";
 		Dao dao=new Dao();
-		dao.db4issueHomework(title, content, issueteacher, deadline);
-		dao.dom4issueHomework(title, content, issueteacher);
+		dao.db4issueTest(title, content, issueteacher, limittime);
+		dao.dom4issueTest(title, content, issueteacher);
 		return "success";
 	}
 }

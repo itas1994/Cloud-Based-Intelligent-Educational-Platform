@@ -1,11 +1,14 @@
 package action.test;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.struts2.ServletActionContext;
+import org.xml.sax.SAXException;
 
 import Dao.Dao;
 
@@ -56,7 +59,7 @@ public class testContentAction {
 		this.telist = telist;
 	}
 	
-	public String execute() throws SQLException{
+	public String execute() throws SQLException, ParserConfigurationException, SAXException, IOException{
 		HttpServletRequest rq=ServletActionContext.getRequest();
 		id=Integer.parseInt(rq.getParameter("id"));
 		Dao dao=new Dao();
@@ -64,18 +67,14 @@ public class testContentAction {
 		String issueteacher=dao.getTestIssueTeacher(id);
 		String ausr="itas1994";
 		String filename="test_answer_content";
-		hasMine=dao.isMyAnswer(filename,id, issueteacher, ausr);
-		content=dao.getHOandTEContent(filename, id, issueteacher);
-		telist=(ArrayList) dao.answer(id, issueteacher);
+		hasMine=dao.isMyAnswer4Test(filename,id, issueteacher, ausr);
+		content=dao.getTestContent(id, issueteacher);
+		telist=(ArrayList) dao.answer4Test(id, issueteacher);
 		
 		String usrid="t001";
 		String result="";
 		String authority=dao.getAuthority(usrid);
-		if("s"==authority)
-			result= "student";
-		else if("t"==authority)
-			result="teacher";
 		
-		return result;
+		return authority;
 	}
 }

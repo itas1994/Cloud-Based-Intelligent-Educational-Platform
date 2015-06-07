@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>作业发布成功</title>
+    <title>My JSP 'issueSucceed.jsp' starting page</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -22,8 +22,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
     <script>
-  		alert("作业发布成功！");
-  		window.location.href="HomeworkAction!execute.action";
+  		alert("测试发布成功！");
+  		window.location.href="TestAction!execute.action";
   	</script>
   </body>
 </html>

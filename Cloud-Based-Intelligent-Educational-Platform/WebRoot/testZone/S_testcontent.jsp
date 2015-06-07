@@ -60,7 +60,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<label id="ascore"><s:property value="ascore"></s:property></label><br>
 			</s:iterator>
 		</div>
-		<input class="btn" id="backtest" type="button" value="返回作业区"
+		<input class="btn" id="backtest" type="button" value="返回测试区"
      			onclick="window.location.href='TestAction!execute.action'"/>
      </div>
     </div>

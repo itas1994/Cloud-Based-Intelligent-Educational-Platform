@@ -44,7 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      		<textarea id="content" name="content" cols="64" rows="12"></textarea><br><br>
      		<input class="btn" id="submitissue" type="submit" value="确认发布" />
     	</form><br>
-    	<input class="btn" id="backresource" type="button" value="返回讨论区"
+    	<input class="btn" id="backdebate" type="button" value="返回讨论区"
      							onclick="window.location.href='DebateAction!execute.action'"/>
     </div>
     </div>

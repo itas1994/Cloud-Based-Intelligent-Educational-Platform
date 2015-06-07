@@ -47,23 +47,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      	</div>
      </div>
      <div id="resultpanel">
-		<div id="debateresult"	>
+		<div id="debateresult">
 			<label id="titlestar">◆</label>
-			<label id="titlelabel"><s:property value='title' /></label><br><br>
+			<label id="titlelabel"><s:property value='title' /></label><br>
+			<label id="contentlabel"><s:property value='content' /></label><br><br>
 			<label id="id"><s:property value="id" /></label>
-			<form id="form2" action="debateReplyAction!execute.action" method="post">
-				<input type="hidden" name="title" value=getTitle() />
-				<input type="hidden" name="id" value=getId() />
-				<textarea id="replytextarea" name="replycontent" cols="100" rows="15"></textarea><br>
-				<input class="btn" id="submitreply" type="submit" value="提交回复"/>
-			</form><br>
+			
 			<s:iterator value="delist">
 				<label id="replyusr"><s:property value="replyusr"></s:property> 回复:</label><br>
 				<label id="replycontent"><s:property value="replycontent"></s:property></label><br>
 				<label id="replytime">回复时间:<s:property value="replytime"></s:property>&nbsp;&nbsp;</label>
 			</s:iterator>
 		</div>
-		<input class="btn" id="backresource" type="button" value="返回讨论区"
+		<div id="form2div">
+			<form id="form2" action="debateReplyAction!execute.action" method="post">
+				<input type="hidden" name="title" value=getTitle() />
+				<input type="hidden" name="id" value=getId() />
+				<textarea id="replytextarea" name="replycontent" cols="100" rows="15"></textarea><br>
+				<input class="btn" id="submitreply" type="submit" value="提交回复"/>
+			</form><br>
+		</div>
+		<input class="btn" id="backdebate" type="button" value="返回讨论区"
      			onclick="window.location.href='DebateAction!execute.action'"/>
      </div>
     </div>

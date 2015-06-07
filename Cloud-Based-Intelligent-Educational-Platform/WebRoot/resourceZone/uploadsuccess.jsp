@@ -20,7 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
   <body>
   		<script>
-  			alert("作业发布成功！");
+  			alert("文件上传成功！");
   			window.location.href="ResourceAction!execute.action";
   		</script>
   </body>

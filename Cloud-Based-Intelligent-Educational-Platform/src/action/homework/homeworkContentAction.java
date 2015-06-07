@@ -70,9 +70,9 @@ public class homeworkContentAction {
 		String issueteacher=dao.getHOandTEIssueTeacher(datatable, id);
 		String ausr="itas1994";
 		String filename="homework_answer_content";
-		hasMine=dao.isMyAnswer(filename,id, issueteacher, ausr);
-		content=dao.getHOandTEContent(filename, id, issueteacher);
-		holist=(ArrayList) dao.answer(id, issueteacher);
+		hasMine=dao.isMyAnswer4Homework(filename,id, issueteacher, ausr);
+		content=dao.getHomeworkContent(id, issueteacher);
+		holist=(ArrayList) dao.answer4Homework(id, issueteacher);
 		
 		String usrid="t001";
 		String result="";

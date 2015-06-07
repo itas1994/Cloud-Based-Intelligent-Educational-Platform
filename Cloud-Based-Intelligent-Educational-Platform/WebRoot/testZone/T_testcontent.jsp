@@ -42,6 +42,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<label id="titlestar">◆</label>
 			<label id="titlelabel"><s:property value="title" /></label><br><br>
 			<label id="contentlabel"><s:property value="content" /></label>
+		</div>
+		<div id="answerresult">
 			<s:iterator value="telist">
 				<label id="ausr"><s:property value="ausr"></s:property> 提交答案:</label><br>
 				<label id="acontent"><s:property value="acontent"></s:property></label><br>

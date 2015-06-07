@@ -1,5 +1,4 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@taglib uri="/struts-tags" prefix="s" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -10,20 +9,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>作业发布成功</title>
+    <title>讨论发布成功</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-
   </head>
-  
+
   <body>
-    <script>
-  		alert("作业发布成功！");
-  		window.location.href="HomeworkAction!execute.action";
-  	</script>
+  		<script>
+  			alert("讨论发布成功！");
+  			window.location.href="DebateAction!execute.action";
+  		</script>
   </body>
 </html>

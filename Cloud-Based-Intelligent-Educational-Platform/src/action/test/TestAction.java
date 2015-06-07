@@ -9,14 +9,23 @@ import Dao.Dao;
 
 public class TestAction {
 		
-	private ArrayList telist;
-	
-	public ArrayList getTelist() {
-		return telist;
+	private ArrayList stelist;
+	private ArrayList ttelist;
+
+	public ArrayList getStelist() {
+		return stelist;
 	}
 
-	public void setTelist(ArrayList telist) {
-		this.telist = telist;
+	public void setStelist(ArrayList stelist) {
+		this.stelist = stelist;
+	}
+
+	public ArrayList getTtelist() {
+		return ttelist;
+	}
+
+	public void setTtelist(ArrayList ttelist) {
+		this.ttelist = ttelist;
 	}
 
 	public String execute() throws SQLException{
@@ -24,14 +33,8 @@ public class TestAction {
 		String result="";
 		Dao dao=new Dao();
 		String authority=dao.getAuthority(usrid);
-		if("s"==authority){
-			telist=(ArrayList) dao.allTest();
-			result="student";
-		}
-		else if("t" == authority){
-			telist=(ArrayList) dao.getOwnHomework(usrid);
-			result="teacher";
-		}
-		return result;
+		stelist=(ArrayList) dao.allTest();
+		ttelist=(ArrayList) dao.getOwnHomework(usrid);
+		return authority;
 	}
 }

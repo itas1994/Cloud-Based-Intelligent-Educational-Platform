@@ -1,11 +1,14 @@
 package action.test;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.struts2.ServletActionContext;
+import org.xml.sax.SAXException;
 
 import Dao.Dao;
 
@@ -47,7 +50,7 @@ public class testAnswerAction {
 		this.telist = telist;
 	}
 
-	public String execute() throws SQLException{
+	public String execute() throws SQLException, ParserConfigurationException, SAXException, IOException{
 		HttpServletRequest rq=ServletActionContext.getRequest();
 		id=Integer.parseInt(rq.getParameter("id"));
 		String acontent=rq.getParameter("acontent");
@@ -59,8 +62,8 @@ public class testAnswerAction {
 		String filename="test_answer_content";
 		dao.insertStudentAnswer(filename, id, issueteacher, ausr, acontent);
 		
-		content=dao.getHOandTEContent(filename, id, issueteacher);
-		telist=(ArrayList) dao.answer(id, issueteacher);
+		content=dao.getTestContent(id, issueteacher);
+		telist=(ArrayList) dao.answer4Test(id, issueteacher);
 		return "success";
 	}
 
