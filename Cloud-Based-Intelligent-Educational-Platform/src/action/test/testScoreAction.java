@@ -59,7 +59,6 @@ public class testScoreAction {
 		String datatable="test";
 		title=dao.getHOandTETitle(datatable, id);
 		String issueteacher=dao.getIssueusr(id);
-		String filename="homework_answer_content";
 		dao.insertTeacherRemark(id, issueteacher,ausr,ascore);
 		
 		content=dao.getTestContent(id, issueteacher);

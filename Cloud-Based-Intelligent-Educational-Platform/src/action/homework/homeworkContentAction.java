@@ -3,12 +3,15 @@ package action.homework;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.struts2.ServletActionContext;
 import org.xml.sax.SAXException;
+
+import com.opensymphony.xwork2.ActionContext;
 
 import Dao.Dao;
 
@@ -68,16 +71,15 @@ public class homeworkContentAction {
 		String datatable="homework";
 		title=dao.getHOandTETitle(datatable, id);
 		String issueteacher=dao.getHOandTEIssueTeacher(datatable, id);
-		String ausr="itas1994";
-		String filename="homework_answer_content";
-		hasMine=dao.isMyAnswer4Homework(filename,id, issueteacher, ausr);
+		
+		Map<String, Object> session = ActionContext.getContext().getSession();
+        String usrid = session.get("USRID").toString(); 
+		
+//		hasMine=dao.isMyAnswer4Homework(id, issueteacher, usrid);//for student
 		content=dao.getHomeworkContent(id, issueteacher);
 		holist=(ArrayList) dao.answer4Homework(id, issueteacher);
-		
-		String usrid="t001";
-		String result="";
+        
 		String authority=dao.getAuthority(usrid);
-		
 		return authority;
 	}
 }

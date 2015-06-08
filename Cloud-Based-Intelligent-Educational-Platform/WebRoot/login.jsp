@@ -21,11 +21,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  		<div id="login">
+  	<div id="login" >
+  		<form action="LoginAction!execute.action" method="post">
   			<label id="idlabel">用户名:</label><input id="id" name="usr" type="text" /><br><br>
-  			<label id="psdlabel">密&nbsp;码:</label><input id="psd" name="psd" type="password"/><br><br>
-  			<input id="submit" name="submit" type="submit" value="登陆"
-  				   onclick="window.location.href='LoginAction!execute.action'"/>
-  		</div>
+ 			<label id="psdlabel">密&nbsp;码:</label><input id="psd" name="psd" type="password"/><br><br>
+  			<input id="submit" name="submit" type="submit" value="登陆" />
+  		</form>
+ 	</div>
   </body>
 </html>

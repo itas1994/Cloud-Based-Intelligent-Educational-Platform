@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      	<label id="suijidianming">随机点名</label>
      	<div id="mainlink">
      		<input class="btn" type="button" name="host" value="首页"
-     				onclick="window.location.href='host.jsp'" />
+     				onclick="window.location.href='backhostAction!execute.action'" />
      		<input class="btn" type="button" name="host" value="账户"
      				onclick="window.location.href=''" />
      	</div>

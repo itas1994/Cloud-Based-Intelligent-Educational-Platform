@@ -3,9 +3,16 @@ package action.resource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.Map;
+
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts2.ServletActionContext;
+
 import Dao.Dao;
+
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 @SuppressWarnings("serial")
@@ -16,6 +23,11 @@ public class UploadAction extends ActionSupport {
     private String uploadFileName;
     private String uploadContentType;
     private String savePath;
+    private Map session;
+    
+    public void setSession(Map session) {
+        this.session = session;
+    }
     
     public String getTitle() {
 		return title;
@@ -70,6 +82,10 @@ public class UploadAction extends ActionSupport {
         String content=request.getParameter("content");
         String title=request.getParameter("title");
         String location="usr/resource_file/"+name;
+        
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        String uploadusr = session.get("USRID").toString(); 
+        
         s=(int) this.upload.length();
         if(s<1024){
         	size=s+"B";
@@ -81,7 +97,7 @@ public class UploadAction extends ActionSupport {
         	size=s+"M";
         }
         Dao dao=new Dao();
-        dao.upload(title,content,size,location,name);
+        dao.upload(title,content,size,location,uploadusr,name);
         return SUCCESS;
     }
 }

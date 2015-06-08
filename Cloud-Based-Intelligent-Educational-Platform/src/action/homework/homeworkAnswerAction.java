@@ -3,12 +3,15 @@ package action.homework;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.struts2.ServletActionContext;
 import org.xml.sax.SAXException;
+
+import com.opensymphony.xwork2.ActionContext;
 
 import Dao.Dao;
 
@@ -58,7 +61,10 @@ public class homeworkAnswerAction {
 		String datatable="homework";
 		title=dao.getHOandTETitle(datatable, id);
 		String issueteacher=dao.getHOandTEIssueTeacher(datatable, id);
-		String ausr="itas1994";
+		
+		Map<String, Object> session = ActionContext.getContext().getSession();
+        String ausr = session.get("USRID").toString(); 
+        
 		String filename="homework_answer_content";
 		dao.insertStudentAnswer(filename, id, issueteacher, ausr, acontent);
 		

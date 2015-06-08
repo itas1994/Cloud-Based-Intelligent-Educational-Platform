@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<link rel="stylesheet" type="text/css" href="css/testhost.css">
+	<link rel="stylesheet" type="text/css" href="css/test/S_testhost.css">
 
   </head>
   
@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      	<label id="ceshiqu">测试区</label>
      	<div id="mainlink">
      		<input class="btn" type="button" name="host" value="首页"
-     				onclick="window.location.href='host.jsp'" />
+     				onclick="window.location.href='backhostAction!execute.action'" />
      		<input class="btn" type="button" name="host" value="账户"
      				onclick="window.location.href=''" />
      	</div>
@@ -42,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<s:property value='title' /></a></label><br><br>
 			<div id="info">
 				<label class="info">发布教师:<s:property value="issueteacher"></s:property></label>
-				<label class="info">发布日期:<s:property value="issuetime"></s:property></label>
+				<label class="info">发布日期:<s:property value="issuetime"></s:property>&nbsp;&nbsp;</label>
 			</div>
 		</div>
 		</s:iterator>

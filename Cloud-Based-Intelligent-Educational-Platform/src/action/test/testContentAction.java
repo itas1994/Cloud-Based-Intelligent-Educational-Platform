@@ -3,12 +3,15 @@ package action.test;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.struts2.ServletActionContext;
 import org.xml.sax.SAXException;
+
+import com.opensymphony.xwork2.ActionContext;
 
 import Dao.Dao;
 
@@ -65,14 +68,14 @@ public class testContentAction {
 		Dao dao=new Dao();
 		title=dao.getTestTitle(id);
 		String issueteacher=dao.getTestIssueTeacher(id);
-		String ausr="itas1994";
-		String filename="test_answer_content";
-		hasMine=dao.isMyAnswer4Test(filename,id, issueteacher, ausr);
+		
+		Map<String, Object> session = ActionContext.getContext().getSession();
+        String usrid = session.get("USRID").toString();
+		
+		hasMine=dao.isMyAnswer4Test(id, issueteacher, usrid);
 		content=dao.getTestContent(id, issueteacher);
 		telist=(ArrayList) dao.answer4Test(id, issueteacher);
 		
-		String usrid="t001";
-		String result="";
 		String authority=dao.getAuthority(usrid);
 		
 		return authority;

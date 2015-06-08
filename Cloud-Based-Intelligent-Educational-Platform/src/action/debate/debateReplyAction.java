@@ -6,11 +6,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 import org.xml.sax.SAXException;
+
+import com.opensymphony.xwork2.ActionContext;
 
 import bean.debateReplyBean;
 import Dao.Dao;
@@ -50,11 +53,14 @@ public class debateReplyAction {
 		HttpServletRequest rq=ServletActionContext.getRequest();
 		title=rq.getParameter("title");
 		id=Integer.parseInt(rq.getParameter("id"));
-		String replyusr="itas1994";
+		String replycontent=rq.getParameter("replycontent");
+		
+		Map<String, Object> session = ActionContext.getContext().getSession();
+        String replyusr = session.get("USRID").toString(); 
+		
 		Date now = new Date();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		String replytime = df.format(now);
-		String replycontent=rq.getParameter("replycontent");
 		
 		Dao dao=new Dao();
 		String issueusr=dao.getIssueusr(id);

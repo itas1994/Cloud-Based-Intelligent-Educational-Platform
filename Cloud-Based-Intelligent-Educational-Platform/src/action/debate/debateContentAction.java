@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.struts2.ServletActionContext;
 import org.xml.sax.SAXException;
+
+import com.opensymphony.xwork2.ActionContext;
 
 import Dao.Dao;
 
@@ -54,8 +57,8 @@ public class debateContentAction {
 	public String execute() throws SQLException, ParserConfigurationException, SAXException, IOException{
 		HttpServletRequest rq=ServletActionContext.getRequest();
 		id=Integer.parseInt(rq.getParameter("id"));
-		String issueusr="itas1994";
 		Dao dao=new Dao();
+		String issueusr=dao.getIssueusr(id);
 		delist=dao.getDebateReply(id, issueusr);
 		title=dao.getDebateTitle(id);
 		content=dao.getDebateContent(id, issueusr);

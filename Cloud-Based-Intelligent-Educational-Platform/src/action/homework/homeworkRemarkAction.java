@@ -59,7 +59,6 @@ public class homeworkRemarkAction {
 		String datatable="homework";
 		title=dao.getHOandTETitle(datatable, id);
 		String issueteacher=dao.getIssueusr(id);
-		String filename="homework_answer_content";
 		dao.insertTeacherRemark(id, issueteacher,ausr,aremark);
 		
 		content=dao.getHomeworkContent(id, issueteacher);

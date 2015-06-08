@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<link rel="stylesheet" type="text/css" href="css/searchfinish.css">
+	<link rel="stylesheet" type="text/css" href="css/resource/searchfinish.css">
   </head>
   <body>
    <div id="main">
@@ -28,7 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      	<label id="ziyuanqu">资源区</label>
      	<div id="mainlink">
      		<input class="btn" type="button" name="host" value="首页"
-     				onclick="window.location.href='host.jsp'" />
+     				onclick="window.location.href='backhostAction!execute.action'" />
      		<input class="btn" type="button" name="host" value="账户"
      				onclick="window.location.href=''" /> | 
      		<form id="form1" action="SearchAction!execute.action" method="post">

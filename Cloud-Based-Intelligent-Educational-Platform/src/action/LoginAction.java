@@ -29,13 +29,20 @@ public class LoginAction extends ActionSupport implements SessionAware{
 		String psd=request.getParameter("psd");
 		Dao dao=new Dao();
 		String r=dao.login(usr,psd);
+		String result="";
 		if(r=="success"){
-			this.session.put(usr,psd);
-			return "success";
+			this.session.put("USRID",usr);
+			String authority=dao.getAuthority(session.get("USRID").toString());
+			if("t".equals(authority))
+				result="t_success";
+			else if("s".equals(authority))
+				result="s_success";
 		}else if(r=="psd_error"){
-			return "psd_error";
+			result="psd_error";
 		}else{
-			return "id_error";
+			result="id_error";
 		}
+		
+		return result;
 	}
 }

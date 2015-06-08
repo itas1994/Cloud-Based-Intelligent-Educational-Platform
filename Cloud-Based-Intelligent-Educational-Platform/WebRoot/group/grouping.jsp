@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      	<label id="ketangfenzu">课堂分组</label>
      	<div id="mainlink">
      		<input class="btn" type="button" name="host" value="首页"
-     				onclick="window.location.href='host.jsp'" />
+     				onclick="window.location.href='backhostAction!execute.action'" />
      		<input class="btn" type="button" name="host" value="账户"
      				onclick="window.location.href=''" />
      	</div>

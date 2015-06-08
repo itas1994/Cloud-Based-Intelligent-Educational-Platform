@@ -104,10 +104,10 @@ public class Dao {
 			return relist;
 		}
 		
-		public void upload(String title,String content,String size,String location,String name) throws SQLException{
+		public void upload(String title,String content,String size,String location,String uploadusr,String name) throws SQLException{
 			this.con();
 			String sql_upload="insert into resourceinfo values(null,'"
-									+title+"','"+size+"',now(),'"+location+"','"+content+"',0,'lizhiwei','"+name+"')";
+									+title+"','"+size+"',now(),'"+location+"','"+content+"',0,'"+uploadusr+"','"+name+"')";
 			st.executeUpdate(sql_upload);
 			this.destroyUpdate();
 		}
@@ -165,25 +165,23 @@ public class Dao {
 		
 		public String login(String usr,String psd) throws SQLException{
 			this.con();
-			String result=null;
-			String sql_login="select psd from usr where id="+usr+"";
+			String result="";
+			String sql_login="select psd from usr where id='"+usr+"'";
 		    rs=st.executeQuery(sql_login);
 		    while(rs.next()){
 				if (rs.getString("psd").equals(psd)) {
 					result = "success";
-					System.out.println("a");
 					break;
 				} else {
 					result = "psd_error";
-					System.out.println("b");
 					break;
 				}
 		    }
-		    if(!rs.next()){
+		    if(rs.equals(null)){
 		    	result="id_error";
-		    	System.out.println("c");
 		    }
 		    this.destroyQuery();
+		    
 		    return result;
 		}
 		
@@ -640,7 +638,7 @@ public class Dao {
             return content;
 		}
 		
-		public boolean isMyAnswer4Homework(String filename,int id,String issueteacher,String ausr){
+		public boolean isMyAnswer4Homework(int id,String issueteacher,String ausr){
 			String _id=id+"";
 			boolean hasMine=true;
 			
@@ -648,14 +646,15 @@ public class Dao {
 	    	try {
 	            DocumentBuilder db = dbf.newDocumentBuilder();
 	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
-	            		+ "usr//"+filename+"//"+issueteacher+".xml");
+	            		+ "usr//homework_answer_content//"+issueteacher+".xml");
 	            NodeList homework = doc.getElementsByTagName("homework");
 	            for(int i=0;i<homework.getLength();i++){
 	            	Node title=homework.item(i).getChildNodes().item(0);
-	            	if(title.getAttributes().toString()==_id){
+	            	if(title.getAttributes().getNamedItem("id").getNodeValue()
+	            			.toString().equals(_id)){
 	            		Node answer=homework.item(i).getChildNodes().item(2);
-	            		if(answer.getChildNodes().item(0).toString()== ausr
-	            					&& answer.getChildNodes().item(2).toString() == "")
+	            		if(answer.getChildNodes().item(0).getTextContent().equals(ausr)
+	            			&& answer.getChildNodes().item(2).getTextContent().equals(""))
 	            				hasMine=false;
 	            	}
 	            }
@@ -779,15 +778,16 @@ public class Dao {
 	    	try {
 	            DocumentBuilder db = dbf.newDocumentBuilder();
 	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
-	            		+ "usr//'"+filename+"'//"+issueteacher+".xml");
+	            		+ "usr//"+filename+"//"+issueteacher+".xml");
 	            NodeList titles = doc.getElementsByTagName("title");
 	            for(int i=0;i<titles.getLength();i++){
-	            	if(titles.item(i).getAttributes().toString()==_id){
+	            	if(titles.item(i).getAttributes().getNamedItem("id")
+	            			.getNodeValue().toString().equals(_id)){
 	            		NodeList answers=doc.getElementsByTagName("answer");
 	            		for(int k=0;k<answers.getLength();k++){
 	            			Node answer=answers.item(k);
-	            			if(ausr==answer.getChildNodes().item(0).toString())
-	            				answer.getChildNodes().item(2).setNodeValue(acontent);
+	            			if(answer.getChildNodes().item(0).getTextContent().equals(ausr))
+	            				answer.getChildNodes().item(2).setTextContent(acontent);;
 	            		}
 	            	}
 	            }
@@ -953,7 +953,7 @@ public class Dao {
 		}
 		//end of issue test
 		
-		public boolean isMyAnswer4Test(String filename,int id,String issueteacher,String ausr){
+		public boolean isMyAnswer4Test(int id,String issueteacher,String ausr){
 			String _id=id+"";
 			boolean hasMine=true;
 			
@@ -961,14 +961,15 @@ public class Dao {
 	    	try {
 	            DocumentBuilder db = dbf.newDocumentBuilder();
 	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
-	            		+ "usr//"+filename+"//"+issueteacher+".xml");
+	            		+ "usr//test_answer_content//"+issueteacher+".xml");
 	            NodeList test = doc.getElementsByTagName("test");
 	            for(int i=0;i<test.getLength();i++){
 	            	Node title=test.item(i).getChildNodes().item(0);
-	            	if(title.getAttributes().toString()==_id){
+	            	if(title.getAttributes().getNamedItem("id")
+	            			.getNodeValue().toString()==_id){
 	            		Node answer=test.item(i).getChildNodes().item(2);
-	            		if(answer.getChildNodes().item(0).toString()== ausr
-	            					&& answer.getChildNodes().item(2).toString() == "")
+	            		if(answer.getChildNodes().item(0).getTextContent().equals(ausr)
+	            			&& answer.getChildNodes().item(2).getTextContent().equals(""))
 	            				hasMine=false;
 	            	}
 	            }

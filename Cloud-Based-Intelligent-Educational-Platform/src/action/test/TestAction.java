@@ -3,6 +3,9 @@ package action.test;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import com.opensymphony.xwork2.ActionContext;
 
 import bean.homeworkBean;
 import Dao.Dao;
@@ -29,8 +32,10 @@ public class TestAction {
 	}
 
 	public String execute() throws SQLException{
-		String usrid="t001";
-		String result="";
+		
+		Map<String, Object> session = ActionContext.getContext().getSession();
+        String usrid = session.get("USRID").toString(); 
+		
 		Dao dao=new Dao();
 		String authority=dao.getAuthority(usrid);
 		stelist=(ArrayList) dao.allTest();
