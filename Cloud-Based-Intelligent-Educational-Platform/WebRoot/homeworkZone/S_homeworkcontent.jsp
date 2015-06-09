@@ -20,12 +20,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="css/homework/S_homeworkcontent.css">
 
   </head>
-  <script language="javascript">
-  		function getId(){
-  			var id=document.getElementsById("id").InnerHTML;
-  			return id;
-  		}
-  </script>
   <body>
     <div id="main">
    	 <div id="topMenu">
@@ -45,23 +39,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<label id="titlestar">◆</label>
 			<label id="titlelabel"><s:property value="title" /></label><br><br>
 			<label id="contentlabel"><s:property value="content" /></label>
-			<label id="id"><s:property value="id" /></label>
+			<label id="id"></label>
 		</div>
 		<div id="answerpanel">
 			<form id="form2" action="homeworkAnswerAction!execute.action" method="post">
-				<input type="hidden" name="id" value=getId() />
+				<input type="hidden" name="id" value="<s:property value="id" />" />
 				<textarea id="atextarea" name="acontent" cols="100" rows="12"></textarea><br>
 				<input class="btn" id="submitanswer" type="submit" value="提交作业"/>
 			</form><br>
 		</div>
-		<div id="answerresult">
-			<s:iterator value="holist">
-				<label id="ausr"><s:property value="ausr"></s:property> 提交答案:</label><br>
-				<label id="acontent"><s:property value="acontent"></s:property></label><br>
-				<label id="atime">提交时间:<s:property value="atime"></s:property>&nbsp;&nbsp;</label><br><br>
-				<label id="aremark"><s:property value="aremark"></s:property></label><br>
-			</s:iterator>
-		</div>
+		<s:iterator value="holist">
+			<div id="answerresult">
+				<label id="ausr">学生  <s:property value="ausr" /> 在 <s:property value="atime" /> 提交答案:</label><br><br>
+				<label id="acontent"><s:property value="acontent"></s:property></label><br><br>
+				<label id="aremark">教师评语:<s:property value="aremark"></s:property></label><br>
+			</div>
+		</s:iterator>
 		<input class="btn" id="backhomework" type="button" value="返回作业区"
      			onclick="window.location.href='HomeworkAction!execute.action'"/>
      </div>

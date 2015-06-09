@@ -43,13 +43,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<label id="titlelabel"><s:property value="title" /></label><br><br>
 			<label id="contentlabel"><s:property value="content" /></label>
 		</div>
-		<div id="answerresult">
-			<s:iterator value="holist">
-				<label id="ausr"><s:property value="ausr"></s:property> 提交答案:</label><br>
-				<label id="acontent"><s:property value="acontent"></s:property></label><br>
-				<label id="atime">提交时间:<s:property value="atime"></s:property>&nbsp;&nbsp;</label><br><br>
-				<label id="aremark">教师评语:<s:property value="aremark"></s:property></label><br>
-				<s:if test='<s:property value="aremark" />==NULL'>
+		<s:iterator value="holist">
+			<div id="answerresult">
+				<label id="ausr">学生  <s:property value="ausr" /> 在 <s:property value="atime" /> 提交答案:</label><br><br>
+				<label id="acontent"><s:property value="acontent"></s:property></label><br><br>
+				<s:if test='<s:property value="aremark" />==""'>
 					<form id="form2" action="homeworkRemarkAction!execute.action" method="post">
 						<input type="hidden" name="id" value="<s:property value='id' />" />
 						<input type="hidden" name="ausr" value="<s:property value='ausr' />" />
@@ -57,8 +55,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<input class="btn" id="submitanswer" type="submit" value="提交作业评价"/>
 					</form><br>
 				</s:if>
-			</s:iterator>
-		</div>
+				<s:else>
+					<label id="aremark">教师评语:<s:property value="aremark"></s:property></label><br>
+				</s:else>
+			</div>
+		</s:iterator>
 		<input class="btn" id="backhomework" type="button" value="返回作业区"
      			onclick="window.location.href='HomeworkAction!execute.action'"/>
      </div>

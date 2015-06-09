@@ -2,7 +2,9 @@ package action.homework;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -65,8 +67,11 @@ public class homeworkAnswerAction {
 		Map<String, Object> session = ActionContext.getContext().getSession();
         String ausr = session.get("USRID").toString(); 
         
-		String filename="homework_answer_content";
-		dao.insertStudentAnswer(filename, id, issueteacher, ausr, acontent);
+        Date now = new Date();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		String atime = df.format(now);
+		
+		dao.insertStudentAnswer4Homework(id,issueteacher,ausr,atime,acontent);
 		
 		content=dao.getHomeworkContent(id, issueteacher);
 		holist=(ArrayList) dao.answer4Homework(id, issueteacher);

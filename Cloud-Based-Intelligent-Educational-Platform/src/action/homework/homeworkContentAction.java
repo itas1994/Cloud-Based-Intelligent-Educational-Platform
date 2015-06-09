@@ -73,12 +73,12 @@ public class homeworkContentAction {
 		String issueteacher=dao.getHOandTEIssueTeacher(datatable, id);
 		
 		Map<String, Object> session = ActionContext.getContext().getSession();
-        String usrid = session.get("USRID").toString(); 
+        String usrid = session.get("USRID").toString();
 		
 //		hasMine=dao.isMyAnswer4Homework(id, issueteacher, usrid);//for student
 		content=dao.getHomeworkContent(id, issueteacher);
 		holist=(ArrayList) dao.answer4Homework(id, issueteacher);
-        
+		
 		String authority=dao.getAuthority(usrid);
 		return authority;
 	}
