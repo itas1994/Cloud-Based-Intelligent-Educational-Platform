@@ -107,7 +107,21 @@ img.pic{
 #acontent{
 	font-size:20;
 	font-family:youyuan;
-	margin-left:40px;
+	margin-left:50px;
+}
+#ascore{
+	margin-left:10px;
+	margin-bottom:10px;
+	color:#FFa07a;
+}
+textarea{
+	resize:none;
+	overflow:none;
+}
+#atextarea{
+	margin-left:10px;
+	margin-bottom:10px;
+	border:solid 1px #FFa07a;
 }
 #backtest{
 	margin-bottom:10px;

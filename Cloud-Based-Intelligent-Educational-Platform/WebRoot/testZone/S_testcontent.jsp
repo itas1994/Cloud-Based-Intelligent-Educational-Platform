@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@taglib uri="/struts-tags" prefix="s" %>
+<%@ taglib uri="/struts-tags" prefix="s" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -20,12 +20,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="css/test/S_testcontent.css">
 
   </head>
-  <script language="javascript">
-  		function getId(){
-  			var id=document.getElementsByTagName("id").value();
-  			return id;
-  		}
-  </script>
   <body>
     <div id="main">
    	 <div id="topMenu">
@@ -45,21 +39,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<label id="titlestar">◆</label>
 			<label id="titlelabel"><s:property value="title" /></label><br><br>
 			<label id="contentlabel"><s:property value="content" /></label>
-			<label id="id"><s:property value="id" /></label>
-			<s:if test='<s:property value="hasMine" />== false'>
+			<s:set name="has" value="<s:property value='hasMine' />" />
+			<s:if test="">
 				<form id="form2" action="testAnswerAction!execute.action" method="post">
-					<input type="hidden" name="id" value=getId() />
+					<input type="hidden" name="id" value="<s:property value="id" />" />
 					<textarea id="atextarea" name="acontent" cols="100" rows="12"></textarea><br>
 					<input class="btn" id="submitanswer" type="submit" value="提交测验"/>
 				</form><br>
 			</s:if>
-			<s:iterator value="telist">
-				<label id="ausr"><s:property value="ausr"></s:property> 提交答案:</label><br>
-				<label id="acontent"><s:property value="acontent"></s:property></label><br>
-				<label id="atime">提交时间:<s:property value="atime"></s:property>&nbsp;&nbsp;</label><br><br>
-				<label id="ascore"><s:property value="ascore"></s:property></label><br>
-			</s:iterator>
 		</div>
+		<s:iterator value="stelist">
+				<div id="answerpanel">
+					<label id="ausr">你  在 <s:property value="atime" /> 提交测试答案:</label><br>
+					<label id="acontent"><s:property value="acontent" /></label><br>
+					<label id="ascore">教师打分:<s:property value="ascore" /></label><br>
+				</div>
+			</s:iterator>
 		<input class="btn" id="backtest" type="button" value="返回测试区"
      			onclick="window.location.href='TestAction!execute.action'"/>
      </div>

@@ -71,10 +71,12 @@ img.pic{
 #id{
 	display:none;
 }
-#atextarea{
-	border:solid 1px #FFa07a;
+textarea{
 	overflow:none;
 	resize:none;
+}
+#atextarea{
+	border:solid 1px #FFa07a;
 	width:98%;
 	margin-top:10px;
 	margin-left:10px;

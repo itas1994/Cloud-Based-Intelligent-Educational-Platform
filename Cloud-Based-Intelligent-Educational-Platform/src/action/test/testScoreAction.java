@@ -17,7 +17,7 @@ public class testScoreAction {
 	private int id;
 	private String title;
 	private String content;
-	private ArrayList telist;
+	private ArrayList ttelist;
 
 	public int getId() {
 		return id;
@@ -42,12 +42,12 @@ public class testScoreAction {
 		this.content = content;
 	}
 
-	public ArrayList getTelist() {
-		return telist;
+	public ArrayList getTtelist() {
+		return ttelist;
 	}
 
-	public void setTelist(ArrayList telist) {
-		this.telist = telist;
+	public void setTelist(ArrayList ttelist) {
+		this.ttelist = ttelist;
 	}
 	
 	public String execute() throws SQLException, ParserConfigurationException, SAXException, IOException{
@@ -58,11 +58,11 @@ public class testScoreAction {
 		Dao dao=new Dao();
 		String datatable="test";
 		title=dao.getHOandTETitle(datatable, id);
-		String issueteacher=dao.getIssueusr(id);
-		dao.insertTeacherRemark(id, issueteacher,ausr,ascore);
+		String issueteacher=dao.getHOandTEIssueTeacher(datatable, id);
+		dao.insertTeacherScore(id, issueteacher,ausr,ascore);
 		
 		content=dao.getTestContent(id, issueteacher);
-		telist=(ArrayList) dao.dotest(id, issueteacher);
+		ttelist=(ArrayList) dao.answer4Test4Teacher(id, issueteacher,ausr);
 		return "success";
 	}
 	

@@ -20,16 +20,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="css/debate/debatecontent.css">
 
   </head>
-  <script language="javascript">
-  		function getTitle(){
-  			var title=document.getElementsByTagName("titlelabel").value();
-  			return title;
-  		}
-  		function getId(){
-  			var id=document.getElementsByTagName("id").value();
-  			return id;
-  		}
-  </script>
   <body>
     <div id="main">
    	 <div id="topMenu">
@@ -51,22 +41,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<label id="titlestar">◆</label>
 			<label id="titlelabel"><s:property value='title' /></label><br>
 			<label id="contentlabel"><s:property value='content' /></label><br><br>
-			<label id="id"><s:property value="id" /></label>
-			
-			<s:iterator value="delist">
-				<label id="replyusr"><s:property value="replyusr"></s:property> 回复:</label><br>
-				<label id="replycontent"><s:property value="replycontent"></s:property></label><br>
-				<label id="replytime">回复时间:<s:property value="replytime"></s:property>&nbsp;&nbsp;</label>
-			</s:iterator>
 		</div>
 		<div id="form2div">
 			<form id="form2" action="debateReplyAction!execute.action" method="post">
-				<input type="hidden" name="title" value=getTitle() />
-				<input type="hidden" name="id" value=getId() />
+				<input type="hidden" name="title" value="<s:property value="title" />" />
+				<input type="hidden" name="id" value="<s:property value="id" />" />
 				<textarea id="replytextarea" name="replycontent" cols="100" rows="15"></textarea><br>
 				<input class="btn" id="submitreply" type="submit" value="提交回复"/>
 			</form><br>
 		</div>
+		<s:iterator value="delist">
+			<div id="replypanel">
+				<label id="replyusr"><s:property value="replyusr" /> 在  <s:property value="replytime" /> 回复:</label><br>
+				<label id="replycontent"><s:property value="replycontent"></s:property></label><br>
+			</div>
+		</s:iterator>
 		<input class="btn" id="backdebate" type="button" value="返回讨论区"
      			onclick="window.location.href='DebateAction!execute.action'"/>
      </div>

@@ -19,9 +19,10 @@ public class testContentAction {
 	
 	private int id;
 	private String title;
-	private boolean hasMine;
+	private int hasMine;
 	private String content;
-	private ArrayList telist;
+	private ArrayList stelist;
+	private ArrayList ttelist;
 	
 	public int getId() {
 		return id;
@@ -46,25 +47,36 @@ public class testContentAction {
 		this.content = content;
 	}
 
-	public boolean isHasMine() {
+	
+	public int getHasMine() {
 		return hasMine;
 	}
 
-	public void setHasMine(boolean hasMine) {
+	public void setHasMine(int hasMine) {
 		this.hasMine = hasMine;
 	}
+
 	
-	public ArrayList getTelist() {
-		return telist;
+	
+	public ArrayList getStelist() {
+		return stelist;
 	}
 
-	public void setTelist(ArrayList telist) {
-		this.telist = telist;
+	public void setStelist(ArrayList stelist) {
+		this.stelist = stelist;
 	}
-	
+
+	public ArrayList getTtelist() {
+		return ttelist;
+	}
+
+	public void setTtelist(ArrayList ttelist) {
+		this.ttelist = ttelist;
+	}
+
 	public String execute() throws SQLException, ParserConfigurationException, SAXException, IOException{
-		HttpServletRequest rq=ServletActionContext.getRequest();
-		id=Integer.parseInt(rq.getParameter("id"));
+		HttpServletRequest request=ServletActionContext.getRequest();
+		id=Integer.parseInt(request.getParameter("id"));
 		Dao dao=new Dao();
 		title=dao.getTestTitle(id);
 		String issueteacher=dao.getTestIssueTeacher(id);
@@ -74,7 +86,10 @@ public class testContentAction {
 		
 		hasMine=dao.isMyAnswer4Test(id, issueteacher, usrid);
 		content=dao.getTestContent(id, issueteacher);
-		telist=(ArrayList) dao.answer4Test(id, issueteacher);
+		stelist=(ArrayList) dao.answer4Test4Student(id, issueteacher,usrid);
+		ttelist=(ArrayList) dao.answer4Test4Teacher(id, issueteacher, usrid);
+		
+//		request.setAttribute("hasMine", hasMine);
 		
 		String authority=dao.getAuthority(usrid);
 		

@@ -2,7 +2,9 @@ package action.test;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -65,11 +67,14 @@ public class testAnswerAction {
 		Map<String, Object> session = ActionContext.getContext().getSession();
         String ausr = session.get("USRID").toString(); 
 		
-		String filename="test_answer_content";
-		dao.insertStudentAnswer(filename, id, issueteacher, ausr, acontent);
+        Date now = new Date();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		String atime = df.format(now);
+        
+		dao.insertStudentAnswer4Test(id, issueteacher, ausr,atime,acontent);
 		
 		content=dao.getTestContent(id, issueteacher);
-		telist=(ArrayList) dao.answer4Test(id, issueteacher);
+		telist=(ArrayList) dao.answer4Test4Student(id, issueteacher,ausr);
 		return "success";
 	}
 

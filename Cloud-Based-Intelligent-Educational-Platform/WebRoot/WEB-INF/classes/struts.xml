@@ -87,6 +87,12 @@
 		<action name="testIssueAction" class="action.test.testIssueAction">
 			<result name="success">testZone/issueSucceed.jsp</result>
 		</action>
+		<action name="testScoreAction" class="action.test.testScoreAction">
+			<result name="success">testZone/T_testcontent.jsp</result>
+		</action>
+		<action name="testAnswerAction" class="action.test.testAnswerAction">
+			<result name="success">testZone/S_testcontent.jsp</result>
+		</action>
 		<action name="backhostAction" class="action.backhostAction">
 			<result name="s">S_host.jsp</result>
 			<result name="t">T_host.jsp</result>

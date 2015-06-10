@@ -222,18 +222,20 @@ public class Dao {
 	            DocumentBuilder db = dbf.newDocumentBuilder();
 	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
 	            		+ "usr//debate_reply_content//"+issueusr+".xml");
-	            NodeList debate = doc.getElementsByTagName("debate");
-	            for(int i=0;i<debate.getLength();i++){
-	            	if(debate.item(i).getTextContent().equals(title) && 
-	            					debate.item(i).getAttributes().getNamedItem("id")
+	            NodeList debates = doc.getElementsByTagName("debate");
+	            for(int i=0;i<debates.getLength();i++){
+	            	Node _title=debates.item(i).getChildNodes().item(0);
+	            	if(_title.getTextContent().equals(title) && 
+	            				_title.getAttributes().getNamedItem("id")
 	            								.getNodeValue().toString().equals(_id)){
-	            		NodeList replies=doc.getElementsByTagName("reply");
+	            		Node Replies=debates.item(i).getChildNodes().item(2);
+	            		NodeList replies=Replies.getChildNodes();
 	            		for(int k=0;k<replies.getLength();k++){
 	            			Node reply=replies.item(k);
 	            			debateReplyBean dr=new debateReplyBean();
-	            			dr.setReplyusr(reply.getChildNodes().item(0).getNodeValue().toString());
-	            			dr.setReplytime(reply.getChildNodes().item(1).getNodeValue().toString());
-	            			dr.setReplycontent(reply.getChildNodes().item(2).getNodeValue().toString());
+	            			dr.setReplyusr(reply.getChildNodes().item(0).getTextContent());
+	            			dr.setReplytime(reply.getChildNodes().item(1).getTextContent());
+	            			dr.setReplycontent(reply.getChildNodes().item(2).getTextContent());
 	            			delist.add(dr);
 	            		}
 	            	}
@@ -262,12 +264,13 @@ public class Dao {
 			DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
             		+ "usr//debate_reply_content//"+issueusr+".xml");
-            NodeList debate = doc.getElementsByTagName("debate");
-            for(int i=0;i<debate.getLength();i++){
-            	if(debate.item(i).getChildNodes().item(0).getTextContent().equals(title) && 
-            					debate.item(i).getChildNodes().item(0).getAttributes().getNamedItem("id")
-            								.getNodeValue().toString().equals(_id)){
-            		content=debate.item(i).getChildNodes().item(1).getTextContent();
+            NodeList debates = doc.getElementsByTagName("debate");
+            for(int i=0;i<debates.getLength();i++){
+            	Node _title=debates.item(i).getChildNodes().item(0);
+            	if(_title.getTextContent().equals(title) && 
+            			_title.getAttributes().getNamedItem("id")
+            				.getNodeValue().toString().equals(_id)){
+            		content=debates.item(i).getChildNodes().item(1).getTextContent();
             	}
             }    
 			return content;
@@ -341,8 +344,10 @@ public class Dao {
 	            ti.setTextContent(title);
 	            Element cont=doc.createElement("content");//title--content
 	            cont.setTextContent(content);
+	            Element Replies=doc.createElement("Replies");
 	            debate.appendChild(ti);//content->title
 	            debate.appendChild(cont);//title->Debates
+	            debate.appendChild(Replies);
 	            debates.appendChild(debate);
 	            this.doc2XmlFile(doc, fileName);
 	    	}catch(Exception e){
@@ -374,25 +379,25 @@ public class Dao {
 				DocumentBuilder db=dbf.newDocumentBuilder();
 				Document doc=db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
 	            		+ "usr//debate_reply_content//"+issueusr+".xml");
-				Node debates=doc.getElementsByTagName("Debates").item(0);
-				NodeList ti=debates.getChildNodes();
-				for(int i=0;i<ti.getLength();i++){
-					Node tit=ti.item(i);
-					if(tit.getAttributes().toString().equals(_id)
-							&& tit.getNodeValue().toString().equals(title)){
-						Node _replyusr=doc.createElement("replyusr");
-						_replyusr.appendChild(doc.createTextNode(replyusr));
-						Node _replytime=doc.createElement("replytime");
-						_replytime.appendChild(doc.createTextNode(replytime));
-						Node _replycontent=doc.createElement("replycontent");
-						_replycontent.appendChild(doc.createTextNode(replycontent));
-						
-						Node reply=doc.createElement("reply");
+				NodeList debates=doc.getElementsByTagName("debate");
+				for(int i=0;i<debates.getLength();i++){
+					Node ti=debates.item(i).getChildNodes().item(0);
+					if(ti.getAttributes().getNamedItem("id")
+								.getNodeValue().toString().equals(_id)){
+						Node Replies=debates.item(i).getChildNodes().item(2);
+						Element _replyusr=doc.createElement("replyusr");
+						_replyusr.setTextContent(replyusr);
+						Element _replytime=doc.createElement("replytime");
+						_replytime.setTextContent(replytime);
+						Element _replycontent=doc.createElement("replycontent");
+						_replycontent.setTextContent(replycontent);
+						Element reply=doc.createElement("reply");
 						reply.appendChild(_replyusr);
 						reply.appendChild(_replytime);
 						reply.appendChild(_replycontent);
-						
-						tit.appendChild(reply);
+						Replies.appendChild(reply);
+						this.doc2XmlFile(doc, "D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+			            		+ "usr//debate_reply_content//"+issueusr+".xml");
 					}
 				}
 			} catch (ParserConfigurationException e) {
@@ -410,17 +415,19 @@ public class Dao {
 	            DocumentBuilder db = dbf.newDocumentBuilder();
 	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
 	            		+ "usr//debate_reply_content//"+issueusr+".xml");
-	            NodeList titles = doc.getElementsByTagName("title");
-	            for(int i=0;i<titles.getLength();i++){
-	            	if(titles.item(i).getNodeValue()==title && 
-	            			titles.item(i).getAttributes().toString()==_id){
-	            		NodeList replies=doc.getElementsByTagName("reply");
+	            NodeList debates = doc.getElementsByTagName("debate");
+	            for(int i=0;i<debates.getLength();i++){
+	            	Node _title=debates.item(i).getChildNodes().item(0);
+	            	if(_title.getAttributes().getNamedItem("id")
+	            				.getNodeValue().toString().equals(_id)){
+	            		Node Replies=debates.item(i).getChildNodes().item(2);
+	            		NodeList replies=Replies.getChildNodes();
 	            		for(int k=0;k<replies.getLength();k++){
 	            			Node reply=replies.item(k);
 	            			debateReplyBean dr=new debateReplyBean();
-	            			dr.setReplyusr(reply.getChildNodes().item(0).toString());
-	            			dr.setReplytime(reply.getChildNodes().item(1).toString());
-	            			dr.setReplycontent(reply.getChildNodes().item(2).toString());
+	            			dr.setReplyusr(reply.getChildNodes().item(0).getTextContent());
+	            			dr.setReplytime(reply.getChildNodes().item(1).getTextContent());
+	            			dr.setReplycontent(reply.getChildNodes().item(2).getTextContent());
 	            			delist.add(dr);
 	            		}
 	            	}
@@ -669,7 +676,8 @@ public class Dao {
 		}
 		//end of homework content
 		
-		public void insertTeacherRemark(int id,String issueteacher,String ausr,String aremark){
+		public void insertTeacherRemark(int id,String issueteacher
+									,String ausr,String aremark,String atime){
 			String _id=id+"";
 			
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -677,14 +685,21 @@ public class Dao {
 	            DocumentBuilder db = dbf.newDocumentBuilder();
 	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
 	            		+ "usr//homework_answer_content//"+issueteacher+".xml");
-	            NodeList titles = doc.getElementsByTagName("title");
-	            for(int i=0;i<titles.getLength();i++){
-	            	if(titles.item(i).getAttributes().toString()==_id){
-	            		NodeList answers=doc.getElementsByTagName("answer");
+	            NodeList homeworks = doc.getElementsByTagName("homework");
+	            for(int i=0;i<homeworks.getLength();i++){
+	            	Node title=homeworks.item(i).getChildNodes().item(0);
+	            	if(title.getAttributes().getNamedItem("id")
+	            			.getNodeValue().toString().equals(_id)){
+	            		Node Answers=homeworks.item(i).getChildNodes().item(2);
+	            		NodeList answers=Answers.getChildNodes();
 	            		for(int k=0;k<answers.getLength();k++){
 	            			Node answer=answers.item(k);
-	            			if(ausr == answer.getChildNodes().item(0).toString())
-	            				answer.getChildNodes().item(3).setNodeValue(aremark);
+	            			if(answer.getChildNodes().item(0).getTextContent().equals(ausr)
+	            					&& answer.getChildNodes().item(1).getTextContent().equals(atime)){
+	            				answer.getChildNodes().item(3).setTextContent(aremark);
+	            				doc2XmlFile(doc,"D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+	            	            		+ "usr//homework_answer_content//t001.xml");
+	            			}
 	            		}
 	            	}
 	            }
@@ -876,7 +891,7 @@ public class Dao {
 			return issueteacher;
 		}
 		
-		public List<testAnswerBean> dotest(int id,String issueteacher) throws SQLException{
+		/*public List<testAnswerBean> getTestAnswer4Teacher(int id,String issueteacher) throws SQLException{
 			String _id=id+"";
 			List<testAnswerBean> telist=new ArrayList<testAnswerBean>();
 
@@ -886,17 +901,20 @@ public class Dao {
 	            DocumentBuilder db = dbf.newDocumentBuilder();
 	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
 	            		+ "usr//test_answer_content//"+issueteacher+".xml");
-	            NodeList titles = doc.getElementsByTagName("title");
-	            for(int i=0;i<titles.getLength();i++){
-	            	if(titles.item(i).getAttributes().toString()==_id){
-	            		NodeList answers=doc.getElementsByTagName("answer");
+	            NodeList tests = doc.getElementsByTagName("test");
+	            for(int i=0;i<tests.getLength();i++){
+	            	Node title=tests.item(i).getChildNodes().item(0);
+	            	if(title.getAttributes().getNamedItem("id")
+	            			.getNodeValue().equals(_id)){
+	            		Node Answers=tests.item(i).getChildNodes().item(2);
+	            		NodeList answers=Answers.getChildNodes();
 	            		for(int k=0;k<answers.getLength();k++){
 	            			Node answer=answers.item(k);
 	            			testAnswerBean t=new testAnswerBean();
-	            			t.setAusr(answer.getChildNodes().item(0).toString());
-	            			t.setAtime(answer.getChildNodes().item(1).toString());
-	            			t.setAcontent(answer.getChildNodes().item(2).toString());
-	            			t.setAscore(answer.getChildNodes().item(4).toString());
+	            			t.setAusr(answer.getChildNodes().item(0).getTextContent());
+	            			t.setAtime(answer.getChildNodes().item(1).getTextContent());
+	            			t.setAcontent(answer.getChildNodes().item(2).getTextContent());
+	            			t.setAscore(answer.getChildNodes().item(3).getTextContent());
 	            			telist.add(t);
 	            		}
 	            	}
@@ -905,6 +923,35 @@ public class Dao {
 	    		e.printStackTrace();
 	    	}
 			return telist;
+		}*/
+		
+		public void insertTeacherScore(int id,String issueteacher,String ausr,String ascore){
+			String _id=id+"";
+			
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    	try {
+	    		String filename="D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+	            		+ "usr//test_answer_content//"+issueteacher+".xml";
+	            DocumentBuilder db = dbf.newDocumentBuilder();
+	            Document doc = db.parse(filename);
+	            NodeList tests = doc.getElementsByTagName("test");
+	            for(int i=0;i<tests.getLength();i++){
+	            	Node title=tests.item(i).getChildNodes().item(0);
+	            	if(title.getAttributes().getNamedItem("id")
+	            			.getNodeValue().equals(_id)){
+	            		Node Answers=tests.item(i).getChildNodes().item(2);
+	            		NodeList answers=Answers.getChildNodes();
+	            		for(int k=0;k<answers.getLength();k++){
+	            			Node answer=answers.item(k);
+	            			if(answer.getChildNodes().item(0).getTextContent().equals(ausr))
+	            				answer.getChildNodes().item(3).setTextContent(ascore);
+	            				this.doc2XmlFile(doc, filename);
+	            		}
+	            	}
+	            }
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
 		}
 		
 		//begin of issue test
@@ -963,8 +1010,10 @@ public class Dao {
 	            ti.setAttribute("id", _id);
 	            Element cont=doc.createElement("content");//title--content
 	            cont.setTextContent(content);
+	            Element Answers=doc.createElement("Answers");
 	            test.appendChild(ti);//title->Debates
 	            test.appendChild(cont);
+	            test.appendChild(Answers);
 	            tests.appendChild(test);
 	            this.doc2XmlFile(doc, fileName);
 	    	}catch(Exception e){
@@ -973,33 +1022,76 @@ public class Dao {
 		}
 		//end of issue test
 		
-		public boolean isMyAnswer4Test(int id,String issueteacher,String ausr){
+		public void insertStudentAnswer4Test(int id,String issueteacher,String ausr
+				,String atime,String acontent){
 			String _id=id+"";
-			boolean hasMine=true;
 			
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 	    	try {
 	            DocumentBuilder db = dbf.newDocumentBuilder();
 	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
 	            		+ "usr//test_answer_content//"+issueteacher+".xml");
-	            NodeList test = doc.getElementsByTagName("test");
-	            for(int i=0;i<test.getLength();i++){
-	            	Node title=test.item(i).getChildNodes().item(0);
+	            NodeList tests = doc.getElementsByTagName("test");
+	            for(int i=0;i<tests.getLength();i++){
+	            	Node title=tests.item(i).getChildNodes().item(0);
 	            	if(title.getAttributes().getNamedItem("id")
-	            			.getNodeValue().toString()==_id){
-	            		Node answer=test.item(i).getChildNodes().item(2);
-	            		if(answer.getChildNodes().item(0).getTextContent().equals(ausr)
-	            			&& answer.getChildNodes().item(2).getTextContent().equals(""))
-	            				hasMine=false;
+	            			.getNodeValue().toString().equals(_id)){
+	            		Node Answers=tests.item(i).getChildNodes().item(2);
+	            		
+	            		Element _answer=doc.createElement("answer");
+            			Element _ausr=doc.createElement("ausr");
+            			_ausr.setTextContent(ausr);
+            			Element _atime=doc.createElement("atime");
+            			_atime.setTextContent(atime);
+            			Element _acontent=doc.createElement("acontent");
+            			_acontent.setTextContent(acontent);
+            			Element _ascore=doc.createElement("ascore");
+            			_ascore.setTextContent("暂未打分");
+            			_answer.appendChild(_ausr);
+            			_answer.appendChild(_atime);
+            			_answer.appendChild(_acontent);
+            			_answer.appendChild(_ascore);
+            			Answers.appendChild(_answer);
+            			doc2XmlFile(doc, "D:/apache-tomcat-6.0.29/webapps/Cloud-Based-Intelligent-Educational-Platform/"
+        	            		+ "usr/test_answer_content/"+issueteacher+".xml");	
 	            	}
 	            }
 	    	}catch(Exception e){
 	    		e.printStackTrace();
 	    	}
+		}
+		
+		public int isMyAnswer4Test(int id,String issueteacher,String ausr){
+			String _id=id+"";
+			int hasMine=1;
+			
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    	try {
+	            DocumentBuilder db = dbf.newDocumentBuilder();
+	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+	            		+ "usr//test_answer_content//"+issueteacher+".xml");
+	            NodeList tests = doc.getElementsByTagName("test");
+	            for(int i=0;i<tests.getLength();i++){
+	            	Node title=tests.item(i).getChildNodes().item(0);
+	            	if(title.getAttributes().getNamedItem("id").getNodeValue().equals(_id)){
+	            		Node Answers=tests.item(i).getChildNodes().item(2);
+	            		NodeList answers=Answers.getChildNodes();
+	            		for(int k=0;k<answers.getLength();k++){
+	            			Node answer=answers.item(k);
+	            			if(answer.getChildNodes().item(0).getTextContent().equals(ausr)
+	    	            			&& answer.getChildNodes().item(2).getTextContent().equals(""))
+	    	            				hasMine=-1;
+	            		}
+	            	}
+	            }
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
+	    	
 			return hasMine;
 		}
 		
-		public List<testAnswerBean> answer4Test(int id,String issueteacher) throws SQLException{
+		public List<testAnswerBean> answer4Test4Student(int id,String issueteacher,String usrid) throws SQLException{
 			String _id=id+"";
 			List<testAnswerBean> telist=new ArrayList<testAnswerBean>();
 
@@ -1009,18 +1101,57 @@ public class Dao {
 	            DocumentBuilder db = dbf.newDocumentBuilder();
 	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
 	            		+ "usr//test_answer_content//"+issueteacher+".xml");
-	            NodeList homework = doc.getElementsByTagName("test");
-	            for(int i=0;i<homework.getLength();i++){
-	            	Node title=homework.item(i).getChildNodes().item(0);
-	            	if(title.getAttributes().toString()==_id){
-	            		NodeList answers=doc.getElementsByTagName("answer");
+	            NodeList tests = doc.getElementsByTagName("test");
+	            for(int i=0;i<tests.getLength();i++){
+	            	Node title=tests.item(i).getChildNodes().item(0);
+	            	if(title.getAttributes().getNamedItem("id")
+	            			.getNodeValue().toString().equals(_id)){
+	            		Node Answers=tests.item(i).getChildNodes().item(2);
+	            		NodeList answers=Answers.getChildNodes();
+	            		for(int k=0;k<answers.getLength();k++){
+	            			if(answers.item(k).getChildNodes().item(0)
+	            					.getTextContent().equals(usrid)){
+	            				Node answer=answers.item(k);
+		            			testAnswerBean te=new testAnswerBean();
+		            			te.setAusr(answer.getChildNodes().item(0).getTextContent());
+		            			te.setAtime(answer.getChildNodes().item(1).getTextContent());
+		            			te.setAcontent(answer.getChildNodes().item(2).getTextContent());
+		            			te.setAscore(answer.getChildNodes().item(3).getTextContent());
+		            			telist.add(te);
+	            			}
+	            		}
+	            	}
+	            }
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
+			return telist;
+		}
+		
+		public List<testAnswerBean> answer4Test4Teacher(int id,String issueteacher,String usrid) throws SQLException{
+			String _id=id+"";
+			List<testAnswerBean> telist=new ArrayList<testAnswerBean>();
+
+			//dom����
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	    	try {
+	            DocumentBuilder db = dbf.newDocumentBuilder();
+	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+	            		+ "usr//test_answer_content//"+issueteacher+".xml");
+	            NodeList tests = doc.getElementsByTagName("test");
+	            for(int i=0;i<tests.getLength();i++){
+	            	Node title=tests.item(i).getChildNodes().item(0);
+	            	if(title.getAttributes().getNamedItem("id")
+	            			.getNodeValue().toString().equals(_id)){
+	            		Node Answers=tests.item(i).getChildNodes().item(2);
+	            		NodeList answers=Answers.getChildNodes();
 	            		for(int k=0;k<answers.getLength();k++){
 	            			Node answer=answers.item(k);
 	            			testAnswerBean te=new testAnswerBean();
-	            			te.setAusr(answer.getChildNodes().item(0).toString());
-	            			te.setAtime(answer.getChildNodes().item(1).toString());
-	            			te.setAcontent(answer.getChildNodes().item(2).toString());
-	            			te.setAscore(answer.getChildNodes().item(4).toString());
+	            			te.setAusr(answer.getChildNodes().item(0).getTextContent());
+	            			te.setAtime(answer.getChildNodes().item(1).getTextContent());
+	            			te.setAcontent(answer.getChildNodes().item(2).getTextContent());
+	            			te.setAscore(answer.getChildNodes().item(3).getTextContent());
 	            			telist.add(te);
 	            		}
 	            	}
@@ -1041,12 +1172,11 @@ public class Dao {
 			DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
             		+ "usr//test_answer_content//"+issueteacher+".xml");
-            NodeList homework = doc.getElementsByTagName("test");
-            for(int i=0;i<homework.getLength();i++){
-            	Node title=homework.item(i).getChildNodes().item(0);
+            NodeList tests = doc.getElementsByTagName("test");
+            for(int i=0;i<tests.getLength();i++){
+            	Node title=tests.item(i).getChildNodes().item(0);
             	if(title.getAttributes().getNamedItem("id").getNodeValue().equals(_id)){
-            		Node cont=homework.item(i).getChildNodes().item(1);
-            		content=cont.getTextContent().toString();
+            		content=tests.item(i).getChildNodes().item(1).getTextContent();
             	}
             }    
 	    	

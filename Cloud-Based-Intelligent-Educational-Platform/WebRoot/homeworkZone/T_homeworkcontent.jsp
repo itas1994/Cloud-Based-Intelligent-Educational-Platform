@@ -43,17 +43,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<label id="titlelabel"><s:property value="title" /></label><br><br>
 			<label id="contentlabel"><s:property value="content" /></label>
 		</div>
-		<s:iterator value="holist">
+		<s:iterator value="holist" var="ho">
 			<div id="answerresult">
 				<label id="ausr">学生  <s:property value="ausr" /> 在 <s:property value="atime" /> 提交答案:</label><br><br>
 				<label id="acontent"><s:property value="acontent"></s:property></label><br><br>
-				<s:if test='<s:property value="aremark" />==""'>
+				<s:if test="#ho.aremark=='暂未评价'">
 					<form id="form2" action="homeworkRemarkAction!execute.action" method="post">
 						<input type="hidden" name="id" value="<s:property value='id' />" />
 						<input type="hidden" name="ausr" value="<s:property value='ausr' />" />
+						<input type="hidden" name="atime" value="<s:property value='atime' />" />
 						<textarea id="atextarea" name="aremark" cols="100" rows="2"></textarea><br>
 						<input class="btn" id="submitanswer" type="submit" value="提交作业评价"/>
-					</form><br>
+					</form>
 				</s:if>
 				<s:else>
 					<label id="aremark">教师评语:<s:property value="aremark"></s:property></label><br>

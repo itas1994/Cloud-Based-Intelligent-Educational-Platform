@@ -55,11 +55,12 @@ public class homeworkRemarkAction {
 		id=Integer.parseInt(rq.getParameter("id"));
 		String ausr=rq.getParameter("ausr");
 		String aremark=rq.getParameter("aremark");
+		String atime=rq.getParameter("atime");
 		Dao dao=new Dao();
 		String datatable="homework";
 		title=dao.getHOandTETitle(datatable, id);
-		String issueteacher=dao.getIssueusr(id);
-		dao.insertTeacherRemark(id, issueteacher,ausr,aremark);
+		String issueteacher=dao.getHOandTEIssueTeacher(datatable, id);
+		dao.insertTeacherRemark(id, issueteacher,ausr,aremark,atime);
 		
 		content=dao.getHomeworkContent(id, issueteacher);
 		holist=(ArrayList) dao.answer4Homework(id, issueteacher);
