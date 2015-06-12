@@ -16,14 +16,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
+	<link rel="stylesheet" type="text/css" href="css/index.css">
 
   </head>
   
   <body>
-    <input class="btn" type="button" name="loginin" value="登陆"
-    	onclick="window.location.href='login.jsp'"/>
+  	<div id="welcome">
+  		<label id="wel1">欢迎使用</label>
+  		<label id="wel2">智慧教学平台</label>
+  		<div id="loginpanel"></div>
+  		<img id="adm" src="image/adm.png" />
+  		<img id="pass" src="image/pass.png" />
+  		<form action="LoginAction!execute.action" method="post">
+  			<input class="" id="adminput" type="text" name="usr" />
+  			<input class="" id="passinput" type="password" name="psd" />
+  			<input class="btn" id="submit" 
+  					name="submit" type="submit" value="登陆" />
+  		</form>
+  	</div>
   </body>
 </html>

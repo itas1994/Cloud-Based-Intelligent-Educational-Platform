@@ -185,6 +185,17 @@ public class Dao {
 		    return result;
 		}
 		
+		public String getUsrName(String usr) throws SQLException{
+			this.con();
+			String sql_name="select name from usr where id = '"+usr+"'";
+			String name="";
+			rs=st.executeQuery(sql_name);
+			while(rs.next()){
+				name=rs.getString("name");
+			}
+			return name;
+		}
+		
 		public List<debateBean> getDebate() throws SQLException{
 			this.con();
 			List<debateBean> delist=new ArrayList<debateBean>();

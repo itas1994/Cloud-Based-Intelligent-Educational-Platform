@@ -32,8 +32,8 @@
 		<action name="LoginAction" class="action.LoginAction">
 			<result name="s_success">S_host.jsp</result>
 			<result name="t_success">T_host.jsp</result>
-			<result name="psd_error">login.jsp</result>
-			<result name="id_error">login.jsp</result>
+			<result name="psd_error">index.jsp</result>
+			<result name="id_error">index.jsp</result>
 		</action>
 		<action name="DebateAction" class="action.debate.DebateAction">
 			<result name="success">debateZone/debatehost.jsp</result>

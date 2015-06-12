@@ -1,0 +1,128 @@
+﻿*{
+	margin:0px;
+	padding:0px;
+	border:0px;
+}
+html{
+	background-color:fafda3;
+}
+#topMenu{
+	width:100%;
+	height:16%;
+	background-color:#ffe148;
+}
+#icon{
+	width:60px;
+	height:60px;
+	position:absolute;
+	left:120px;
+	top:15px;
+}
+#title{
+	position:absolute;
+	left:190px;
+	top:35px;
+	font-family:汉仪菱心体简;
+	font-size:30px;
+	color:#EE4000;
+}
+#current_usr{
+	float:right;
+	font-weight:bold;
+	font-family:SimHei;
+	font-size:20px;
+	margin-right:-220px;
+	margin-top:65px;
+	color:#EE4000;
+}
+#usr{
+	font-style:italic;
+}
+a.usr_a{
+	text-decoration:none;
+	font-size:20px;
+	font-weight:bold;
+	color:#EE4000;
+	font-family:SimHei;
+}
+#host_adm{
+	float:right;
+	margin-top:60px;
+	margin-right:200px;
+}
+#menu_bar_first{
+	width:430px;
+	height:35px;
+	float:left;
+}
+#menu_bar_last{
+	width:395px;
+	height:35px;
+	float:right;
+}
+#menu_host{
+	height:35px;
+	margin-left:10px;
+	margin-right:0px;
+}
+#menu_host:hover{
+	position: relative;
+	top: 3px;
+}
+img.menu_element{
+	height:35px;
+}
+img.menu_element:hover{
+	position: relative;
+	top: 3px;
+}
+div.select{
+	width:140px;
+	height:140px;
+	background-color:#FFFFFF;
+	text-align:center;
+	line-height:140px;
+	float:left;
+	display:inline;
+	border:solid 3px #FFFFFF;
+	background-color:#EAEAEA;
+	margin-left:1.6%;
+	margin-top:15% 
+}
+div.select:hover{
+	background-color:#D1D1D1;
+}
+label.selectlabel{
+	font-family:KaiTi;
+	font-size:30px;
+	font-weight:bold;
+}
+input.btn{
+	display: inline-block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	font: 14px/100% Arial, Helvetica, sans-serif;
+	padding: .5em 2em .55em;
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+	-webkit-border-radius: .5em; 
+	border-radius: .5em;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	
+	color: #000000;
+	border: solid 1px none;
+	background: #FFa07a;
+}
+input.btn:hover {
+	text-decoration: none;
+	
+	background: #FF6347;
+}
+input.btn:active {
+	position: relative;
+	top: 1px;
+	
+	color: #000000;
+}

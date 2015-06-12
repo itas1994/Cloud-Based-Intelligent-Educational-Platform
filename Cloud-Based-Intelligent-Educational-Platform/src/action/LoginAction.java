@@ -18,6 +18,15 @@ public class LoginAction extends ActionSupport implements SessionAware{
 	/**
 	 * @return
 	 */
+	private String name;
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	private Map session;
     public void setSession(Map session) {
         this.session = session;
@@ -28,6 +37,7 @@ public class LoginAction extends ActionSupport implements SessionAware{
 		String usr=request.getParameter("usr");
 		String psd=request.getParameter("psd");
 		Dao dao=new Dao();
+		name=dao.getUsrName(usr);
 		String r=dao.login(usr,psd);
 		String result="";
 		if(r=="success"){
