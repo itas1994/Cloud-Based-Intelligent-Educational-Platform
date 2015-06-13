@@ -24,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   	<div id="topMenu">
      	<img id="icon" src="image/logo.png" />
-     	<label id="title">智慧教学平台</label>
+     	<label id="webid">智慧教学平台</label>
      	<img id="host_adm" src="image/adm.png" />
      	<label id="current_usr">
      		<a id="usr" class="usr_a" href=""><s:property value="name" /></a> 同学,

@@ -18,7 +18,7 @@ html{
 	left:120px;
 	top:15px;
 }
-#title{
+#webid{
 	position:absolute;
 	left:190px;
 	top:35px;
@@ -75,27 +75,6 @@ img.menu_element{
 img.menu_element:hover{
 	position: relative;
 	top: 3px;
-}
-div.select{
-	width:140px;
-	height:140px;
-	background-color:#FFFFFF;
-	text-align:center;
-	line-height:140px;
-	float:left;
-	display:inline;
-	border:solid 3px #FFFFFF;
-	background-color:#EAEAEA;
-	margin-left:1.6%;
-	margin-top:15% 
-}
-div.select:hover{
-	background-color:#D1D1D1;
-}
-label.selectlabel{
-	font-family:KaiTi;
-	font-size:30px;
-	font-weight:bold;
 }
 input.btn{
 	display: inline-block;

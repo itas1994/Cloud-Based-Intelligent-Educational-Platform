@@ -53,8 +53,6 @@ html{
 	position:absolute;
 	left:220px;
 	top:250px;
-	-moz-opacity:0.5;
-	opacity:0.5;
 	-webkit-border-radius: 5px;
 	font-size:15px;
 }
@@ -65,8 +63,6 @@ html{
 	position:absolute;
 	left:220px;
 	top:350px;
-	-moz-opacity:0.5;
-	opacity:0.5;
 	-webkit-border-radius: 5px;
 	font-size:15px;
 }
