@@ -1,49 +1,23 @@
-﻿*{
-	margin:0px;
-	padding:0px;
-	border:0px;
+﻿#current_panel{
+	width:98px;
+	height:35px;
+	background-color:#ffe148;
+	margin-left:632px;
+	background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#ffe148), to(#ffffff));
 }
-html{
-	background-color:#FFEC8B;
-	background-image:url(/Cloud-Based-Intelligent-Educational-Platform/image/context.jpg);
-}
-#main{	
-	background-color:#FFFFFF;
-	margin-left:auto;
-	margin-right:auto;
-	width:1000px;
-	-webkit-box-shadow:1px 1px 20px #222;
-}
-#topMenu{
-	background-color:#FFFACD;
-	width:100%;
-	margin-left:auto;
-	margin-right:auto;
-	padding-bottom:5px;
-}
-#icon{
-	margin-left:5px;
-	display:inline;
-}
-#mainlink{
+#issue_debate{
 	position:absolute;
-	left:840px;
-	top:73px;
-	display:inline;
-}
-#search_text{
-	height:25px;
-	border:solid 1px;
-	border-color:#FFa07a;
-}
-img.pic{
-	width:100px;
-	height:100px;
+	left:950px;
+	top:198px;
 }
 #resultpanel{
-	width:100%;
-	background-color:C5C1AA;
+	margin-left:250px;
+	margin-top:3px;
+	width:850px;
+	background-color:#ffe148;
+	-webkit-border-radius:5px;
 	padding-top:1px;
+	padding-bottom:1px;
 }
 #titlestar{
 	color:2E8B57;
@@ -53,6 +27,7 @@ img.pic{
 	margin-top:10px;
 }
 #titlelabel{
+	-webkit-border-radius:5px;
 	color:2E8B57;
 	font-family:张海山锐线体简;
 	font-size:25px;
@@ -61,6 +36,7 @@ img.pic{
 	margin-top:10px;
 }
 #contentlabel{
+	-webkit-border-radius:5px;
 	color:2E8B57;
 	font-family:张海山锐线体简;
 	font-size:25px;
@@ -68,10 +44,8 @@ img.pic{
 	margin-left:50px;
 	margin-top:10px;
 }
-#id{
-	display:none;
-}
 #replytextarea{
+	-webkit-border-radius:5px;
 	border:solid 1px #FFa07a;
 	overflow:none;
 	resize:none;
@@ -85,6 +59,7 @@ img.pic{
 	margin-left:44.5%;
 }
 #debateresult,#form2div,#replypanel{
+	-webkit-border-radius:5px;
 	width:98%;
 	background-color:#EEEEE0;
 	margin-top:10px;
@@ -113,40 +88,11 @@ img.pic{
 	margin-bottom:10px;
 	margin-left:44%;
 }
-input.btn{
-	display: inline-block;
-	outline: none;
-	cursor: pointer;
-	text-align: center;
-	text-decoration: none;
-	font: 14px/100% Arial, Helvetica, sans-serif;
-	padding: .5em 2em .55em;
-	text-shadow: 0 1px 1px rgba(0,0,0,.3);
-	-webkit-border-radius: .5em; 
-	border-radius: .5em;
-	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	
-	color: #000000;
-	border: solid 1px none;
-	background: #FFa07a;
-}
-input.btn:hover {
-	text-decoration: none;
-	
-	background: #FF6347;
-}
-input.btn:active {
-	position: relative;
-	top: 1px;
-	
-	color: #000000;
-}
 #taolunqu{
 	position:absolute;
-	margin-left:0.5%;
-	margin-top:1.5%;
+	margin-left:1.5%;
+	margin-top:1.8%;
 	font-family:汉仪菱心体简;
 	color:#EE4000;
-	font-size:60px;
+	font-size:20px;
 }

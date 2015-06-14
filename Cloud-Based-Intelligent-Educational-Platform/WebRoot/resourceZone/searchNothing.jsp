@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@taglib uri="/struts-tags" prefix="s" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -17,33 +18,44 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<link rel="stylesheet" type="text/css" href="css/resource/searchnothing.css">
+	<link rel="stylesheet" type="text/css" href="css/common.css">
+	
   </head>
   
   <body>
-  <div id="main">
-     <div id="topMenu">
-     	<div id="icon">
-     		<img class="icon" src="image/1.jpg" />
-     	</div>
-     	<label id="ziyuanqu">资源区</label>
-     	<div id="mainlink">
-     		<input class="btn" type="button" name="host" value="首页"
-     				onclick="window.location.href='backhostAction!execute.action'" />
-     		<input class="btn" type="button" name="host" value="账户"
-     				onclick="window.location.href=''" /> | 
-     		<form id="form1" action="SearchAction!execute.action" method="post">
-     			<input id="search_text" type="text" name="title" />
-     			<input class="btn" type="submit" name="name" value="搜索" /> 	|
-     		</form>
-     		<input class="btn" type="button" value="上传文件" 
-     				onclick="window.location.href='resourceZone/upload.jsp'" />
-     	</div>
-     </div>
+  <div id="topMenu">
+     	<img id="icon" src="image/logo.png" />
+     	<label id="webid">智慧教学平台</label>
+     	<img id="host_adm" src="image/adm.png" />
+     	<label id="current_usr">
+     		<a id="usr" class="usr_a" href=""><s:property value="name" /></a> ,
+     		<a class="usr_a" href="">登出</a>
+     	</label>
+    </div>
+    <img id="menu_bar_first" src="image/menu_bar.png" /> 
+    <img id="menu_host" src="image/menu_host.png" 
+    		onclick="window.location.href='backhostAction!execute.action'" />
+    <img class="menu_element" src="image/menu_resource.png" 
+    		onclick="window.location.href='ResourceAction!execute.action'" />
+    <img class="menu_element" src="image/menu_debate.png" 
+    		onclick="window.location.href='DebateAction!execute.action'" />
+    <img class="menu_element" src="image/menu_homework.png" 
+    		onclick="window.location.href='HomeworkAction!execute.action'" />
+    <img class="menu_element" src="image/menu_test.png" 
+    		onclick="window.location.href='TestAction!execute.action'" />
+    <img id="menu_bar_last" src="image/menu_bar.png" />
+    <div id="current_panel"></div>
+    <div id="panel_title">
+    	<label id="ziyuanqu">★再检查一下您的关键字吧</label>
+    	<form id="form1" action="SearchAction!execute.action" method="post">
+   			<input id="search_text" type="text" name="title" />
+   			<input id="search_button" class="btn" type="submit" name="name" value="搜索" />
+    	</form>
+     	<input id="upload_resource" class="btn" type="button" value="上传文件" 
+     			onclick="window.location.href='resourceZone/upload.jsp'" />
+    </div>
      <div id="errornotice">
      	<img id="nothingpic" src="image/searchnothing.jpg" /><br><br>
      	<p id="nothing">未检索到您所要的资源!</p><br>
-     	<input class="btn" id="backresource" type="button" value="返回资源区"
-     				onclick="window.location.href='ResourceAction!execute.action'"/>
      </div>
-  </div>
 </html>

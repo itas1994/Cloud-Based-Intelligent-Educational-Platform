@@ -28,8 +28,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		<img id="adm" src="image/adm.png" />
   		<img id="pass" src="image/pass.png" />
   		<form action="LoginAction!execute.action" method="post">
-  			<input class="" id="adminput" type="text" name="usr" />
-  			<input class="" id="passinput" type="password" name="psd" />
+  			<input id="adminput" type="text" name="usr" />
+  			<input id="passinput" type="password" name="psd" />
   			<input class="btn" id="submit" 
   					name="submit" type="submit" value="登陆" />
   		</form>

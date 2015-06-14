@@ -6,13 +6,20 @@
 	<constant name="struts.multipart.saveDir" value ="/temp"/>
 	<constant name="struts.multipart.maxSize" value="10240000" />
 	<package name="default" namespace="/" extends="struts-default">
+		<action name="LoginAction" class="action.LoginAction">
+			<result name="success">host.jsp</result>
+			<result name="psd_error">index.jsp</result>
+			<result name="id_error">index.jsp</result>
+		</action>
 		<action name="SearchAction" class="action.resource.SearchAction">
 			<result name="success">resourceZone/searchFinish.jsp</result>
 			<result name="error">resourceZone/searchNothing.jsp</result>
 		</action>
 		<action name="UploadAction" class="action.resource.UploadAction">
 			<param name="savePath">/usr/resource_file</param>
-			<result name="success">resourceZone/uploadsuccess.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">ResourceAction</param>
+			</result>
 		</action>
 		<action name="ResourceAction" class="action.resource.ResourceAction">
 			<result name="success">resourceZone/resourcehost.jsp</result>
@@ -29,12 +36,6 @@
         <action name="ContentAction" class="action.resource.ContentAction">
 			<result name="success">resourceZone/resourcecontent.jsp</result>
 		</action>
-		<action name="LoginAction" class="action.LoginAction">
-			<result name="s_success">S_host.jsp</result>
-			<result name="t_success">T_host.jsp</result>
-			<result name="psd_error">index.jsp</result>
-			<result name="id_error">index.jsp</result>
-		</action>
 		<action name="DebateAction" class="action.debate.DebateAction">
 			<result name="success">debateZone/debatehost.jsp</result>
 		</action>
@@ -44,8 +45,10 @@
 		<action name="debateReplyAction" class="action.debate.debateReplyAction">
 			<result name="success">/debateZone/debatecontent.jsp</result>
 		</action>
-		<action name="IssueAction" class="action.debate.IssueAction">
-			<result name="success">/debateZone/issueSucceed.jsp</result>
+		<action name="debateIssueAction" class="action.debate.debateIssueAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">DebateAction</param>
+			</result>
 		</action>
 		<action name="DmAction" class="action.DmAction">
 			<result name="dmsuc">dmZone/dmsuc.jsp</result>
@@ -71,7 +74,9 @@
 			<result name="success">homeworkZone/T_homeworkcontent.jsp</result>
 		</action>
 		<action name="homeworkIssueAction" class="action.homework.homeworkIssueAction">
-			<result name="success">homeworkZone/issueSucceed.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">HomeworkAction</param>
+			</result>
 		</action>
 		<action name="homeworkAnswerAction" class="action.homework.homeworkAnswerAction">
 			<result name="success">homeworkZone/S_homeworkcontent.jsp</result>
@@ -85,7 +90,9 @@
 			<result name="s">testZone/S_testcontent.jsp</result>
 		</action>
 		<action name="testIssueAction" class="action.test.testIssueAction">
-			<result name="success">testZone/issueSucceed.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">TestAction</param>
+			</result>
 		</action>
 		<action name="testScoreAction" class="action.test.testScoreAction">
 			<result name="success">testZone/T_testcontent.jsp</result>
@@ -94,8 +101,7 @@
 			<result name="success">testZone/S_testcontent.jsp</result>
 		</action>
 		<action name="backhostAction" class="action.backhostAction">
-			<result name="s">S_host.jsp</result>
-			<result name="t">T_host.jsp</result>
+			<result name="success">host.jsp</result>
 		</action>
 	</package>
 </struts>    

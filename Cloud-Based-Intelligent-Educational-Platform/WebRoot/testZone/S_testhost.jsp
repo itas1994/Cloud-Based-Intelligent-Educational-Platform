@@ -18,23 +18,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<link rel="stylesheet" type="text/css" href="css/test/S_testhost.css">
-
+	<link rel="stylesheet" type="text/css" href="css/common.css">
+	
   </head>
   
   <body>
-  	<div id="main">
-   	 <div id="topMenu">
-     	<div id="icon">
-     		<img class="icon" src="image/1.jpg" />
-     	</div>
-     	<label id="ceshiqu">测试区</label>
-     	<div id="mainlink">
-     		<input class="btn" type="button" name="host" value="首页"
-     				onclick="window.location.href='backhostAction!execute.action'" />
-     		<input class="btn" type="button" name="host" value="账户"
-     				onclick="window.location.href=''" />
-     	</div>
-     </div>
+  	<div id="topMenu">
+     	<img id="icon" src="image/logo.png" />
+     	<label id="webid">智慧教学平台</label>
+     	<img id="host_adm" src="image/adm.png" />
+     	<label id="current_usr">
+     		<a id="usr" class="usr_a" href=""><s:property value="name" /></a> ,
+     		<a class="usr_a" href="">登出</a>
+     	</label>
+    </div>
+    <img id="menu_bar_first" src="image/menu_bar.png" /> 
+    <img id="menu_host" src="image/menu_host.png" 
+    		onclick="window.location.href='backhostAction!execute.action'" />
+    <img class="menu_element" src="image/menu_resource.png" 
+    		onclick="window.location.href='ResourceAction!execute.action'" />
+    <img class="menu_element" src="image/menu_debate.png" 
+    		onclick="window.location.href='DebateAction!execute.action'" />
+    <img class="menu_element" src="image/menu_homework.png" 
+    		onclick="window.location.href='HomeworkAction!execute.action'" />
+    <img class="menu_element" src="image/menu_test.png" 
+    		onclick="window.location.href='TestAction!execute.action'" />
+    <img id="menu_bar_last" src="image/menu_bar.png" />
+    <div id="current_panel"></div>
+    <div id="panel_title">
+    	<label id="ceshiqu">★测试和作业一样是有deadline的</label>
+    </div>
      <div id="test">
      	<s:iterator value="stelist">
 		<div id="searchresult">
@@ -47,6 +60,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 		</s:iterator>
      </div>
-	 </div>
   </body>
 </html>

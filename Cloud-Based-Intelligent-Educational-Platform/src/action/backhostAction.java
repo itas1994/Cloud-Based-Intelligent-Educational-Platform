@@ -24,8 +24,7 @@ public class backhostAction {
         
         Dao dao=new Dao();
         name=dao.getUsrName(usrid);
-        String authority=dao.getAuthority(usrid);
         
-		return authority;
+		return "success";
 	}
 }

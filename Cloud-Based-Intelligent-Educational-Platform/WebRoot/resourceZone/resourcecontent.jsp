@@ -18,6 +18,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<link rel="stylesheet" type="text/css" href="css/resource/resourcecontent.css">
+	<link rel="stylesheet" type="text/css" href="css/common.css">
+
   </head>
   
   <body>
@@ -26,15 +28,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      	<label id="webid">智慧教学平台</label>
      	<img id="host_adm" src="image/adm.png" />
      	<label id="current_usr">
-     		<a id="usr" class="usr_a" href=""><s:property value="name" /></a> 老师,
+     		<a id="usr" class="usr_a" href=""><s:property value="name" /></a> ,
      		<a class="usr_a" href="">登出</a>
      	</label>
     </div>
     <img id="menu_bar_first" src="image/menu_bar.png" /> 
     <img id="menu_host" src="image/menu_host.png" 
     		onclick="window.location.href='backhostAction!execute.action'" />
-    <img class="menu_element" src="image/menu_group.png" 
-    		onclick="window.location.href='group/grouping.jsp'" />
     <img class="menu_element" src="image/menu_resource.png" 
     		onclick="window.location.href='ResourceAction!execute.action'" />
     <img class="menu_element" src="image/menu_debate.png" 
