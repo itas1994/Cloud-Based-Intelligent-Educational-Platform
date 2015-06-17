@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -36,6 +37,7 @@ import bean.debateBean;
 import bean.debateReplyBean;
 import bean.homeworkAnswerBean;
 import bean.homeworkBean;
+import bean.preBean;
 import bean.resourceBean;
 import bean.testAnswerBean;
 import bean.testBean;
@@ -460,11 +462,6 @@ public class Dao {
 					User r=new User();
 					r.setID(rs.getString("id"));
 					r.setName(rs.getString("name"));
-					r.setAge(rs.getString("age"));
-					r.setSex(rs.getString("sex"));
-					r.setEmail(rs.getString("email"));
-					r.setNation(rs.getString("nation"));
-					r.setTel(rs.getString("tel"));
 					list.add(r);
 				}
 			this.destroyQuery();
@@ -481,11 +478,6 @@ public class Dao {
 					User r=new User();
 					r.setID(rs.getString("id"));
 					r.setName(rs.getString("name"));
-					r.setAge(rs.getString("age"));
-					r.setSex(rs.getString("sex"));
-					r.setEmail(rs.getString("email"));
-					r.setNation(rs.getString("nation"));
-					r.setTel(rs.getString("tel"));
 					list.add(r);
 					num++;
 				}
@@ -519,11 +511,6 @@ public class Dao {
 					User r=new User();
 					r.setID(rs.getString("id"));
 					r.setName(rs.getString("name"));
-					r.setAge(rs.getString("age"));
-					r.setSex(rs.getString("sex"));
-					r.setEmail(rs.getString("email"));
-					r.setNation(rs.getString("nation"));
-					r.setTel(rs.getString("tel"));
 					list.add(r);
 				}
 			this.destroyQuery();
@@ -1193,4 +1180,152 @@ public class Dao {
 	    	
             return content;
 		}
+		
+		/*begin of info*/
+		public List<User> getInfo(String usrid) throws SQLException{
+			List<User> ulist=new ArrayList<User>();
+			
+			this.con();
+			String sql_usrinfo="select * from usr where id = '"+usrid+"'";
+			rs=st.executeQuery(sql_usrinfo);
+			while(rs.next()){
+				User u=new User();
+				u.setID(rs.getString("id"));
+				u.setAuthority(rs.getString("authority"));
+				u.setAge(rs.getInt("age"));
+				u.setEmail(rs.getString("email"));
+				u.setName(rs.getString("name"));
+				u.setNation(rs.getString("nation"));
+				u.setSex(rs.getString("sex"));
+				u.setTel(rs.getString("tel"));
+				ulist.add(u);
+			}
+			
+			return ulist;
+		}
+		
+		public String[] getFileName(String path){
+			File f=new File(path);
+			String[] f_array=f.list();
+			
+			return f_array;
+		}
+		
+		public int[] getCountFromXML(String usrid,String[] f_ho,String[] f_te) throws SAXException, IOException, ParserConfigurationException{
+			List<preBean> inlist=new ArrayList<preBean>();
+			int[] temp=new int[2];
+			int c_ho=0;
+			int c_te=0;
+			
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			for(int c1=0;c1<f_ho.length;c1++){
+				Document doc = db.parse("D:\\apache-tomcat-6.0.29\\webapps\\Cloud-Based-Intelligent-Educational-Platform\\"
+	            		+ "usr\\homework_answer_content\\"+f_ho[c1]);
+	            NodeList homeworks = doc.getElementsByTagName("homework");
+	            for(int i=0;i<homeworks.getLength();i++){
+	            	Node Answers=homeworks.item(i).getChildNodes().item(2);
+	            	NodeList answers=Answers.getChildNodes();
+	            	for(int k=0;k<answers.getLength();k++){
+	            		Node ausr=answers.item(k).getChildNodes().item(0);
+	            		if(usrid==ausr.getTextContent())
+	            			c_ho++;
+	            	}
+	            }    
+			}
+			for(int c2=0;c2<f_te.length;c2++){
+				Document doc = db.parse("D:\\apache-tomcat-6.0.29\\webapps\\Cloud-Based-Intelligent-Educational-Platform\\"
+	            		+ "usr\\test_answer_content\\"+f_te[c2]);
+	            NodeList tests = doc.getElementsByTagName("test");
+	            for(int i=0;i<tests.getLength();i++){
+	            	Node Answers=tests.item(i).getChildNodes().item(2);
+	            	NodeList answers=Answers.getChildNodes();
+	            	for(int k=0;k<answers.getLength();k++){
+	            		Node ausr=answers.item(k).getChildNodes().item(0);
+	            		if(usrid==ausr.getTextContent())
+	            			c_te++;
+	            	}
+	            }    
+			}
+			
+			temp[0]=c_ho;
+			temp[1]=c_te;
+			
+			return temp;
+		}
+		
+		
+		public List<preBean> getCount4Student(String usrid,String[] f_ho,String[] f_te) throws SQLException, SAXException, IOException, ParserConfigurationException{
+			List<preBean> inlist=new ArrayList<preBean>();
+			preBean pb=new preBean();
+			int count_re=0;
+			int count_de=0;
+			
+			this.con();
+			String sql_info="select c_re.count_re,c_de.count_de from"
+					+ "(select count(uploadusr) as count_re "
+					+ "from resourceinfo where uploadusr = '"+usrid+"') as c_re,"
+					+ "(select count(issueusr) as count_de "
+					+ "from debate where issueusr = '"+usrid+"') as c_de";
+			rs=st.executeQuery(sql_info);
+			while(rs.next()){
+				count_re=rs.getInt("count_re");
+				count_de=rs.getInt("count_de");
+				pb.setCount_re(count_re);
+				pb.setCount_de(count_de);
+			}
+			this.destroyQuery();
+			
+			int[] temp=this.getCountFromXML(usrid, f_ho, f_te);
+			pb.setCount_ho(temp[0]);
+			pb.setCount_te(temp[1]);
+			inlist.add(pb);
+			
+			return inlist;
+		}
+		
+		public List<preBean> getCount4Teacher(String usrid) throws SQLException, SAXException, IOException, ParserConfigurationException{
+			List<preBean> inlist=new ArrayList<preBean>();
+			preBean pb=new preBean();
+			int count_re=0;
+			int count_de=0;
+			int count_ho=0;
+			int count_te=0;
+			
+			this.con();
+			String sql_info="select c_re.count_re,c_de.count_de,"
+					+ "c_ho.count_ho,c_te.count_te from "
+					+ "(select count(uploadusr) as count_re "
+					+ "from resourceinfo where uploadusr = '"+usrid+"') as c_re,"
+					+ "(select count(issueusr) as count_de "
+					+ "from debate where issueusr = '"+usrid+"') as c_de,"
+					+ "(select count(issueteacher) as count_ho "
+					+ "from homework where issueteacher = '"+usrid+"') as c_ho,"
+					+ "(select count(issueteacher) as count_te "
+					+ "from test where issueteacher = '"+usrid+"') as c_te";
+			rs=st.executeQuery(sql_info);
+			while(rs.next()){
+				count_re=rs.getInt("count_re");
+				count_de=rs.getInt("count_de");
+				count_ho=rs.getInt("count_ho");
+				count_te=rs.getInt("count_te");
+				pb.setCount_re(count_re);
+				pb.setCount_de(count_de);
+				pb.setCount_ho(count_ho);
+				pb.setCount_te(count_te);
+				inlist.add(pb);
+			}
+			this.destroyQuery();
+			
+			return inlist;
+		}
+		
+		public void modifyPsd(String usrid,String new_psd) throws SQLException{
+			this.con();
+			String sql_mo_psd="update usr set psd = '"+new_psd+"' "
+					+ "where id = '"+usrid+"'";
+			st.executeUpdate(sql_mo_psd);
+			this.destroyUpdate();
+		}
+		/*end of info*/
 }

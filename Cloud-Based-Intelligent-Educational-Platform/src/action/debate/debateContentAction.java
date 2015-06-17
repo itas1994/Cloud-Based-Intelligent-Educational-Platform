@@ -20,6 +20,15 @@ public class debateContentAction {
 	private List delist=new ArrayList();
 	private String title;
 	private String content;
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getContent() {
 		return content;
 	}
@@ -58,6 +67,11 @@ public class debateContentAction {
 		HttpServletRequest rq=ServletActionContext.getRequest();
 		id=Integer.parseInt(rq.getParameter("id"));
 		Dao dao=new Dao();
+		
+		Map<String, Object> session = ActionContext.getContext().getSession();
+        String usrid = session.get("USRID").toString(); 
+        name=dao.getUsrName(usrid);
+		
 		String issueusr=dao.getIssueusr(id);
 		delist=dao.getDebateReply(id, issueusr);
 		title=dao.getDebateTitle(id);

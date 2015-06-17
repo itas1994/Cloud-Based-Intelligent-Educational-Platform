@@ -14,6 +14,16 @@ public class TestAction {
 		
 	private ArrayList stelist;
 	private ArrayList ttelist;
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public ArrayList getStelist() {
 		return stelist;
@@ -32,11 +42,12 @@ public class TestAction {
 	}
 
 	public String execute() throws SQLException{
+		Dao dao=new Dao();
 		
 		Map<String, Object> session = ActionContext.getContext().getSession();
         String usrid = session.get("USRID").toString(); 
+        name=dao.getUsrName(usrid);
 		
-		Dao dao=new Dao();
 		String authority=dao.getAuthority(usrid);
 		stelist=(ArrayList) dao.allTest();
 		ttelist=(ArrayList) dao.getOwnHomework(usrid);

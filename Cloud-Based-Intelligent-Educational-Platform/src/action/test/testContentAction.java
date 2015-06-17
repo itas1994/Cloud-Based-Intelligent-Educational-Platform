@@ -23,6 +23,16 @@ public class testContentAction {
 	private String content;
 	private ArrayList stelist;
 	private ArrayList ttelist;
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 	public int getId() {
 		return id;
@@ -83,6 +93,7 @@ public class testContentAction {
 		
 		Map<String, Object> session = ActionContext.getContext().getSession();
         String usrid = session.get("USRID").toString();
+        name=dao.getUsrName(usrid);
 		
 		hasMine=dao.isMyAnswer4Test(id, issueteacher, usrid);
 		content=dao.getTestContent(id, issueteacher);

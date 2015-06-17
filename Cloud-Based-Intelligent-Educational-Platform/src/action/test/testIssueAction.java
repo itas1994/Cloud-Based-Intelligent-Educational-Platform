@@ -13,6 +13,16 @@ import Dao.Dao;
 
 public class testIssueAction {
 	
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 	public String execute() throws SQLException{
 		HttpServletRequest rq=ServletActionContext.getRequest();
@@ -20,11 +30,12 @@ public class testIssueAction {
 		String content=rq.getParameter("content");
 		String limittime=rq.getParameter("limittime");//
 		//limittime的输入方式为输入分钟
+		Dao dao=new Dao();
 		
 		Map<String, Object> session = ActionContext.getContext().getSession();
         String issueteacher = session.get("USRID").toString(); 
-		
-		Dao dao=new Dao();
+        name=dao.getUsrName(issueteacher);
+        
 		dao.db4issueTest(title, content, issueteacher, limittime);
 		dao.dom4issueTest(title, content, issueteacher);
 		return "success";

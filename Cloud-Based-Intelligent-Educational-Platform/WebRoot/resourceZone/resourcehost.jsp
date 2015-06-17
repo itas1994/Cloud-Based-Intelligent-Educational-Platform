@@ -21,14 +21,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
   </head>
 
+	<script>
+		function logout(){
+			if(confirm("要走了么？╮(╯▽╰)╭")){
+				window.location.href = "LogoutAction!execute.action";
+			}
+		}
+</script>
+
   <body>
      <div id="topMenu">
      	<img id="icon" src="image/logo.png" />
      	<label id="webid">智慧教学平台</label>
      	<img id="host_adm" src="image/adm.png" />
      	<label id="current_usr">
-     		<a id="usr" class="usr_a" href=""><s:property value="name" /></a> ,
-     		<a class="usr_a" href="">登出</a>
+     		<a id="usr" class="usr_a" href="PersonalInfoAction!execute.action"><s:property value="name" /></a> ,
+     		<a class="usr_a" onclick="logout()">登出</a>
      	</label>
     </div>
     <img id="menu_bar_first" src="image/menu_bar.png" /> 
@@ -51,7 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    			<input id="search_button" class="btn" type="submit" name="name" value="搜索" />
     	</form>
      	<input id="upload_resource" class="btn" type="button" value="上传文件" 
-     			onclick="window.location.href='resourceZone/upload.jsp'" />
+     			onclick="window.location.href='conveyName4ResourceAction!execute.action'" />
     </div>
     <div id="resource">
      	<s:iterator value="relist">

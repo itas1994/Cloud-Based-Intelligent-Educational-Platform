@@ -22,7 +22,16 @@ public class homeworkContentAction {
 	private boolean hasMine;
 	private String content;
 	private ArrayList holist;
-	
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 	public int getId() {
 		return id;
@@ -74,8 +83,8 @@ public class homeworkContentAction {
 		
 		Map<String, Object> session = ActionContext.getContext().getSession();
         String usrid = session.get("USRID").toString();
+        name=dao.getUsrName(usrid);
 		
-//		hasMine=dao.isMyAnswer4Homework(id, issueteacher, usrid);//for student
 		content=dao.getHomeworkContent(id, issueteacher);
 		holist=(ArrayList) dao.answer4Homework(id, issueteacher);
 		

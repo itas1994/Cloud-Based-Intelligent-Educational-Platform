@@ -22,14 +22,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
   </head>
   
+  <script>
+		function logout(){
+			if(confirm("要走了么？╮(╯▽╰)╭")){
+				window.location.href = "LogoutAction!execute.action";
+			}
+		}
+</script>
+  
   <body>
     <div id="topMenu">
      	<img id="icon" src="image/logo.png" />
      	<label id="webid">智慧教学平台</label>
      	<img id="host_adm" src="image/adm.png" />
      	<label id="current_usr">
-     		<a id="usr" class="usr_a" href=""></a> ,
-     		<a class="usr_a" href="">登出</a>
+     		<a id="usr" class="usr_a" href="PersonalInfoAction!execute.action"><s:property value="name" /></a> ,
+     		<a class="usr_a" onclick="logout()">登出</a>
      	</label>
     </div>
     <img id="menu_bar_first" src="image/menu_bar.png" /> 
@@ -47,8 +55,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div id="current_panel"></div>
     <div id="panel_title">
     	<label id="ceshiqu">★在这里发布试卷</label>
-    	<input id="issue_test" class="btn" type="button" value="发布新测试" 
-     			onclick="window.location.href='testZone/testissue.jsp'" />
     </div>
      <div id="issue">
     	<form id="form2" action="testIssueAction!execute.action" method="post">

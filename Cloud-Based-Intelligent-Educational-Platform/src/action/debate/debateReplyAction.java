@@ -23,6 +23,15 @@ public class debateReplyAction {
 	private String title;
 	private int id;
 	private List<debateReplyBean> delist=new ArrayList<debateReplyBean>();
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 	public String getTitle() {
 		return title;
@@ -54,15 +63,16 @@ public class debateReplyAction {
 		title=rq.getParameter("title");
 		id=Integer.parseInt(rq.getParameter("id"));
 		String replycontent=rq.getParameter("replycontent");
+		Dao dao=new Dao();
 		
 		Map<String, Object> session = ActionContext.getContext().getSession();
         String replyusr = session.get("USRID").toString(); 
-		
+        name=dao.getUsrName(replyusr);
+        
 		Date now = new Date();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		String replytime = df.format(now);
 		
-		Dao dao=new Dao();
 		String issueusr=dao.getIssueusr(id);
 		dao.insertReply(id, title, replycontent, replyusr, replytime, issueusr);
 		delist=dao.reply(id, title, issueusr);

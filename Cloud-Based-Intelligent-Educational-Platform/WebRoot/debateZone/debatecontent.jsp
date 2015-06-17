@@ -21,14 +21,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="css/common.css">
 	
   </head>
+  
+  <script>
+		function logout(){
+			if(confirm("要走了么？╮(╯▽╰)╭")){
+				window.location.href = "LogoutAction!execute.action";
+			}
+		}
+</script>
+  
   <body>
     <div id="topMenu">
      	<img id="icon" src="image/logo.png" />
      	<label id="webid">智慧教学平台</label>
      	<img id="host_adm" src="image/adm.png" />
      	<label id="current_usr">
-     		<a id="usr" class="usr_a" href=""><s:property value="name" /></a> ,
-     		<a class="usr_a" href="">登出</a>
+     		<a id="usr" class="usr_a" href="PersonalInfoAction!execute.action"><s:property value="name" /></a> ,
+     		<a class="usr_a" onclick="logout()">登出</a>
      	</label>
     </div>
     <img id="menu_bar_first" src="image/menu_bar.png" /> 
@@ -47,7 +56,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div id="panel_title">
     	<label id="taolunqu">★快来参与当前的讨论吧</label>
     	<input id="issue_debate" class="btn" type="button" value="发布新讨论" 
-     			onclick="window.location.href='debateZone/debateissue.jsp'" />
+     			onclick="window.location.href='conveyName4DebateAction!execute.action'" />
     </div>
      <div id="resultpanel">
 		<div id="debateresult">

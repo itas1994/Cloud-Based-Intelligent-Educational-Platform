@@ -11,6 +11,18 @@
 			<result name="psd_error">index.jsp</result>
 			<result name="id_error">index.jsp</result>
 		</action>
+		<action name="LogoutAction" class="action.LogoutAction">
+			<result name="success">index.jsp</result>
+		</action>
+		<action name="PersonalInfoAction" class="action.PersonalInfoAction">
+			<result name="success">info.jsp</result>
+		</action>
+		<action name="ModifyPsdAction" class="action.ModifyPsdAction">
+			<result name="success">host.jsp</result>
+		</action>
+		<action name="backhostAction" class="action.backhostAction">
+			<result name="success">host.jsp</result>
+		</action>
 		<action name="SearchAction" class="action.resource.SearchAction">
 			<result name="success">resourceZone/searchFinish.jsp</result>
 			<result name="error">resourceZone/searchNothing.jsp</result>
@@ -23,6 +35,9 @@
 		</action>
 		<action name="ResourceAction" class="action.resource.ResourceAction">
 			<result name="success">resourceZone/resourcehost.jsp</result>
+		</action>
+		<action name="conveyName4ResourceAction" class="action.resource.conveyName4ResourceAction">
+			<result name="success">resourceZone/upload.jsp</result>
 		</action>
 		<action name="DownloadAction" class="action.resource.DownloadAction">
             <result name="success" type="stream">
@@ -38,6 +53,9 @@
 		</action>
 		<action name="DebateAction" class="action.debate.DebateAction">
 			<result name="success">debateZone/debatehost.jsp</result>
+		</action>
+		<action name="conveyName4DebateAction" class="action.debate.conveyName4DebateAction">
+			<result name="success">debateZone/debateissue.jsp</result>
 		</action>
 		<action name="debateContentAction" class="action.debate.debateContentAction">
 			<result name="success">debateZone/debatecontent.jsp</result>
@@ -66,6 +84,9 @@
 			<result name="s">homeworkZone/S_homeworkhost.jsp</result>
 			<result name="t">homeworkZone/T_homeworkhost.jsp</result>
 		</action>
+		<action name="conveyName4HomeworkAction" class="action.homework.conveyName4HomeworkAction">
+			<result name="success">homeworkZone/homeworkissue.jsp</result>
+		</action>
 		<action name="homeworkContentAction" class="action.homework.homeworkContentAction">
 			<result name="s">homeworkZone/S_homeworkcontent.jsp</result>
 			<result name="t">homeworkZone/T_homeworkcontent.jsp</result>
@@ -85,6 +106,9 @@
 			<result name="s">testZone/S_testhost.jsp</result>
 			<result name="t">testZone/T_testhost.jsp</result>
 		</action>
+		<action name="conveyName4TestAction" class="action.test.conveyName4TestAction">
+			<result name="success">testZone/testissue.jsp</result>
+		</action>
 		<action name="testContentAction" class="action.test.testContentAction">
 			<result name="t">testZone/T_testcontent.jsp</result>
 			<result name="s">testZone/S_testcontent.jsp</result>
@@ -99,9 +123,6 @@
 		</action>
 		<action name="testAnswerAction" class="action.test.testAnswerAction">
 			<result name="success">testZone/S_testcontent.jsp</result>
-		</action>
-		<action name="backhostAction" class="action.backhostAction">
-			<result name="success">host.jsp</result>
 		</action>
 	</package>
 </struts>    

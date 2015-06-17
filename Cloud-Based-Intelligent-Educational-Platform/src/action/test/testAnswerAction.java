@@ -23,6 +23,16 @@ public class testAnswerAction {
 	private String title;
 	private String content;
 	private ArrayList telist;
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public int getId() {
 		return id;
@@ -66,6 +76,7 @@ public class testAnswerAction {
 		
 		Map<String, Object> session = ActionContext.getContext().getSession();
         String ausr = session.get("USRID").toString(); 
+        name=dao.getUsrName(ausr);
 		
         Date now = new Date();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");

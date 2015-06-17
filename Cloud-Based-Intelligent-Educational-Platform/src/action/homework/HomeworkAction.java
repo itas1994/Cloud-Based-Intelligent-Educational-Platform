@@ -14,7 +14,17 @@ public class HomeworkAction {
 		
 	private ArrayList<homeworkBean> sholist;
 	private ArrayList<homeworkBean> tholist;
-	
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 
 	public ArrayList<homeworkBean> getSholist() {
 		return sholist;
@@ -37,9 +47,12 @@ public class HomeworkAction {
 
 
 	public String execute() throws SQLException{
+		Dao dao=new Dao();
+
 		Map<String, Object> session = ActionContext.getContext().getSession();
         String usrid = session.get("USRID").toString(); 
-		Dao dao=new Dao();
+        name=dao.getUsrName(usrid);
+		
 		String authority=dao.getAuthority(usrid);
 		sholist=(ArrayList<homeworkBean>) dao.allHomework();
 		tholist=(ArrayList<homeworkBean>) dao.getOwnHomework(usrid);

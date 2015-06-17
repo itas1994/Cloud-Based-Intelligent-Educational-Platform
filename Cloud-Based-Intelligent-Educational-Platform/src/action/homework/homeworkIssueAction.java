@@ -13,17 +13,28 @@ import Dao.Dao;
 
 public class homeworkIssueAction {
 	
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 	public String execute() throws SQLException{
 		HttpServletRequest rq=ServletActionContext.getRequest();
 		String title=rq.getParameter("title");
 		String content=rq.getParameter("content");
 		String deadline=rq.getParameter("deadline");
-
+		Dao dao=new Dao();
+		
 		Map<String, Object> session = ActionContext.getContext().getSession();
         String issueteacher = session.get("USRID").toString();
+        name=dao.getUsrName(issueteacher);
 		
-		Dao dao=new Dao();
 		dao.db4issueHomework(title, content, issueteacher, deadline);
 		dao.dom4issueHomework(title, content, issueteacher);
 		return "success";
