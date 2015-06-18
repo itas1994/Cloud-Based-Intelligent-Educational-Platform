@@ -58,11 +58,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
      <div id="issue">
     	<form id="form2" action="testIssueAction!execute.action" method="post">
-     		<label class="issue_info">作业标题: </label><textarea id="title" name="title" cols="54" rows="1"></textarea><br><br>
+     		<label class="issue_info">作业标题: </label>
+     		<textarea id="title" name="title" cols="54" rows="1"></textarea><br><br>
      		<label class="issue_info">作业内容:</label>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
      		<textarea id="content" name="content" cols="64" rows="12"></textarea><br><br>
+     		
      		<label class="issue_info">测试时长:</label>
-     		<textarea id="limittime" name="limittime" cols="54" rows="1"></textarea><br><br>
+     		<textarea id="limittime" name="limittime" cols="45" rows="1"></textarea>
+     		<label class="issue_info">(分钟)</label><br><br>
+     		
+     		<label class="issue_info">截止日期:</label>
+     		<textarea id="deadline" name="year" cols="6" rows="1"></textarea>
+     		<label class="issue_info">-</label>
+     		<textarea id="deadline" name="month" cols="6" rows="1"></textarea>
+     		<label class="issue_info">-</label>
+     		<textarea id="deadline" name="day" cols="6" rows="1"></textarea>
+     		<label class="issue_info">(年年年年-月月-日日)</label><br><br>
+     		
      		<input class="btn" id="submitissue" type="submit" value="确认发布" />
     	</form><br>
     </div>

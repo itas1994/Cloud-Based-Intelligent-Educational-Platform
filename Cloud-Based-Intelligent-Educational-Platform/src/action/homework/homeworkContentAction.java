@@ -2,6 +2,7 @@ package action.homework;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -23,6 +24,17 @@ public class homeworkContentAction {
 	private String content;
 	private ArrayList holist;
 	private String name;
+	private int isExpired;
+
+	public int getIsExpired() {
+		return isExpired;
+	}
+
+
+	public void setIsExpired(int isExpired) {
+		this.isExpired = isExpired;
+	}
+
 
 	public String getName() {
 		return name;
@@ -73,7 +85,7 @@ public class homeworkContentAction {
 		this.hasMine = hasMine;
 	}
 	
-	public String execute() throws SQLException, ParserConfigurationException, SAXException, IOException{
+	public String execute() throws SQLException, ParserConfigurationException, SAXException, IOException, ParseException{
 		HttpServletRequest rq=ServletActionContext.getRequest();
 		id=Integer.parseInt(rq.getParameter("id"));
 		Dao dao=new Dao();
@@ -87,6 +99,8 @@ public class homeworkContentAction {
 		
 		content=dao.getHomeworkContent(id, issueteacher);
 		holist=(ArrayList) dao.answer4Homework(id, issueteacher);
+		
+		isExpired=dao.isExpired4Homework(id);
 		
 		String authority=dao.getAuthority(usrid);
 		return authority;

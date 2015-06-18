@@ -24,6 +24,17 @@ public class testAnswerAction {
 	private String content;
 	private ArrayList telist;
 	private String name;
+	private ArrayList stelist;
+
+	public ArrayList getStelist() {
+		return stelist;
+	}
+
+
+	public void setStelist(ArrayList stelist) {
+		this.stelist = stelist;
+	}
+
 
 	public String getName() {
 		return name;
@@ -85,6 +96,7 @@ public class testAnswerAction {
 		dao.insertStudentAnswer4Test(id, issueteacher, ausr,atime,acontent);
 		
 		content=dao.getTestContent(id, issueteacher);
+		stelist=(ArrayList) dao.answer4Test4Student(id, issueteacher,ausr);
 		telist=(ArrayList) dao.answer4Test4Student(id, issueteacher,ausr);
 		return "success";
 	}

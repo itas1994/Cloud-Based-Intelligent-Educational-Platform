@@ -30,13 +30,19 @@ public class testIssueAction {
 		String content=rq.getParameter("content");
 		String limittime=rq.getParameter("limittime");//
 		//limittime的输入方式为输入分钟
+		String year=rq.getParameter("year");
+		String month=rq.getParameter("month");
+		String day=rq.getParameter("day");
+		
+		String deadline=year+"-"+month+"-"+day;
+		
 		Dao dao=new Dao();
 		
 		Map<String, Object> session = ActionContext.getContext().getSession();
         String issueteacher = session.get("USRID").toString(); 
         name=dao.getUsrName(issueteacher);
         
-		dao.db4issueTest(title, content, issueteacher, limittime);
+		dao.db4issueTest(title, content, issueteacher, limittime,deadline);
 		dao.dom4issueTest(title, content, issueteacher);
 		return "success";
 	}

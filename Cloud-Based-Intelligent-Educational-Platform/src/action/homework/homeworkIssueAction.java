@@ -28,7 +28,12 @@ public class homeworkIssueAction {
 		HttpServletRequest rq=ServletActionContext.getRequest();
 		String title=rq.getParameter("title");
 		String content=rq.getParameter("content");
-		String deadline=rq.getParameter("deadline");
+		String year=rq.getParameter("year");
+		String month=rq.getParameter("month");
+		String day=rq.getParameter("day");
+		
+		String deadline=year+"-"+month+"-"+day;
+		
 		Dao dao=new Dao();
 		
 		Map<String, Object> session = ActionContext.getContext().getSession();

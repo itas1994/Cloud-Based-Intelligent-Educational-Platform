@@ -64,6 +64,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<label id="titlelabel"><s:property value="title" /></label><br><br>
 			<label id="contentlabel"><s:property value="content" /></label>
 		</div>
+		<s:if test='isExpired=="1"'>
+			<div id="answerwarn">
+				&nbsp;&nbsp;&nbsp;您发布的这篇作业已经关闭,以下是同学们提交的所有答案
+			</div>
+		</s:if>
 		<s:iterator value="holist" var="ho">
 			<div id="answerresult">
 				<label id="ausr">学生  <s:property value="ausr" /> 在 <s:property value="atime" /> 提交答案:</label><br><br>
@@ -73,12 +78,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<input type="hidden" name="id" value="<s:property value='id' />" />
 						<input type="hidden" name="ausr" value="<s:property value='ausr' />" />
 						<input type="hidden" name="atime" value="<s:property value='atime' />" />
-						<textarea id="atextarea" name="aremark" cols="100" rows="2"></textarea><br>
+						<textarea id="atextarea" placeholder="请输入评价" name="aremark" cols="100" rows="2"></textarea><br>
 						<input class="btn" id="submitanswer" type="submit" value="提交作业评价"/>
 					</form>
 				</s:if>
 				<s:else>
-					<label id="aremark">教师评语:<s:property value="aremark"></s:property></label><br>
+					&nbsp;<label id="aremark">教师评语:<s:property value="aremark"></s:property></label><br>
 				</s:else>
 			</div>
 		</s:iterator>

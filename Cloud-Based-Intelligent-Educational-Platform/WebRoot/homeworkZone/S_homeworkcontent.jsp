@@ -63,18 +63,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<label id="contentlabel"><s:property value="content" /></label>
 			<label id="id"></label>
 		</div>
-		<div id="answerpanel">
-			<form id="form2" action="homeworkAnswerAction!execute.action" method="post">
-				<input type="hidden" name="id" value="<s:property value="id" />" />
-				<textarea id="atextarea" name="acontent" cols="100" rows="12"></textarea><br>
-				<input class="btn" id="submitanswer" type="submit" value="提交作业"/>
-			</form><br>
-		</div>
+		<s:if test='isExpired=="-1"'>
+			<div id="answerpanel">
+				<form id="form2" action="homeworkAnswerAction!execute.action" method="post">
+					<input type="hidden" name="id" value="<s:property value="id" />" />
+					<textarea id="atextarea" name="acontent" cols="100" rows="12"></textarea><br>
+					<input class="btn" id="submitanswer" type="submit" value="提交作业"/>
+				</form><br>
+			</div>
+		</s:if>
+		<s:elseif test='isExpired=="1"'>
+			<div id="answerpanel">
+				&nbsp;&nbsp;&nbsp;该作业已经关闭，不能提交答案啦
+			</div>
+		</s:elseif>
 		<s:iterator value="holist">
 			<div id="answerresult">
 				<label id="ausr">学生  <s:property value="ausr" /> 在 <s:property value="atime" /> 提交答案:</label><br><br>
 				<label id="acontent"><s:property value="acontent"></s:property></label><br><br>
-				<label id="aremark">教师评语:<s:property value="aremark"></s:property></label><br>
+				&nbsp;<label id="aremark">教师评语:<s:property value="aremark"></s:property></label><br>
 			</div>
 		</s:iterator>
      </div>

@@ -7,7 +7,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -564,6 +567,47 @@ public class Dao {
 			return holist;
 		}
 		
+		public int isExpired4Homework(int id) throws SQLException, ParseException{
+			int isExpired=-1;
+			String deadline="";
+			
+			this.con();
+			String sql_deadline="select deadline from homework where id = "+id+"";
+			rs=st.executeQuery(sql_deadline);
+			while(rs.next()){
+				deadline=rs.getString("deadline");
+			}
+			this.destroyQuery();
+			
+			String _deadline=deadline+" 00:00:00";
+			SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+			Date now_time=new Date();
+			String now=format.format(now_time);
+			long now_stamp=this.date2TimeStamp(now);
+			
+			long deadline_stamp=this.date2TimeStamp(_deadline);
+			
+			if(0<=(now_stamp-deadline_stamp))
+				isExpired=1;
+			
+			return isExpired;
+		}
+		
+		public long date2TimeStamp(String time) throws ParseException{
+			SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+			Date date = format.parse(time);
+			long time_stamp=date.getTime();
+			
+			return time_stamp;
+		}
+		
+		public String timeStamp2Date(long time_stamp){
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String date = format.format(time_stamp);
+			
+			return date;
+		}
+		
 		//begin of homework content
 		public List<homeworkAnswerBean> answer4Homework(int id,String issueteacher) throws SQLException{
 			String _id=id+"";
@@ -839,12 +883,51 @@ public class Dao {
 					t.setId(rs.getInt("id"));
 					t.setTitle(rs.getString("title"));
 					t.setIssuetime(rs.getString("issuetime"));
-					t.setLimittime(rs.getString("limittime"));
+					t.setLimittime(rs.getInt("limittime"));
 					t.setIssueteacher(rs.getString("issueteacher"));
 					telist.add(t);
 				}
 			this.destroyQuery();
 			return telist;
+		}
+		
+		public int getLimitTimeInMinutes(int id) throws SQLException{
+			String limittime="";
+			int timespan=0;
+			
+			this.con();
+			String sql_limittime="select limittime from test where id = "+id+"";
+			rs=st.executeQuery(sql_limittime);
+			while(rs.next()){
+				timespan=rs.getInt("limittime");
+			}
+			this.destroyQuery();
+			
+			return timespan;
+		}
+		
+		public String getLimitTimeInDate(int id) throws SQLException, ParseException{
+			String limittime="";
+			int timespan=0;
+			
+			this.con();
+			String sql_limittime="select limittime from test where id = "+id+"";
+			rs=st.executeQuery(sql_limittime);
+			while(rs.next()){
+				timespan=rs.getInt("limittime");
+			}
+			this.destroyQuery();
+			
+			SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+			Date now_time=new Date();
+			String now=format.format(now_time);
+			long now_stamp=this.date2TimeStamp(now);
+			
+			int s_time=timespan*60*1000;
+			long limit_stamp=now_stamp+s_time;
+			limittime=this.timeStamp2Date(limit_stamp);
+			
+			return limittime;
 		}
 		
 		public List<testBean> getOwnTest(String usrid) throws SQLException{
@@ -857,7 +940,7 @@ public class Dao {
 					t.setId(rs.getInt("id"));
 					t.setTitle(rs.getString("title"));
 					t.setIssuetime(rs.getString("issuetime"));
-					t.setLimittime(rs.getString("limittime"));
+					t.setLimittime(rs.getInt("limittime"));
 					t.setIssueteacher(rs.getString("issueteacher"));
 					telist.add(t);
 				}
@@ -970,10 +1053,10 @@ public class Dao {
 			transformer.transform(source,fileResult);
 		}
 		
-		public void db4issueTest(String title,String content,String issueteacher,String limittime) throws SQLException{
+		public void db4issueTest(String title,String content,String issueteacher,String limittime,String deadline) throws SQLException{
 			this.con();
 			String sql_issue="insert into test values(null,'"+title+"','usr/test_answer_content/"+issueteacher+".xml',"
-					+ "now(),'"+limittime+"','"+issueteacher+"')";
+					+ "now(),'"+deadline+"','"+limittime+"','"+issueteacher+"')";
 			st.executeUpdate(sql_issue);
 			this.destroyUpdate();
 		}
@@ -1074,11 +1157,15 @@ public class Dao {
 	            	if(title.getAttributes().getNamedItem("id").getNodeValue().equals(_id)){
 	            		Node Answers=tests.item(i).getChildNodes().item(2);
 	            		NodeList answers=Answers.getChildNodes();
-	            		for(int k=0;k<answers.getLength();k++){
-	            			Node answer=answers.item(k);
-	            			if(answer.getChildNodes().item(0).getTextContent().equals(ausr)
-	    	            			&& answer.getChildNodes().item(2).getTextContent().equals(""))
-	    	            				hasMine=-1;
+	            		if(answers.getLength()!=0){
+	            			for(int k=0;k<answers.getLength();k++){
+		            			Node answer=answers.item(k);
+		            			if(answer.getChildNodes().item(0).getTextContent().equals(ausr)
+		    	            			&& answer.getChildNodes().item(2).getTextContent().equals(""))
+		    	            				hasMine=-1;
+		            		}
+	            		}else{
+	            			hasMine=-1;
 	            		}
 	            	}
 	            }
@@ -1124,6 +1211,32 @@ public class Dao {
 	    		e.printStackTrace();
 	    	}
 			return telist;
+		}
+		
+		public int isExpired4Test(int id) throws SQLException, ParseException{
+			int isExpired=-1;
+			String deadline="";
+			
+			this.con();
+			String sql_deadline="select deadline from test where id = "+id+"";
+			rs=st.executeQuery(sql_deadline);
+			while(rs.next()){
+				deadline=rs.getString("deadline");
+			}
+			this.destroyQuery();
+			
+			String _deadline=deadline+" 00:00:00";
+			SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+			Date now_time=new Date();
+			String now=format.format(now_time);
+			long now_stamp=this.date2TimeStamp(now);
+			
+			long deadline_stamp=this.date2TimeStamp(_deadline);
+			
+			if(0<=(now_stamp-deadline_stamp))
+				isExpired=1;
+			
+			return isExpired;
 		}
 		
 		public List<testAnswerBean> answer4Test4Teacher(int id,String issueteacher,String usrid) throws SQLException{

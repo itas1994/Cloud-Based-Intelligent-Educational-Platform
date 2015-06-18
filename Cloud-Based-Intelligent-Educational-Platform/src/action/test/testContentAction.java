@@ -2,6 +2,7 @@ package action.test;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -24,6 +25,39 @@ public class testContentAction {
 	private ArrayList stelist;
 	private ArrayList ttelist;
 	private String name;
+	private int isExpired;
+	private String limittime;
+	private int timespan;
+
+	public int getTimespan() {
+		return timespan;
+	}
+
+
+	public void setTimespan(int timespan) {
+		this.timespan = timespan;
+	}
+
+
+	public String getLimittime() {
+		return limittime;
+	}
+
+
+	public void setLimittime(String limittime) {
+		this.limittime = limittime;
+	}
+
+
+	public int getIsExpired() {
+		return isExpired;
+	}
+
+
+	public void setIsExpired(int isExpired) {
+		this.isExpired = isExpired;
+	}
+
 
 	public String getName() {
 		return name;
@@ -84,23 +118,26 @@ public class testContentAction {
 		this.ttelist = ttelist;
 	}
 
-	public String execute() throws SQLException, ParserConfigurationException, SAXException, IOException{
+	public String execute() throws SQLException, ParserConfigurationException, SAXException, IOException, ParseException{
 		HttpServletRequest request=ServletActionContext.getRequest();
 		id=Integer.parseInt(request.getParameter("id"));
+		
 		Dao dao=new Dao();
-		title=dao.getTestTitle(id);
-		String issueteacher=dao.getTestIssueTeacher(id);
 		
 		Map<String, Object> session = ActionContext.getContext().getSession();
         String usrid = session.get("USRID").toString();
         name=dao.getUsrName(usrid);
 		
+        String issueteacher=dao.getTestIssueTeacher(id);
+        
+        title=dao.getTestTitle(id);
 		hasMine=dao.isMyAnswer4Test(id, issueteacher, usrid);
 		content=dao.getTestContent(id, issueteacher);
 		stelist=(ArrayList) dao.answer4Test4Student(id, issueteacher,usrid);
 		ttelist=(ArrayList) dao.answer4Test4Teacher(id, issueteacher, usrid);
-		
-//		request.setAttribute("hasMine", hasMine);
+		isExpired=dao.isExpired4Test(id);
+		limittime=dao.getLimitTimeInDate(id);
+		timespan=dao.getLimitTimeInMinutes(id);
 		
 		String authority=dao.getAuthority(usrid);
 		

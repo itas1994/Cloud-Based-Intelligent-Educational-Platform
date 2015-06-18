@@ -5,7 +5,7 @@ public class testBean {
 	private String title;
 	private String contentpath;
 	private String issuetime;
-	private String limittime;
+	private int limittime;
 	private String issueteacher;
 	public int getId() {
 		return id;
@@ -31,10 +31,10 @@ public class testBean {
 	public void setIssuetime(String issuetime) {
 		this.issuetime = issuetime;
 	}
-	public String getLimittime() {
+	public int getLimittime() {
 		return limittime;
 	}
-	public void setLimittime(String limittime) {
+	public void setLimittime(int limittime) {
 		this.limittime = limittime;
 	}
 	public String getIssueteacher() {

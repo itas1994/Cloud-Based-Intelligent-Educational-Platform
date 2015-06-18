@@ -1,1 +1,85 @@
-﻿
+﻿img.host_pic{
+	border-top:5px solid #ffe148;
+	border-bottom:50px solid #ffe148;
+	border-left:10px solid #ffe148;
+	border-right:10px solid #ffe148;
+	width:260px;
+	height:140px;
+}
+#host1{
+	position:relative;
+	left:310px;
+	top:15px;
+}
+#host2{
+	position:relative;
+	left:350px;
+	top:25px;
+}
+#host3{
+	position:relative;
+	left:100px;
+	top:200px;
+}
+#host4{
+	position:relative;
+	left:-440px;
+	top:160px;
+}
+#host5{
+	position:relative;
+	left:350px;
+	top:60px;
+}
+#host6{
+	position:relative;
+	left:350px;
+	top:80px;
+}
+div.describe{
+	font-weight:bold;
+	font-family:汉仪菱心体简;
+	color:#EE4000;
+}
+#resource{
+	position:absolute;
+	font-size:30px;
+	left:40px;
+	top:180px;
+}
+#debate{
+	position:absolute;
+	font-size:20px;
+	left:120px;
+	top:320px;
+}
+#homework{
+	position:absolute;
+	font-size:40px;
+	left:100px;
+	top:580px;
+}
+#test{
+	position:absolute;
+	font-size:25px;
+	left:840px;
+	top:230px;
+}
+#signin{
+	position:absolute;
+	font-size:35px;
+	left:740px;
+	top:330px;
+}
+#group{
+	position:absolute;
+	font-size:35px;
+	left:800px;
+	top:500px;
+}
+#callover{
+	position:absolute;
+	font-size:30px;
+	left:30px;
+	top:440px;
+}

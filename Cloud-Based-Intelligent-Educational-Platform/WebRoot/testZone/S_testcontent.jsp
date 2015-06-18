@@ -28,7 +28,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				window.location.href = "LogoutAction!execute.action";
 			}
 		}
-</script>
+		
+  </script>
   
   <body>
     <div id="topMenu">
@@ -61,19 +62,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<label id="titlestar">◆</label>
 			<label id="titlelabel"><s:property value="title" /></label><br><br>
 			<label id="contentlabel"><s:property value="content" /></label>
-			<s:if test='hasMine=="-1"'>
-				<form id="form2" action="testAnswerAction!execute.action" method="post">
-					<input type="hidden" name="id" value="<s:property value="id" />" />
-					<textarea id="atextarea" name="acontent" cols="100" rows="12"></textarea><br>
-					<input class="btn" id="submitanswer" type="submit" value="提交测验"/>
-				</form><br>
-			</s:if>
 		</div>
+		<input type="hidden" id="timespan" value='<s:property value="timespan" />' />
+		<s:if test='hasMine=="-1"'>
+				<s:if test='isExpired=="-1"'>
+					<div id="limittime_panel">
+						<div id="time_notice">
+							&nbsp;&nbsp;&nbsp;&nbsp;你的答题时间为
+							<label class="test_time">
+								<s:property value="timespan" />
+							</label>分钟,如果在答题时间内没有提交答案,系统将在
+							<label class="test_time">
+								<s:property value="limittime" />
+							</label>自动上传你的答案，请在该时刻之前完成并提交答案
+						</div>
+					</div>
+					<div id="answerpanel">
+						<form id="form2" action="testAnswerAction!execute.action" method="post">
+							<input id="id" type="hidden" name="id" value="<s:property value="id" />" />
+							<textarea id="atextarea" name="acontent" cols="100" rows="12"></textarea><br>
+							<input class="btn" id="submitanswer" type="submit" value="提交测验"/>
+						</form><br>
+					</div>
+				</s:if>
+				<s:elseif test='isExpired=="1"'>
+					<div id="answerpanel">
+						&nbsp;&nbsp;&nbsp;该测试已经关闭,你不能提交答案了
+					</div>
+				</s:elseif>
+			</s:if>
 		<s:iterator value="stelist">
 			<div id="answerpanel">
-				<label id="ausr">你  在 <s:property value="atime" /> 提交测试答案:</label><br>
-				<label id="acontent"><s:property value="acontent" /></label><br>
-				<label id="ascore">教师打分:<s:property value="ascore" /></label><br>
+				<label id="ausr">你  在 <s:property value="atime" /> 提交测试答案:</label><br><br>
+				<label id="acontent"><s:property value="acontent" /></label><br><br>
+				&nbsp;<label id="ascore">教师打分:<s:property value="ascore" /></label><br>
 			</div>
 		</s:iterator>
      </div>

@@ -24,16 +24,14 @@
 #titlelabel{
 	color:2E8B57;
 	font-family:张海山锐线体简;
-	font-size:25px;
+	font-size:35px;
 	font-weight:bold;
 	margin-left:10px;
 	margin-top:10px;
 }
 #contentlabel{
-	color:2E8B57;
-	font-family:张海山锐线体简;
+	font-family:youyuan;
 	font-size:25px;
-	font-weight:bold;
 	margin-left:50px;
 	margin-top:10px;
 }
@@ -50,7 +48,7 @@
 	margin-bottom:10px;
 	margin-left:44.5%;
 }
-#testresult,#answerpanel{
+#testresult,#answerpanel,#limittime_panel{
 	-webkit-border-radius:5px;
 	width:98%;
 	background-color:#EEEEE0;
@@ -58,6 +56,27 @@
 	margin-bottom:10px;
 	margin-left:auto;
 	margin-right:auto;
+}
+#answerpanel{
+	font-family:youyuan;
+	font-weight:bold;
+	color:#EE4000;
+}
+#limittime_panel{
+	font-size:20;
+	font-family:youyuan;
+}
+#time_notice{
+	position:relative;
+	left:15px;
+}
+label.test_time{
+	font-weight:bold;
+	color:#EE4000;
+}
+#form2{
+	position:relative;
+	top:10px;
 }
 #ausr{
 	font-family:张海山锐线体简;

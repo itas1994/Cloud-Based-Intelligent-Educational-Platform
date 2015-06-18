@@ -29,16 +29,14 @@
 #titlelabel{
 	color:2E8B57;
 	font-family:张海山锐线体简;
-	font-size:25px;
+	font-size:35px;
 	font-weight:bold;
 	margin-left:10px;
 	margin-top:10px;
 }
 #contentlabel{
-	color:2E8B57;
-	font-family:张海山锐线体简;
+	font-family:youyuan;
 	font-size:25px;
-	font-weight:bold;
 	margin-left:50px;
 	margin-top:10px;
 }
@@ -55,7 +53,7 @@
 	margin-bottom:10px;
 	margin-left:44.5%;
 }
-#testresult,#answerresult{
+#testresult,#answerresult,#answerwarn{
 	-webkit-border-radius:5px;
 	width:98%;
 	background-color:#EEEEE0;
@@ -63,6 +61,11 @@
 	margin-bottom:10px;
 	margin-left:auto;
 	margin-right:auto;
+}
+#answerwarn{
+	font-family:youyuan;
+	font-weight:bold;
+	color:#EE4000;
 }
 #ausr{
 	font-family:张海山锐线体简;
@@ -82,9 +85,8 @@
 	margin-left:50px;
 }
 #ascore{
-	margin-left:10px;
-	margin-bottom:10px;
-	color:#FFa07a;
+	font-family:youyuan;
+	color:#EE4000;
 }
 textarea{
 	-webkit-border-radius:5px;
@@ -92,9 +94,11 @@ textarea{
 	overflow:none;
 }
 #atextarea{
-	margin-left:10px;
-	margin-bottom:10px;
 	border:solid 1px #FFa07a;
+	width:50%;
+	margin-top:10px;
+	margin-left:220px;
+	margin-bottom:10px;
 }
 #ceshiqu{
 	position:absolute;
