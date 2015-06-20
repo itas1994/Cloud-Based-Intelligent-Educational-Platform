@@ -19,8 +19,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
@@ -35,7 +37,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import bean.User;
-import bean.classes;
+import bean.timeTableBean;
 import bean.debateBean;
 import bean.debateReplyBean;
 import bean.homeworkAnswerBean;
@@ -456,10 +458,10 @@ public class Dao {
 		//end of reply
 		
 		//����
-		public ArrayList<User> alluser() throws SQLException{
+		public ArrayList<User> allStudent() throws SQLException{
 			this.con();
 			ArrayList<User> list=new ArrayList<User>();
-			String sql_search="select * from usr";
+			String sql_search="select * from usr where authority not in('t')";
 			rs=st.executeQuery(sql_search);
 				while(rs.next()){
 					User r=new User();
@@ -488,22 +490,337 @@ public class Dao {
 			return num;
 		}
 		
-		public List<classes> getClasses() throws SQLException{
+		public boolean isInDates(String strDate,String strDateBegin,String strDateEnd){   
+	        SimpleDateFormat sd = new SimpleDateFormat("HH:mm:ss");  
+	        Date myDate = null;  
+	        Date dateBegin = null;  
+	        Date dateEnd = null;  
+	        try {  
+	            myDate = sd.parse(strDate);  
+	            dateBegin = sd.parse(strDateBegin);  
+	            dateEnd = sd.parse(strDateEnd);  
+	        } catch (ParseException e) {  
+	            // TODO Auto-generated catch block  
+	            e.printStackTrace();  
+	        }  
+	        strDate = String.valueOf(myDate);  
+	        strDateBegin = String.valueOf(dateBegin);  
+	        strDateEnd = String.valueOf(dateEnd);  
+	          
+	        int strDateH = Integer.parseInt(strDate.substring(11,13));
+	        int strDateM = Integer.parseInt(strDate.substring(14,16));
+	        int strDateS = Integer.parseInt(strDate.substring(17,19));
+	        
+	        int strDateBeginH = Integer.parseInt(strDateBegin.substring(11,13));  
+	        int strDateBeginM = Integer.parseInt(strDateBegin.substring(14,16));  
+	        int strDateBeginS = Integer.parseInt(strDateBegin.substring(17,19));  
+	          
+	        int strDateEndH = Integer.parseInt(strDateEnd.substring(11,13));  
+	        int strDateEndM = Integer.parseInt(strDateEnd.substring(14,16));  
+	        int strDateEndS = Integer.parseInt(strDateEnd.substring(17,19));  
+	          
+	        if((strDateH>=strDateBeginH && strDateH<=strDateEndH)){  
+	            if(strDateH>strDateBeginH && strDateH<strDateEndH){  
+	                return true;  
+	            }else if(strDateH==strDateBeginH && strDateM>strDateBeginM && strDateH<strDateEndH){  
+	                return true;  
+	            }else if(strDateH==strDateBeginH && strDateM==strDateBeginM && strDateS>strDateBeginS && strDateH<strDateEndH){  
+	                return true;  
+	            }else if(strDateH==strDateBeginH && strDateM==strDateBeginM && strDateS==strDateBeginS && strDateH<strDateEndH){  
+	                return true;  
+	            }else if(strDateH>strDateBeginH && strDateH==strDateEndH && strDateM<strDateEndM){  
+	                return true;  
+	            }else if(strDateH>strDateBeginH && strDateH==strDateEndH && strDateM==strDateEndM && strDateS<strDateEndS){  
+	                return true;  
+	            }else if(strDateH>strDateBeginH && strDateH==strDateEndH && strDateM==strDateEndM && strDateS==strDateEndS){  
+	                return true;  
+	            }else{  
+	                return false;  
+	            }  
+	        }else{  
+	            return false;  
+	        }  
+	    }  
+		
+		
+		public void modifySigninTime(String now,String usrid) throws SQLException{
 			this.con();
-			List<classes> delist=new ArrayList<classes>();
-			String sql_debate="select * from classes";
-			rs=st.executeQuery(sql_debate);
-			while(rs.next()){
-				classes ca = new classes();
-				ca.setS_class1(rs.getString("subject1"));
-				ca.setS_class2(rs.getString("subject2"));
-				ca.setS_class3(rs.getString("subject3"));
-				delist.add(ca);
-			}
-			this.destroyQuery();
-			return delist;
+			String sql_modify_signin_time="update usr set "
+					+ "signinTime='"+now+"' where id='"+usrid+"'";
+			st.executeUpdate(sql_modify_signin_time);
+			this.destroyUpdate();
 		}
 		
+		public void compareAndModifySigninTime(String now,
+				String oldSigninTime,String usrid) throws ParseException, SQLException{
+			int oldDay=0;
+			int newDay=0;
+			
+			if(oldSigninTime.substring(8).equals("0")){
+				oldDay=Integer.parseInt(oldSigninTime.substring(9,10));
+			}else{
+				oldDay=Integer.parseInt(oldSigninTime.substring(8,10));
+			}
+			
+			if(now.substring(8).equals("0")){
+				newDay=Integer.parseInt(now.substring(9,10));
+			}else{
+				newDay=Integer.parseInt(now.substring(8,10));
+			}
+			
+			if((newDay-oldDay)>=1)
+				this.modifySigninTime(now,usrid);
+		}
+		
+		public void restoreIsSignin(String usrid) throws SQLException{
+			this.con();
+			String sql_restore_isSignin="update usr set isSignin1=-1,isSignin2=-1,"
+					+ "isSignin3=-1,isSignin4=-1,isSignin5=-1,isSignin6=-1 where "
+					+ "id='"+usrid+"'";
+			st.executeUpdate(sql_restore_isSignin);
+			this.destroyUpdate();
+		}
+		
+		public void compareAndRestoreIsSignin(String now,
+				String oldSigninTime,String usrid) throws SQLException{
+			int oldDay=0;
+			int newDay=0;
+			
+			if(oldSigninTime.substring(8).equals("0")){
+				oldDay=Integer.parseInt(oldSigninTime.substring(9,10));
+			}else{
+				oldDay=Integer.parseInt(oldSigninTime.substring(8,10));
+			}
+			
+			if(now.substring(8).equals("0")){
+				newDay=Integer.parseInt(now.substring(9,10));
+			}else{
+				newDay=Integer.parseInt(now.substring(8,10));
+			}
+			
+			if((newDay-oldDay)>=1)
+				this.restoreIsSignin(usrid);
+		}
+		
+		public String getSigninTime(String usrid) throws SQLException{
+			String signinTime="";
+			
+			this.con();
+			String sql_signin_time="select signinTime from usr where id='"+usrid+"'";
+			rs=st.executeQuery(sql_signin_time);
+			while(rs.next()){
+				signinTime=rs.getString("signinTime");
+			}
+			this.destroyQuery();
+			
+			return signinTime;
+		}
+		
+		public void modifyIsSignin(String usrid) throws SQLException{
+			int index=this.getCurrentCourseIndex();
+			
+			this.con();
+			String sql_modify_isSignin="update usr set isSignin"+index+"=1 where id='"+usrid+"'";
+			st.executeUpdate(sql_modify_isSignin);
+			this.destroyUpdate();
+		}
+		
+		public String[] getCurrentCourseStart() throws SQLException{
+			String[] start_time=new String[6];
+			int i=0;
+			
+			this.con();
+			String sql_start_time="select start from timetable order by id";
+			rs=st.executeQuery(sql_start_time);
+			while(rs.next()){
+				start_time[i]=rs.getString("start");
+				i++;
+			}
+			
+			return start_time;
+		}
+		
+		public String[] getCurrentCourseEnd() throws SQLException{
+			String[] end_time=new String[6];
+			int k=0;
+			
+			this.con();
+			String sql_end_time="select end from timetable order by id";
+			rs=st.executeQuery(sql_end_time);
+			while(rs.next()){
+				end_time[k]=rs.getString("end");
+				k++;
+			}
+			
+			return end_time;
+		}
+		
+		public String getNow(){
+			SimpleDateFormat format=new SimpleDateFormat("HH:mm:ss");
+			Date now=new Date();
+			String strNow=format.format(now);
+			
+			return strNow;
+		}
+		
+		public String[] getCurrentCourse() throws SQLException{
+			String[] current_course=new String[3];
+			boolean judge_time=false;
+			
+			String strNow=this.getNow();
+			String[] start_time=this.getCurrentCourseStart();
+			String[] end_time=this.getCurrentCourseEnd();
+			
+			for(int j=0;j<start_time.length;j++){
+				judge_time=this.isInDates(strNow, start_time[j], end_time[j]);
+				if(judge_time==true){
+					String sql_course_name="select course from timetable where "
+							+ "start='"+start_time[j]+"',end_time='"
+									+end_time[j]+"'";
+					rs=st.executeQuery(sql_course_name);
+					current_course[0]=rs.getString("course");
+					current_course[1]=start_time[j];
+					current_course[2]=end_time[j];
+				}
+			}
+			this.destroyQuery();
+			
+			return current_course;
+		}
+		
+		public int getCurrentCourseIndex() throws SQLException{
+			boolean judge_time=false;
+			int index=0;
+			
+			String strNow=this.getNow();
+			String[] start_time=this.getCurrentCourseStart();
+			String[] end_time=this.getCurrentCourseEnd();
+			
+			for(int j=0;j<start_time.length;j++){
+				judge_time=this.isInDates(strNow, start_time[j], end_time[j]);
+				if(judge_time==true){
+					index=j;
+				}
+			}
+			
+			return index;
+		}
+		
+		public String getLoginTime(String usrid) throws SQLException{
+			String old_login_time="";
+			
+			this.con();
+			String sql_login_time="select loginTime from usr where id='"+usrid+"'";
+			rs=st.executeQuery(sql_login_time);
+			while(rs.next()){
+				old_login_time=rs.getString("loginTime");
+			}
+			this.destroyQuery();
+			
+			return old_login_time;
+		}
+		
+		public void modifyLoginTime(String now,String usrid) throws SQLException{
+			this.con();
+			String sql_modify_login_time="update usr set "
+					+ "loginTime='"+now+"' where id='"+usrid+"'";
+			st.executeUpdate(sql_modify_login_time);
+			this.destroyUpdate();
+		}
+		
+		public String[] getTeacherCourses(String usrid) throws SQLException{
+			String[] courses=new String[6];
+			String[] courses_temp=new String[6];
+			int j=0;
+			
+			this.con();
+			String sql_teacher_courses="select course1,course2,course3,course4,"
+					+ "course5,course6 from usr where id='"+usrid+"'";
+			rs=st.executeQuery(sql_teacher_courses);
+			while(rs.next()){
+				courses_temp[0]=rs.getString("course1");
+				courses_temp[1]=rs.getString("course2");
+				courses_temp[2]=rs.getString("course3");
+				courses_temp[3]=rs.getString("course4");
+				courses_temp[4]=rs.getString("course5");
+				courses_temp[5]=rs.getString("course6");
+			}
+			for(int i=0;i<courses_temp.length;i++){
+				if(courses_temp[i].equals(""))
+					continue;
+				else{
+					courses[j]=courses_temp[i];
+					j++;
+				}
+			}
+			
+			return courses;
+		}
+		
+		public void createXML4signin(String teacher,String[] courses) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException{
+			String filepath="D://apache-tomcat-6.0.29/webapps//Cloud-Based-Intelligent-Educational-Platform"
+					+ "//usr/signin//"+teacher+".xml";
+			DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder=factory.newDocumentBuilder();
+			Document doc=builder.newDocument();
+			Element Courses=doc.createElement("Courses");
+			for(int i=0;i<courses.length;i++){
+				Element course=doc.createElement("course");
+				course.setAttribute("name",courses[i]);
+				Courses.appendChild(course);
+			}
+			doc.appendChild(Courses);
+			
+			Transformer transformer=TransformerFactory.newInstance().newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8"); 
+			StreamResult fileResult=new StreamResult(new File(filepath));
+			DOMSource source=new DOMSource(doc);
+			transformer.transform(source,fileResult);
+		}
+		
+		public void restoreXML4signin(String teacher,String[] courses) throws ParserConfigurationException, SAXException, IOException, TransformerFactoryConfigurationError, TransformerException{
+			String filename="D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+            		+ "usr//signin//"+teacher+".xml";
+			File file=new File(filename);
+			if(file.exists()==false)
+				this.createXML4signin(teacher,courses);
+			
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+	        Document doc = db.parse(filename);
+	        NodeList courses_=doc.getElementsByTagName("course");
+	        for(int i=0;i<courses_.getLength();i++){
+	        	Node course=courses_.item(i);
+	        	NodeList course_children=courses_.item(i).getChildNodes();
+	        	for(int k=0;k<course_children.getLength();k++){
+	        		course.removeChild(course_children.item(k));
+	        	}
+	        }
+		}
+		
+		public void compareAndModifyLoginTimeAndXML(String now,
+				String oldLoginTime,String usrid,String[] courses) throws SQLException, ParserConfigurationException, SAXException, IOException, TransformerFactoryConfigurationError, TransformerException{
+			int oldDay=0;
+			int newDay=0;
+			
+			if(oldLoginTime.substring(8).equals("0")){
+				oldDay=Integer.parseInt(oldLoginTime.substring(9,10));
+			}else{
+				oldDay=Integer.parseInt(oldLoginTime.substring(8,10));
+			}
+			
+			if(now.substring(8).equals("0")){
+				newDay=Integer.parseInt(now.substring(9,10));
+			}else{
+				newDay=Integer.parseInt(now.substring(8,10));
+			}
+			
+			if((newDay-oldDay)>=1){
+				this.modifyLoginTime(now,usrid);
+				this.restoreXML4signin(usrid, courses);
+			}
+		}
 		
 		public ArrayList<User> Groupinguser() throws SQLException{
 			this.con();
@@ -594,7 +911,7 @@ public class Dao {
 		}
 		
 		public long date2TimeStamp(String time) throws ParseException{
-			SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = format.parse(time);
 			long time_stamp=date.getTime();
 			
@@ -971,40 +1288,6 @@ public class Dao {
 			this.destroyQuery();
 			return issueteacher;
 		}
-		
-		/*public List<testAnswerBean> getTestAnswer4Teacher(int id,String issueteacher) throws SQLException{
-			String _id=id+"";
-			List<testAnswerBean> telist=new ArrayList<testAnswerBean>();
-
-			//dom����
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-	    	try {
-	            DocumentBuilder db = dbf.newDocumentBuilder();
-	            Document doc = db.parse("D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
-	            		+ "usr//test_answer_content//"+issueteacher+".xml");
-	            NodeList tests = doc.getElementsByTagName("test");
-	            for(int i=0;i<tests.getLength();i++){
-	            	Node title=tests.item(i).getChildNodes().item(0);
-	            	if(title.getAttributes().getNamedItem("id")
-	            			.getNodeValue().equals(_id)){
-	            		Node Answers=tests.item(i).getChildNodes().item(2);
-	            		NodeList answers=Answers.getChildNodes();
-	            		for(int k=0;k<answers.getLength();k++){
-	            			Node answer=answers.item(k);
-	            			testAnswerBean t=new testAnswerBean();
-	            			t.setAusr(answer.getChildNodes().item(0).getTextContent());
-	            			t.setAtime(answer.getChildNodes().item(1).getTextContent());
-	            			t.setAcontent(answer.getChildNodes().item(2).getTextContent());
-	            			t.setAscore(answer.getChildNodes().item(3).getTextContent());
-	            			telist.add(t);
-	            		}
-	            	}
-	            }
-	    	}catch(Exception e){
-	    		e.printStackTrace();
-	    	}
-			return telist;
-		}*/
 		
 		public void insertTeacherScore(int id,String issueteacher,String ausr,String ascore){
 			String _id=id+"";

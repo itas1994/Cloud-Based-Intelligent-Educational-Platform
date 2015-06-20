@@ -6,6 +6,29 @@
 	width:260px;
 	height:140px;
 }
+a.host_3_function{
+	text-decoration:none;
+	font-size:20px;
+	font-weight:bold;
+	font-family:SimHei;
+	color:#EE4000;
+	border:2px solid #EE4000;
+}
+#sign_in{
+	position:absolute;
+	left:1000px;
+	top:60px;
+}
+#grouping{
+	position:absolute;
+	left:1060px;
+	top:60px;
+}
+#call_over{
+	position:absolute;
+	left:1120px;
+	top:60px;
+}
 #host1{
 	position:relative;
 	left:310px;

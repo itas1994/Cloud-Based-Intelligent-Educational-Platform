@@ -1,8 +1,9 @@
 eclipse.preferences.version=1
+encoding//WebRoot/callover/callOverResult.jsp=UTF-8
 encoding//WebRoot/debateZone/debatehost.jsp=UTF-8
-encoding//WebRoot/dmZone/dmsuc.jsp=UTF-8
 encoding//WebRoot/homeworkZone/T_homeworkcontent.jsp=UTF-8
 encoding//WebRoot/info.jsp=UTF-8
 encoding//WebRoot/resourceZone/resourcecontent.jsp=UTF-8
 encoding//WebRoot/resourceZone/resourcehost.jsp=UTF-8
+encoding//WebRoot/signin/signInResult.jsp=UTF-8
 encoding/<project>=UTF-8

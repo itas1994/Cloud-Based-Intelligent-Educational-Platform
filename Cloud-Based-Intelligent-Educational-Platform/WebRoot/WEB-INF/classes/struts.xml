@@ -68,11 +68,11 @@
 				<param name="actionName">DebateAction</param>
 			</result>
 		</action>
-		<action name="DmAction" class="action.DmAction">
-			<result name="dmsuc">dmZone/dmsuc.jsp</result>
+		<action name="CallOverAction" class="action.callover.CallOverAction">
+			<result name="success">callover/callOverResult.jsp</result>
 		</action>
-		<action name="SigninAction" class="action.SigninAction">
-			<result name="dmsuc">Sign/sign.jsp</result>
+		<action name="SigninAction" class="action.signin.SigninAction">
+			<result name="success">signin/signInResult.jsp</result>
 		</action>
 		<action name="GroupingAction" class="action.groupingAction">
 			<result name="suc">group/grouping.jsp</result>
