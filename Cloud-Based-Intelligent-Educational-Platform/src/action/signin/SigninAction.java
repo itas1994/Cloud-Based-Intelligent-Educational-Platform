@@ -1,8 +1,13 @@
 package action.signin;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import com.opensymphony.xwork2.ActionContext;
 
@@ -49,7 +54,7 @@ public class SigninAction {
 		this.end = end;
 	}
 
-	public String execute() throws SQLException{
+	public String execute() throws SQLException, ParserConfigurationException, SAXException, IOException{
 		Map<String, Object> session = ActionContext.getContext().getSession();
         String usrid = session.get("USRID").toString();
         
@@ -62,6 +67,12 @@ public class SigninAction {
 		course_name=current_course[0];
 		start=current_course[1];
 		end=current_course[2];
+		
+		int index=dao.getCurrentCourseIndex();
+		dao.db4signin(index, usrid);
+		
+		String current_teacher=dao.getCurrentCourseTeaher(course_name, start, end);
+		dao.xml4signin(current_teacher, course_name, usrid);
 		
 		return "success";
 	}

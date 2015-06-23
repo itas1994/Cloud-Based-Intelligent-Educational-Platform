@@ -706,6 +706,62 @@ public class Dao {
 			return index;
 		}
 		
+		public void db4signin(int index,String usrid) throws SQLException{
+			this.con();
+			String sql_signin="update usr set isSignin"+index+"=1 where"
+					+ " id='"+usrid+"'";
+			st.executeUpdate(sql_signin);
+			this.destroyUpdate();
+		}
+		
+		public String getCurrentCourseTeaher(String course,String start,
+				String end) throws SQLException{
+			String current_teacher="";
+			
+			this.con();
+			String sql_current_teacher="select id from usr where "
+					+ "course='"+course+"',start='"+start+"',"
+							+ "end='"+end+"'";
+			rs=st.executeQuery(sql_current_teacher);
+			while(rs.next()){
+				current_teacher=rs.getString("id");
+			}
+			
+			return current_teacher;
+		}
+		
+		public void xml4signin(String current_teacher,
+				String course,String student) throws ParserConfigurationException, SAXException, IOException{
+			String filename="D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+            		+ "usr//signin//"+current_teacher+".xml";
+			
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+	        Document doc = db.parse(filename);
+	        NodeList courses_=doc.getElementsByTagName("course");
+	        for(int i=0;i<courses_.getLength();i++){
+	        	Node course_=courses_.item(i);
+	        	if(course_.getAttributes().getNamedItem("name")
+	        			.getTextContent().equals(course)){
+	        		NodeList students=course_.getChildNodes();
+	        		if(students.getLength()==0){
+	        			Element student_=doc.createElement("student");
+	        			student_.setTextContent(student);
+	        			course_.appendChild(student_);
+	        		}else{
+	        			for(int j=0;j<students.getLength();j++){
+	        				Node student_=students.item(j);
+	        				if(!student_.getTextContent().equals(student)){
+	        					Element student_new=doc.createElement("student");
+	    	        			student_new.setTextContent(student);
+	    	        			course_.appendChild(student_new);
+	        				}
+	        			}
+	        		}
+	        	}
+	        }
+		}
+		
 		public String getLoginTime(String usrid) throws SQLException{
 			String old_login_time="";
 			
@@ -746,9 +802,7 @@ public class Dao {
 				courses_temp[5]=rs.getString("course6");
 			}
 			for(int i=0;i<courses_temp.length;i++){
-				if(courses_temp[i].equals(""))
-					continue;
-				else{
+				if(!courses_temp[i].equals("")){
 					courses[j]=courses_temp[i];
 					j++;
 				}
@@ -758,16 +812,18 @@ public class Dao {
 		}
 		
 		public void createXML4signin(String teacher,String[] courses) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException{
-			String filepath="D://apache-tomcat-6.0.29/webapps//Cloud-Based-Intelligent-Educational-Platform"
-					+ "//usr/signin//"+teacher+".xml";
+			String filepath="D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform"
+					+ "//usr//signin//"+teacher+".xml";
 			DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder=factory.newDocumentBuilder();
 			Document doc=builder.newDocument();
 			Element Courses=doc.createElement("Courses");
 			for(int i=0;i<courses.length;i++){
-				Element course=doc.createElement("course");
-				course.setAttribute("name",courses[i]);
-				Courses.appendChild(course);
+				if(!courses[i].equals("")){
+					Element course=doc.createElement("course");
+					course.setAttribute("name",courses[i]);
+					Courses.appendChild(course);
+				}
 			}
 			doc.appendChild(Courses);
 			

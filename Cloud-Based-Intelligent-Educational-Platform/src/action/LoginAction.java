@@ -70,20 +70,18 @@ public class LoginAction extends ActionSupport implements SessionAware{
 			result="id_error";
 		}
 		
+		SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date now=new Date();
+		String now_time=format.format(now);
+		
 		if(authority.equals("s")){
-			SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Date now=new Date();
-			String now_time=format.format(now);
 			String old_signin_time=dao.getSigninTime(usr);
 			dao.compareAndRestoreIsSignin(now_time, old_signin_time, usr);
 			dao.compareAndModifySigninTime(now_time, old_signin_time, usr);
 		}else if(authority.equals("t")){
-			SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Date now=new Date();
-			String now_time=format.format(now);
 			String old_login_time=dao.getLoginTime(usr);
 			String[] courses=dao.getTeacherCourses(usr);
-			dao.compareAndModifyLoginTimeAndXML(now_time, old_login_time, usr,courses);
+			dao.compareAndModifyLoginTimeAndXML(now_time, old_login_time, usr, courses);
 		}
 		
 		return result;
