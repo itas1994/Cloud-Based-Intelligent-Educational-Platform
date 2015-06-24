@@ -48,7 +48,7 @@ public class LoginAction extends ActionSupport implements SessionAware{
 		}else{
 			result="id_error";
 		}
-		
+		System.out.println(result);
 		return result;
 	}
 }

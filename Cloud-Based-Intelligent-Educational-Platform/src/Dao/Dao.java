@@ -57,7 +57,7 @@ public class Dao {
 			String psd="lzw0201";
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
-				con=DriverManager.getConnection(url,usr,psd);
+				con=DriverManager.getConnection(url,usr,"");
 				st=con.createStatement();
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
