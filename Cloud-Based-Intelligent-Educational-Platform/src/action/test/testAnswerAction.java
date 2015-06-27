@@ -93,11 +93,11 @@ public class testAnswerAction {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		String atime = df.format(now);
         
-		dao.insertStudentAnswer4Test(id, issueteacher, ausr,atime,acontent);
+		dao.insertStudentAnswer4Test(id, issueteacher, name,atime,acontent);
 		
 		content=dao.getTestContent(id, issueteacher);
-		stelist=(ArrayList) dao.answer4Test4Student(id, issueteacher,ausr);
-		telist=(ArrayList) dao.answer4Test4Student(id, issueteacher,ausr);
+		stelist=(ArrayList) dao.answer4Test4Student(id, issueteacher,name);
+		telist=(ArrayList) dao.answer4Test4Student(id, issueteacher,name);
 		return "success";
 	}
 

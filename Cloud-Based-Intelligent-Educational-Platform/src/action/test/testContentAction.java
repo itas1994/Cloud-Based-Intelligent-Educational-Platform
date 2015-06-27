@@ -27,14 +27,14 @@ public class testContentAction {
 	private String name;
 	private int isExpired;
 	private String limittime;
-	private int timespan;
+	private float timespan;
 
-	public int getTimespan() {
+	public float getTimespan() {
 		return timespan;
 	}
 
 
-	public void setTimespan(int timespan) {
+	public void setTimespan(float timespan) {
 		this.timespan = timespan;
 	}
 

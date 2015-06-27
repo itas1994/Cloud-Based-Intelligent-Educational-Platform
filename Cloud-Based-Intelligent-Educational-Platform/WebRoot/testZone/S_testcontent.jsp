@@ -23,15 +23,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <script>
+  		document.write(timespan);
+  		
 		function logout(){
 			if(confirm("要走了么？╮(╯▽╰)╭")){
 				window.location.href = "LogoutAction!execute.action";
 			}
 		}
 		
+		function get_form(){
+			document.getElementById("form2").submit();
+		}
+		
+		function delay_submit(){
+			timespan=document.getElementById("timespan").value;
+			window.setInterval("get_form()",timespan*60*1000);
+		}
   </script>
   
-  <body>
+  <body onLoad="delay_submit()">
+  	<input type="hidden" id="timespan" value="<s:property value='timespan' />" />
     <div id="topMenu">
      	<img id="icon" src="image/logo.png" />
      	<label id="webid">智慧教学平台</label>
@@ -63,7 +74,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<label id="titlelabel"><s:property value="title" /></label><br><br>
 			<label id="contentlabel"><s:property value="content" /></label>
 		</div>
-		<input type="hidden" id="timespan" value='<s:property value="timespan" />' />
 		<s:if test='hasMine=="-1"'>
 				<s:if test='isExpired=="-1"'>
 					<div id="limittime_panel">
@@ -86,7 +96,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</div>
 				</s:if>
 				<s:elseif test='isExpired=="1"'>
-					<div id="answerpanel">
+					<div id="stopanswer">
 						&nbsp;&nbsp;&nbsp;该测试已经关闭,你不能提交答案了
 					</div>
 				</s:elseif>

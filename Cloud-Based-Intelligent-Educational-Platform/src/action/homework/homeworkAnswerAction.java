@@ -82,7 +82,7 @@ public class homeworkAnswerAction {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		String atime = df.format(now);
 		
-		dao.insertStudentAnswer4Homework(id,issueteacher,ausr,atime,acontent);
+		dao.insertStudentAnswer4Homework(id,issueteacher,name,atime,acontent);
 		
 		content=dao.getHomeworkContent(id, issueteacher);
 		holist=(ArrayList) dao.answer4Homework(id, issueteacher);

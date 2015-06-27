@@ -48,7 +48,7 @@
 	margin-bottom:10px;
 	margin-left:44.5%;
 }
-#testresult,#answerpanel,#limittime_panel{
+#testresult,#answerpanel,#limittime_panel,#stopanswer{
 	-webkit-border-radius:5px;
 	width:98%;
 	background-color:#EEEEE0;
@@ -57,7 +57,7 @@
 	margin-left:auto;
 	margin-right:auto;
 }
-#answerpanel{
+#stopanswer{
 	font-family:youyuan;
 	font-weight:bold;
 	color:#EE4000;
@@ -93,7 +93,11 @@ label.test_time{
 #acontent{
 	font-size:20;
 	font-family:youyuan;
-	margin-left:40px;
+	margin-left:50px;
+}
+#ascore{
+	font-family:youyuan;
+	color:#EE4000;
 }
 #ceshiqu{
 	position:absolute;

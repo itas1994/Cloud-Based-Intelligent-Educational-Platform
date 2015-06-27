@@ -67,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div id="answerpanel">
 				<form id="form2" action="homeworkAnswerAction!execute.action" method="post">
 					<input type="hidden" name="id" value="<s:property value="id" />" />
-					<textarea id="atextarea" name="acontent" cols="100" rows="12"></textarea><br>
+					<textarea id="atextarea" name="acontent" cols="100" rows="6"></textarea><br>
 					<input class="btn" id="submitanswer" type="submit" value="提交作业"/>
 				</form><br>
 			</div>
@@ -79,7 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</s:elseif>
 		<s:iterator value="holist">
 			<div id="answerresult">
-				<label id="ausr">学生  <s:property value="ausr" /> 在 <s:property value="atime" /> 提交答案:</label><br><br>
+				<label id="ausr"><s:property value="name" /> 在 <s:property value="atime" /> 提交答案:</label><br><br>
 				<label id="acontent"><s:property value="acontent"></s:property></label><br><br>
 				&nbsp;<label id="aremark">教师评语:<s:property value="aremark"></s:property></label><br>
 			</div>

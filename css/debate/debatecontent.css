@@ -43,6 +43,7 @@
 	margin-top:10px;
 }
 #replytextarea{
+	font-size:25px;
 	-webkit-border-radius:5px;
 	border:solid 1px #FFa07a;
 	overflow:none;

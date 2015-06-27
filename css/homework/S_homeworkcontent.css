@@ -41,6 +41,7 @@ textarea{
 	resize:none;
 }
 #atextarea{
+	font-size:25px;
 	border:solid 1px #FFa07a;
 	width:98%;
 	margin-top:10px;

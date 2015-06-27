@@ -92,7 +92,7 @@ public class Dao {
 		public List<resourceBean> search(String title) throws SQLException{
 			this.con();
 			List<resourceBean> relist=new ArrayList<resourceBean>();
-			String sql_search="select * from resourceinfo where title = '"+title+"'";
+			String sql_search="select * from resourceinfo where title like '%"+title+"%'";
 			rs=st.executeQuery(sql_search);
 				while(rs.next()){
 					resourceBean r=new resourceBean();
@@ -171,12 +171,15 @@ public class Dao {
 		}
 		
 		public String login(String usr,String psd) throws SQLException{
+			int hash_psd=psd.hashCode();
+			String _hash_psd=hash_psd+"";
+			
 			this.con();
 			String result="";
 			String sql_login="select psd from usr where id='"+usr+"'";
 		    rs=st.executeQuery(sql_login);
 		    while(rs.next()){
-				if (rs.getString("psd").equals(psd)) {
+				if (rs.getString("psd").equals(_hash_psd)) {
 					result = "success";
 					break;
 				} else {
@@ -477,7 +480,7 @@ public class Dao {
 			this.con();
 			int num=0;
 			ArrayList<User> list=new ArrayList<User>();
-			String sql_search="select * from usr";
+			String sql_search="select id,name from usr where authority not in('t')";
 			rs=st.executeQuery(sql_search);
 				while(rs.next()){
 					User r=new User();
@@ -802,12 +805,9 @@ public class Dao {
 				courses_temp[5]=rs.getString("course6");
 			}
 			for(int i=0;i<courses_temp.length;i++){
-				if(!courses_temp[i].equals("")){
-					courses[j]=courses_temp[i];
-					j++;
-				}
+				courses[j]=courses_temp[i];
+				j++;
 			}
-			
 			return courses;
 		}
 		
@@ -838,9 +838,6 @@ public class Dao {
 		public void restoreXML4signin(String teacher,String[] courses) throws ParserConfigurationException, SAXException, IOException, TransformerFactoryConfigurationError, TransformerException{
 			String filename="D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
             		+ "usr//signin//"+teacher+".xml";
-			File file=new File(filename);
-			if(file.exists()==false)
-				this.createXML4signin(teacher,courses);
 			
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
@@ -855,8 +852,20 @@ public class Dao {
 	        }
 		}
 		
+		public boolean isFileExist(String filename,String teacher){
+			boolean isExists=true;
+			
+			File file=new File(filename);
+			if(!file.exists())
+				isExists=false;
+			
+			return isExists;
+		}
+		
 		public void compareAndModifyLoginTimeAndXML(String now,
 				String oldLoginTime,String usrid,String[] courses) throws SQLException, ParserConfigurationException, SAXException, IOException, TransformerFactoryConfigurationError, TransformerException{
+			String filename="D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
+            		+ "usr//signin//"+usrid+".xml";
 			int oldDay=0;
 			int newDay=0;
 			
@@ -871,6 +880,10 @@ public class Dao {
 			}else{
 				newDay=Integer.parseInt(now.substring(8,10));
 			}
+			
+			boolean isExists=this.isFileExist(filename, usrid);
+			if(isExists==false)
+				this.createXML4signin(usrid, courses);
 			
 			if((newDay-oldDay)>=1){
 				this.modifyLoginTime(now,usrid);
@@ -1264,15 +1277,15 @@ public class Dao {
 			return telist;
 		}
 		
-		public int getLimitTimeInMinutes(int id) throws SQLException{
+		public float getLimitTimeInMinutes(int id) throws SQLException{
 			String limittime="";
-			int timespan=0;
+			float timespan=0;
 			
 			this.con();
 			String sql_limittime="select limittime from test where id = "+id+"";
 			rs=st.executeQuery(sql_limittime);
 			while(rs.next()){
-				timespan=rs.getInt("limittime");
+				timespan=rs.getFloat("limittime");
 			}
 			this.destroyQuery();
 			
@@ -1773,8 +1786,11 @@ public class Dao {
 		}
 		
 		public void modifyPsd(String usrid,String new_psd) throws SQLException{
+			int hash_new_psd=new_psd.hashCode();
+			String _hash_new_psd=hash_new_psd+"";
+			
 			this.con();
-			String sql_mo_psd="update usr set psd = '"+new_psd+"' "
+			String sql_mo_psd="update usr set psd = '"+_hash_new_psd+"' "
 					+ "where id = '"+usrid+"'";
 			st.executeUpdate(sql_mo_psd);
 			this.destroyUpdate();

@@ -77,7 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<form id="form2" action="testScoreAction!execute.action" method="post">
 						<input type="hidden" name="id" value="<s:property value='id' />" />
 						<input type="hidden" name="ausr" value="<s:property value='ausr' />" />
-						<textarea id="atextarea" placeholder="请输入分数" name="ascore" cols="100" rows="2"></textarea><br>
+						<textarea id="atextarea" placeholder="请输入分数" name="ascore" cols="100" rows="1"></textarea><br>
 						<input class="btn" id="submitanswer" type="submit" value="提交测试打分"/>
 					</form><br>
 				</s:if>

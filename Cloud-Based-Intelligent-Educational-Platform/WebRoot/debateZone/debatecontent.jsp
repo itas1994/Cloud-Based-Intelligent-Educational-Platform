@@ -68,13 +68,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<form id="form2" action="debateReplyAction!execute.action" method="post">
 				<input type="hidden" name="title" value="<s:property value="title" />" />
 				<input type="hidden" name="id" value="<s:property value="id" />" />
-				<textarea id="replytextarea" name="replycontent" cols="100" rows="15"></textarea><br>
+				<textarea id="replytextarea" name="replycontent" cols="100" rows="6"></textarea><br>
 				<input class="btn" id="submitreply" type="submit" value="提交回复"/>
 			</form><br>
 		</div>
 		<s:iterator value="delist">
 			<div id="replypanel">
-				<label id="replyusr"><s:property value="replyusr" /> 在  <s:property value="replytime" /> 回复:</label><br>
+				<label id="replyusr"><s:property value="replyusr" /> 在  <s:property value="replytime" /> 回复:</label><br><br>
 				<label id="replycontent"><s:property value="replycontent"></s:property></label><br>
 			</div>
 		</s:iterator>

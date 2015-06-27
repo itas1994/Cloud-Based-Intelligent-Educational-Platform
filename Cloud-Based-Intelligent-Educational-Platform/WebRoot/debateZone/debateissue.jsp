@@ -57,9 +57,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
      <div id="issue">
     	<form id="form2" action="debateIssueAction!execute.action" method="post">
-     		<label class="issue_info">讨论标题: </label><textarea id="title" name="title" cols="54" rows="1"></textarea><br><br>
+     		<label class="issue_info">讨论标题: </label><textarea id="title" name="title" cols="34" rows="1"></textarea><br><br>
      		<label class="issue_info">讨论内容:</label>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
-     		<textarea id="content" name="content" cols="64" rows="12"></textarea><br><br>
+     		<textarea id="content" name="content" cols="34" rows="6"></textarea><br><br>
      		<input class="btn" id="submitissue" type="submit" value="确认发布" />
     	</form><br>
     </div>

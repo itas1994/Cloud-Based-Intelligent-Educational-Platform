@@ -59,11 +59,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      <div id="upload">
     	<form id="form2" action="UploadAction!execute.action"
      				enctype="multipart/form-data" method="post">
-     		<label class="upload_info">资源标题: </label><textarea id="title" name="title" cols="54" rows="1"></textarea><br><br>
+     		<label class="upload_info">资源标题: </label>
+     		<textarea id="title" name="title" cols="34" rows="1"></textarea><br><br>
      		<label class="upload_info">内容描述:</label>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
-     		<textarea id="content" name="content" cols="64" rows="12"></textarea><br><br>
-			<label class="upload_info">选择文件: </label><input type="file" name="upload" />
-     			  <input class="btn" type="submit" value="确认上传" />
+     		<textarea id="content" name="content" cols="34" rows="6"></textarea><br><br>
+			<label class="upload_info">选择文件:</label><br>
+			<input id="choose_file" type="file" name="upload" />
+     		<input class="btn" type="submit" value="确认上传" />
     	</form><br>
     </div>
   </body>

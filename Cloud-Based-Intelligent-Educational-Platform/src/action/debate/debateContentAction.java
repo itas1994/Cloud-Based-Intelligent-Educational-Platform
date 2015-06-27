@@ -3,6 +3,7 @@ package action.debate;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ public class debateContentAction {
 	private String title;
 	private String content;
 	private String name;
+	private int id;
 
 	public String getName() {
 		return name;
@@ -37,7 +39,6 @@ public class debateContentAction {
 		this.content = content;
 	}
 
-	private int id;
 	public List getDelist() {
 		return delist;
 	}
@@ -76,6 +77,7 @@ public class debateContentAction {
 		delist=dao.getDebateReply(id, issueusr);
 		title=dao.getDebateTitle(id);
 		content=dao.getDebateContent(id, issueusr);
+		
 		return "success";
 	}
 }

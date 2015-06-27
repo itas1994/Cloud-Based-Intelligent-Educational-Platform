@@ -74,7 +74,7 @@ public class debateReplyAction {
 		String replytime = df.format(now);
 		
 		String issueusr=dao.getIssueusr(id);
-		dao.insertReply(id, title, replycontent, replyusr, replytime, issueusr);
+		dao.insertReply(id, title, replycontent, name, replytime, issueusr);
 		delist=dao.reply(id, title, issueusr);
 		return "success";
 	}

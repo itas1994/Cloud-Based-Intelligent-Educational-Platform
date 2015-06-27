@@ -78,7 +78,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<input type="hidden" name="id" value="<s:property value='id' />" />
 						<input type="hidden" name="ausr" value="<s:property value='ausr' />" />
 						<input type="hidden" name="atime" value="<s:property value='atime' />" />
-						<textarea id="atextarea" placeholder="请输入评价" name="aremark" cols="100" rows="2"></textarea><br>
+						<textarea id="atextarea" placeholder="请输入评价" name="aremark" cols="100" rows="1"></textarea><br>
 						<input class="btn" id="submitanswer" type="submit" value="提交作业评价"/>
 					</form>
 				</s:if>

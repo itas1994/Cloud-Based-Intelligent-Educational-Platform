@@ -94,6 +94,7 @@ textarea{
 	overflow:none;
 }
 #atextarea{
+	font-size:25px;
 	border:solid 1px #FFa07a;
 	width:50%;
 	margin-top:10px;
