@@ -621,11 +621,12 @@ public class Dao {
 		
 		public void modifyIsSignin(String usrid) throws SQLException{
 			int index=this.getCurrentCourseIndex();
-			
-			this.con();
-			String sql_modify_isSignin="update usr set isSignin"+index+"=1 where id='"+usrid+"'";
-			st.executeUpdate(sql_modify_isSignin);
-			this.destroyUpdate();
+			if(index!=0){
+				this.con();
+				String sql_modify_isSignin="update usr set isSignin"+index+"=1 where id='"+usrid+"'";
+				st.executeUpdate(sql_modify_isSignin);
+				this.destroyUpdate();
+			}
 		}
 		
 		public String[] getCurrentCourseStart() throws SQLException{
@@ -655,6 +656,10 @@ public class Dao {
 				k++;
 			}
 			
+			/*for(int j=0;j<end_time.length;j++){
+				System.out.println(end_time[j]);
+			}*/
+			
 			return end_time;
 		}
 		
@@ -662,6 +667,8 @@ public class Dao {
 			SimpleDateFormat format=new SimpleDateFormat("HH:mm:ss");
 			Date now=new Date();
 			String strNow=format.format(now);
+			
+//			System.out.println(strNow);
 			
 			return strNow;
 		}
@@ -676,14 +683,16 @@ public class Dao {
 			
 			for(int j=0;j<start_time.length;j++){
 				judge_time=this.isInDates(strNow, start_time[j], end_time[j]);
+//				System.out.println(judge_time);
 				if(judge_time==true){
 					String sql_course_name="select course from timetable where "
-							+ "start='"+start_time[j]+"',end_time='"
-									+end_time[j]+"'";
+							+ "start='"+start_time[j]+"' and end='"+end_time[j]+"'";
 					rs=st.executeQuery(sql_course_name);
-					current_course[0]=rs.getString("course");
-					current_course[1]=start_time[j];
-					current_course[2]=end_time[j];
+					while(rs.next()){
+						current_course[0]=rs.getString("course");
+						current_course[1]=start_time[j];
+						current_course[2]=end_time[j];
+					}
 				}
 			}
 			this.destroyQuery();
@@ -702,14 +711,16 @@ public class Dao {
 			for(int j=0;j<start_time.length;j++){
 				judge_time=this.isInDates(strNow, start_time[j], end_time[j]);
 				if(judge_time==true){
-					index=j;
+					index=j+1;
 				}
 			}
 			
 			return index;
 		}
 		
-		public void db4signin(int index,String usrid) throws SQLException{
+		public void db4signin(String usrid) throws SQLException{
+			int index=this.getCurrentCourseIndex();
+			
 			this.con();
 			String sql_signin="update usr set isSignin"+index+"=1 where"
 					+ " id='"+usrid+"'";
@@ -717,26 +728,28 @@ public class Dao {
 			this.destroyUpdate();
 		}
 		
-		public String getCurrentCourseTeaher(String course,String start,
-				String end) throws SQLException{
+		public String getCurrentCourseTeaher(String course) throws SQLException{
 			String current_teacher="";
-			
-			this.con();
-			String sql_current_teacher="select id from usr where "
-					+ "course='"+course+"',start='"+start+"',"
-							+ "end='"+end+"'";
-			rs=st.executeQuery(sql_current_teacher);
-			while(rs.next()){
-				current_teacher=rs.getString("id");
+			int index=this.getCurrentCourseIndex();
+			if(index!=0){
+				this.con();
+				String sql_current_teacher="select id from usr where "
+						+ "course"+index+"='"+course+"'";
+				rs=st.executeQuery(sql_current_teacher);
+				while(rs.next()){
+					current_teacher=rs.getString("id");
+				}
 			}
 			
 			return current_teacher;
 		}
 		
 		public void xml4signin(String current_teacher,
-				String course,String student) throws ParserConfigurationException, SAXException, IOException{
+				String course,String student) 
+						throws ParserConfigurationException, SAXException, IOException, SQLException{
 			String filename="D://apache-tomcat-6.0.29//webapps//Cloud-Based-Intelligent-Educational-Platform//"
             		+ "usr//signin//"+current_teacher+".xml";
+			int index=this.getCurrentCourseIndex();
 			
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
@@ -745,12 +758,15 @@ public class Dao {
 	        for(int i=0;i<courses_.getLength();i++){
 	        	Node course_=courses_.item(i);
 	        	if(course_.getAttributes().getNamedItem("name")
-	        			.getTextContent().equals(course)){
+	        			.getTextContent().equals(course)
+	        			&& course_.getAttributes().getNamedItem("index")
+	        			.getTextContent().equals(index+"")){
 	        		NodeList students=course_.getChildNodes();
 	        		if(students.getLength()==0){
 	        			Element student_=doc.createElement("student");
 	        			student_.setTextContent(student);
 	        			course_.appendChild(student_);
+	        			this.doc2XmlFile(doc, filename);
 	        		}else{
 	        			for(int j=0;j<students.getLength();j++){
 	        				Node student_=students.item(j);
@@ -758,6 +774,7 @@ public class Dao {
 	        					Element student_new=doc.createElement("student");
 	    	        			student_new.setTextContent(student);
 	    	        			course_.appendChild(student_new);
+	    	        			this.doc2XmlFile(doc, filename);
 	        				}
 	        			}
 	        		}
@@ -808,6 +825,7 @@ public class Dao {
 				courses[j]=courses_temp[i];
 				j++;
 			}
+			
 			return courses;
 		}
 		
@@ -820,7 +838,9 @@ public class Dao {
 			Element Courses=doc.createElement("Courses");
 			for(int i=0;i<courses.length;i++){
 				if(!courses[i].equals("")){
+					int index=i+1;
 					Element course=doc.createElement("course");
+					course.setAttribute("index",index+"");
 					course.setAttribute("name",courses[i]);
 					Courses.appendChild(course);
 				}

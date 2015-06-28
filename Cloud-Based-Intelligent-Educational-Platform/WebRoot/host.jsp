@@ -45,14 +45,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				window.location.href = "LogoutAction!execute.action";
 			}
 		}
-</script>
+	</script>
   
   <body  onLoad="getAuthority();">
   	<input type="hidden" id="authority" value="<s:property value='authority' />" />
   	<div id="topMenu">
      	<img id="icon" src="image/logo.png" />
      	<label id="webid">智慧教学平台</label>
-     	<a href="" id="sign_in" class="host_3_function">签到</a>
+     	<a href="SigninAction!execute.action" id="sign_in" class="host_3_function">签到</a>
      	<a href="" id="grouping" class="host_3_function">分组</a>
      	<a href="CallOverAction!execute.action" id="call_over" class="host_3_function">抽点</a>
      	<img id="host_adm" src="image/adm.png" />

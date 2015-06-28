@@ -21,6 +21,15 @@ public class SigninAction {
 	private String start;
 	private String end;
 	private String name;
+	private int in_class_now;
+
+	public int getIn_class_now() {
+		return in_class_now;
+	}
+
+	public void setIn_class_now(int in_class_now) {
+		this.in_class_now = in_class_now;
+	}
 
 	public String getName() {
 		return name;
@@ -69,10 +78,14 @@ public class SigninAction {
 		end=current_course[2];
 		
 		int index=dao.getCurrentCourseIndex();
-		dao.db4signin(index, usrid);
-		
-		String current_teacher=dao.getCurrentCourseTeaher(course_name, start, end);
-		dao.xml4signin(current_teacher, course_name, usrid);
+		if(index!=0){
+			dao.db4signin(usrid);
+			String current_teacher=dao.getCurrentCourseTeaher(course_name);
+			dao.xml4signin(current_teacher, course_name, usrid);
+			in_class_now=1;
+		}else{
+			in_class_now=-1;
+		}
 		
 		return "success";
 	}

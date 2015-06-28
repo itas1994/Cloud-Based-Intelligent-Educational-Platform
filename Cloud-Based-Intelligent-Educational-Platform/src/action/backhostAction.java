@@ -9,6 +9,15 @@ import com.opensymphony.xwork2.ActionContext;
 
 public class backhostAction {
 	private String name;
+	private String authority;
+
+	public String getAuthority() {
+		return authority;
+	}
+
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
 
 	public String getName() {
 		return name;
@@ -24,6 +33,7 @@ public class backhostAction {
         
         Dao dao=new Dao();
         name=dao.getUsrName(usrid);
+        authority=dao.getAuthority(usrid);
         
 		return "success";
 	}

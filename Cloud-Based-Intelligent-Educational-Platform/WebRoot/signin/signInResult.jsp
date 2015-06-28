@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<link rel="stylesheet" type="text/css" href="css/debate/debatecontent.css">
+	<link rel="stylesheet" type="text/css" href="css/common.css">
 	<link rel="stylesheet" type="text/css" href="css/signin/signin.css">
 
   </head>
@@ -56,17 +56,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <div id="resultpanel">
   		<div id="resultcontent">
-  			你当前正在进行的课程为
- 			<label id="course_name">
- 				<s:property value="course_name" />
- 			</label>,上课时段为
-			<label id="start">
-				<s:property value="start" />
-			</label>
-			至
-			<label id="end">
-				<s:property value="end" />
-			</label>,本节课今日已成功签到。
+  			<s:if test='in_class_now=="-1"'>
+  				<label id="not_in_class">现在不是上课时间,不用签到啊</label>
+  			</s:if>
+  			<s:elseif test='in_class_now=="1"'>
+  				<label id="course_name_label">当前课程:</label>
+ 				<label id="course_name">
+ 					<s:property value="course_name" />
+ 				</label><br><br>
+ 				<label id="start_label">上课时段:</label>
+				<label id="start">
+					<s:property value="start" />
+				</label>
+				<label id="to_label">至</label>
+				<label id="end">
+					<s:property value="end" />
+				</label><br>
+			</s:elseif>
   		</div>
   	</div>
   </body>

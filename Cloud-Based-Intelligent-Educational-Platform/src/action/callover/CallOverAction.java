@@ -54,11 +54,11 @@ public class CallOverAction {
 		num=dao.numbers()-1;
 		int a=(int)Math.floor(Math.random() * ( num + 1));
 		for(int i=0;i<ulist.size();i++){
-		    	if(i==a){
-		    		User user=new User();
-		    		user=ulist.get(i);
-		    		ulist.removeAll(ulist);
-		    		ulist.add(user);
+		    if(i==a){
+		    	User user=new User();
+		    	user=ulist.get(i);
+		    	ulist.removeAll(ulist);
+		    	ulist.add(user);
 		    }
 		}
 		request.setAttribute("ulist", ulist);

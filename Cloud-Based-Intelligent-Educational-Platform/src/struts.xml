@@ -8,8 +8,8 @@
 	<package name="default" namespace="/" extends="struts-default">
 		<action name="LoginAction" class="action.LoginAction">
 			<result name="success">host.jsp</result>
-			<result name="psd_error">index.jsp</result>
-			<result name="id_error">index.jsp</result>
+		</action>
+		<action name="checkLoginAction" class="action.checkLoginAction">
 		</action>
 		<action name="LogoutAction" class="action.LogoutAction">
 			<result name="success">index.jsp</result>
