@@ -1,5 +1,0 @@
-[2015/03/12 22:02:52]	信息	GetLocalConfigXML: config file [BlackList_Bill.xml] Load error: 要求分号。
- 
-	 
-[2015/03/12 22:02:52]	信息	CSiteList<ItemType, ContainerType>::Load() [C:\Program Files (x86)\ICBCEbankTools\ICBCAntiPhishing\Config\BlackList_Bill.xml] Load error: 要求分号。
- 	 
