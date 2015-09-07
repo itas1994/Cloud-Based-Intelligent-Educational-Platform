@@ -21,7 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="css/info.css">
 	
   </head>
-  	<script type="text/javascript" src="./js/jquery-1.11.1.min.js">
+  	<script type="text/javascript" src="./script/js/jquery-1.11.1.min.js">
   	</script>
     <script>
 		function logout(){

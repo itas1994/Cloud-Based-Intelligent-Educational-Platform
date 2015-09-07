@@ -74,11 +74,11 @@
 		<action name="SigninAction" class="action.signin.SigninAction">
 			<result name="success">signin/signInResult.jsp</result>
 		</action>
-		<action name="GroupingAction" class="action.groupingAction">
-			<result name="suc">group/grouping.jsp</result>
+		<action name="conveyName4GroupAction" class="action.group.conveyName4GroupAction">
+			<result name="success">group/groupcount.jsp</result>
 		</action>
-		<action name="GroupedAction" class="action.groupedAction">
-			<result name="suc">group/grouped.jsp</result>
+		<action name="GroupAction" class="action.group.GroupAction">
+			<result name="success">group/groupSucceed.jsp</result>
 		</action>
 		<action name="HomeworkAction" class="action.homework.HomeworkAction">
 			<result name="s">homeworkZone/S_homeworkhost.jsp</result>

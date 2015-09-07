@@ -218,7 +218,7 @@ public class Dao {
 				d.setTitle(rs.getString("title"));
 				d.setIssuetime(rs.getString("issuetime"));
 				d.setIssueusr(rs.getString("issueusr"));
-				d.setReplynum(rs.getInt("replynum"));
+//				d.setReplynum(rs.getInt("replynum"));
 				delist.add(d);
 			}
 			this.destroyQuery();
@@ -914,14 +914,17 @@ public class Dao {
 		public ArrayList<User> Groupinguser() throws SQLException{
 			this.con();
 			ArrayList<User> list=new ArrayList<User>();
-			String sql_search="SELECT * FROM usr ORDER BY RAND()  LIMIT 40";
+			String sql_search="SELECT * FROM usr WHERE authority='s' ORDER BY RAND() LIMIT 40";
 			rs=st.executeQuery(sql_search);
-				while(rs.next()){
-					User r=new User();
-					r.setID(rs.getString("id"));
-					r.setName(rs.getString("name"));
-					list.add(r);
-				}
+			while(rs.next()){
+				User r=new User();
+				r.setID(rs.getString("id"));
+				r.setName(rs.getString("name"));
+				list.add(r);
+			}
+			
+			System.out.println(list.size());
+			
 			this.destroyQuery();
 			return list;
 		}

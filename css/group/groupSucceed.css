@@ -1,0 +1,52 @@
+﻿#current_panel{
+	width:98px;
+	height:35px;
+	background-color:#ffe148;
+	margin-left:312px;
+	background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#ffe148), to(#ffffff));
+}
+#resultpanel{
+	-webkit-border-radius:5px;
+	margin-left:250px;
+	margin-top:3px;
+	width:850px;
+	background-color:#ffe148;
+	-webkit-border-radius:5px;
+	padding-top:1px;
+	padding-bottom:1px;
+}
+#resultcontent{
+	-webkit-border-radius:5px;
+	width:70%;
+	height:50%;
+	background-color:#EEEEE0;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:4.6%;
+	margin-bottom:4.6%;
+}
+#form1{
+	position:relative;
+	top:40%;
+	left:15%;
+}
+#notice{
+	color:2E8B57;
+	font-family:张海山锐线体简;
+	font-size:30px;
+	font-weight:bold;
+}
+#num{
+	height:25px;
+	border:solid 1px;
+	border-color:#FFa07a;
+	-webkit-border-radius: 5px;
+}
+#fenzu{
+	position:absolute;
+	margin-left:1.5%;
+	margin-top:1.8%;
+	font-family:汉仪菱心体简;
+	color:#EE4000;
+	font-size:20px;
+}

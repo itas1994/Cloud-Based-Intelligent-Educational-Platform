@@ -53,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      	<img id="icon" src="image/logo.png" />
      	<label id="webid">智慧教学平台</label>
      	<a href="SigninAction!execute.action" id="sign_in" class="host_3_function">签到</a>
-     	<a href="" id="grouping" class="host_3_function">分组</a>
+     	<a href="conveyName4GroupAction!execute.action" id="grouping" class="host_3_function">分组</a>
      	<a href="CallOverAction!execute.action" id="call_over" class="host_3_function">抽点</a>
      	<img id="host_adm" src="image/adm.png" />
      	<label id="current_usr">
